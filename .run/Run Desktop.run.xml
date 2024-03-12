@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Desktop" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="s11.bomberguy.DesktopLauncher" />
+    <module name="bomberguy.desktop.main" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
