@@ -7,5 +7,6 @@ public class DesktopLauncher {
 		//Lwjgl3ApplicationConfiguration config = Config.getConfig();
 		//new Lwjgl3Application(new BomberGuy(), config);
 		new MenuPanel();
+		System.out.println("Teszt");
 	}
 }
