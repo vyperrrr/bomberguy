@@ -2,8 +2,10 @@ package s11.bomberguy;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import s11.bomberguy.characters.Player;
 
 public class BomberGuy extends ApplicationAdapter {
 	SpriteBatch batch;
