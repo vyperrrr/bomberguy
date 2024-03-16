@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class BomberGuy extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
+
+
 	
 	@Override
 	public void create () {
