@@ -2,7 +2,6 @@ package s11.bomberguy.gui.controls;
 
 import s11.bomberguy.PlayerControl;
 import s11.bomberguy.gui.MenuPanel;
-import s11.bomberguy.gui.controls.ControlButton;
 
 import javax.swing.*;
 

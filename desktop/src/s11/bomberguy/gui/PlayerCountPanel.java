@@ -1,5 +1,6 @@
 package s11.bomberguy.gui;
 
+import s11.bomberguy.DesktopLauncher;
 import s11.bomberguy.GameSetup;
 
 import javax.swing.*;
@@ -63,7 +64,9 @@ public class PlayerCountPanel extends JFrame {
                 e -> {
                     setVisible(false);
                     dispose();
-                    new MapPickerPanel();
+                    //new MapPickerPanel();
+                    //Game starts from here for now
+                    DesktopLauncher.launchGame();
                 }
         );
     }

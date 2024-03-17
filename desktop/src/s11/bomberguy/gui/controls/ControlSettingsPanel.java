@@ -1,11 +1,11 @@
 package s11.bomberguy.gui.controls;
 
-import s11.bomberguy.Controls;
 import s11.bomberguy.PlayerControl;
 import s11.bomberguy.gui.MenuPanel;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import s11.bomberguy.Controls;
 
 import static s11.bomberguy.gui.MenuPanel.FRAME_HEIGHT;
 import static s11.bomberguy.gui.MenuPanel.FRAME_WIDTH;
