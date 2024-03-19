@@ -5,6 +5,8 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import s11.bomberguy.gui.MenuPanel;
 import s11.bomberguy.Controls;
 
+import java.util.ArrayList;
+
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		launchMenu();
@@ -20,6 +22,11 @@ public class DesktopLauncher {
 	public static void launchGame()
 	{
 		Lwjgl3ApplicationConfiguration config = Config.getConfig();
-		new Lwjgl3Application(new GameModel(Controls.getControls()), config);
+		ArrayList<PlayerControl> controls = Controls.getControls();
+		GameSetup setup =  GameSetup.getGameSetup();
+		// Fails of bad folder structure
+		// GameModel model = new GameModel(controls, setup);
+		GameModel model = new GameModel(controls, setup.getPlayerNum());
+		new Lwjgl3Application(model, config);
 	}
 }

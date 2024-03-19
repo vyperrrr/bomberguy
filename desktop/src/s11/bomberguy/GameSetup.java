@@ -8,7 +8,7 @@ public class GameSetup {
     private int rounds = 1;
 
     private GameSetup() {}
-    public GameSetup getGameSetup() {
+    public static GameSetup getGameSetup() {
         if (gameSetup == null) {
             gameSetup = new GameSetup();
         }
@@ -34,5 +34,17 @@ public class GameSetup {
             gameSetup = new GameSetup();
         }
         gameSetup.rounds = rounds;
+    }
+
+    public int getPlayerNum() {
+        return playerNum;
+    }
+
+    public int getMapNum() {
+        return mapNum;
+    }
+
+    public int getRounds() {
+        return rounds;
     }
 }

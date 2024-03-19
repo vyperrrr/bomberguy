@@ -13,6 +13,7 @@ import s11.bomberguy.mapElements.Wall;
 import s11.bomberguy.PlayerControl;
 
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 
 public class GameModel extends Game {
@@ -21,15 +22,18 @@ public class GameModel extends Game {
 	private Timer timer;
 	public ArrayList<Player> players;
 
+	public int playerCount;
+
 	ArrayList<PlayerControl> controls;
 	private ArrayList<Monster> monsters;
 	private ArrayList<Crate> crates;
 	private ArrayList<Wall> walls;
 
 	// Data passed by GUI
-	public GameModel(ArrayList<PlayerControl> controls) {
+	public GameModel(ArrayList<PlayerControl> controls, int playerCount) {
 		this.controls = controls;
-		System.out.println(controls);
+		this.playerCount = playerCount;
+		System.out.println(controls.toString());
 	}
 
 	@Override
@@ -37,11 +41,10 @@ public class GameModel extends Game {
 		// Initialize players
 		players = new ArrayList<>();
 
-		// Player 1
-		players.add(new Player(new Texture("assets/badlogic.jpg"),
-				0, 0, 200, 200, 100, controls.get(0)));
+		// Generate players
+		IntStream.range(0, playerCount).forEach(i -> players.add(new Player(new Texture("assets/badlogic.jpg"),
+				50, 50, 200, 200, 100, controls.get(i))));
 
-		// Set screen to game screen
 		setScreen(new GameScreen(this));
 	}
 

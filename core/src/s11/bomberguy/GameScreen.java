@@ -38,8 +38,9 @@ public class GameScreen implements Screen {
         batch.begin();
 
         // Draw content
-        drawPlayers();
         movePlayers();
+        drawPlayers();
+
         // batch.draw();
 
 

@@ -16,6 +16,6 @@ public class Controls {
     }
 
     public static void setControls(ArrayList<PlayerControl> controlSettings) {
-        controls = (ArrayList<PlayerControl>) controlSettings.clone();
+        controls = controlSettings;
     }
 }

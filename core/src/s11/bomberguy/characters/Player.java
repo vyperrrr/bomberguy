@@ -21,7 +21,6 @@ public class Player extends Character {
     public Player(Texture texture, float x, float y, float width, float height, float moveSpeed, PlayerControl controls) {
         super(texture, x, y, width, height, moveSpeed);
         this.controls = controls;
-        System.out.println(controls.toString());
     }
 
     public void move() {
@@ -34,7 +33,7 @@ public class Player extends Character {
         if (Gdx.input.isKeyPressed(controls.getUpButton())) {
             y += moveSpeed * Gdx.graphics.getDeltaTime();
         }
-        if (Gdx.input.isKeyPressed(controls.getUpButton())) {
+        if (Gdx.input.isKeyPressed(controls.getDownButton())) {
             y -= moveSpeed * Gdx.graphics.getDeltaTime();
         }
     }

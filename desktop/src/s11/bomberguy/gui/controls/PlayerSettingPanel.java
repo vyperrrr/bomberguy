@@ -1,5 +1,6 @@
 package s11.bomberguy.gui.controls;
 
+import com.badlogic.gdx.Input;
 import s11.bomberguy.PlayerControl;
 import s11.bomberguy.gui.MenuPanel;
 
@@ -76,8 +77,8 @@ public class PlayerSettingPanel extends JPanel {
 
                         @Override
                         public void keyPressed(KeyEvent e) {
-                            upButton.setKeyCode(e.getKeyCode());
-                            upButton.setText("Előre: " + getKeyText(upButton.getKeyCode()));
+                            upButton.setKeyCode(Input.Keys.valueOf(getKeyText(e.getExtendedKeyCode())));
+                            upButton.setText("Előre: " + getKeyText(e.getKeyCode()));
                             dialog.dispose();
                         }
 
@@ -100,8 +101,8 @@ public class PlayerSettingPanel extends JPanel {
 
                         @Override
                         public void keyPressed(KeyEvent e) {
-                            downButton.setKeyCode(e.getKeyCode());
-                            downButton.setText("Hátra: " + getKeyText(downButton.getKeyCode()));
+                            downButton.setKeyCode(Input.Keys.valueOf(getKeyText(e.getExtendedKeyCode())));
+                            downButton.setText("Hátra: " + getKeyText(e.getKeyCode()));
                             dialog.dispose();
                         }
 
@@ -124,8 +125,8 @@ public class PlayerSettingPanel extends JPanel {
 
                         @Override
                         public void keyPressed(KeyEvent e) {
-                            leftButton.setKeyCode(e.getKeyCode());
-                            leftButton.setText("Balra: " + getKeyText(leftButton.getKeyCode()));
+                            leftButton.setKeyCode(Input.Keys.valueOf(getKeyText(e.getExtendedKeyCode())));
+                            leftButton.setText("Balra: " + getKeyText(e.getKeyCode()));
                             dialog.dispose();
                         }
 
@@ -148,8 +149,8 @@ public class PlayerSettingPanel extends JPanel {
 
                         @Override
                         public void keyPressed(KeyEvent e) {
-                            rightButton.setKeyCode(e.getKeyCode());
-                            rightButton.setText("Jobbra: " + getKeyText(rightButton.getKeyCode()));
+                            rightButton.setKeyCode(Input.Keys.valueOf(getKeyText(e.getExtendedKeyCode())));
+                            rightButton.setText("Jobbra: " + getKeyText(e.getKeyCode()));
                             dialog.dispose();
                         }
 
@@ -172,8 +173,8 @@ public class PlayerSettingPanel extends JPanel {
 
                         @Override
                         public void keyPressed(KeyEvent e) {
-                            bombButton.setKeyCode(e.getKeyCode());
-                            bombButton.setText("Bomba: " + getKeyText(bombButton.getKeyCode()));
+                            bombButton.setKeyCode(Input.Keys.valueOf(getKeyText(e.getExtendedKeyCode())));
+                            bombButton.setText("Bomba: " + getKeyText(e.getKeyCode()));
                             dialog.dispose();
                         }
 
@@ -196,8 +197,8 @@ public class PlayerSettingPanel extends JPanel {
 
                         @Override
                         public void keyPressed(KeyEvent e) {
-                            extraButton.setKeyCode(e.getKeyCode());
-                            extraButton.setText("Extra: " + getKeyText(extraButton.getKeyCode()));
+                            extraButton.setKeyCode(Input.Keys.valueOf(getKeyText(e.getExtendedKeyCode())));
+                            extraButton.setText("Extra: " + getKeyText(e.getKeyCode()));
                             dialog.dispose();
                         }
 
