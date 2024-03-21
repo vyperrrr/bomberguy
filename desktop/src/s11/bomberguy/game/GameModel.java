@@ -1,11 +1,9 @@
-package s11.bomberguy;
+package s11.bomberguy.game;
 
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Timer;
-import s11.bomberguy.characters.Character;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 import s11.bomberguy.mapElements.Crate;

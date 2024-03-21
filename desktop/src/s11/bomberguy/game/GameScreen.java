@@ -1,4 +1,4 @@
-package s11.bomberguy;
+package s11.bomberguy.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import s11.bomberguy.characters.*;
-
-import java.util.Arrays;
 
 public class GameScreen implements Screen {
     private GameModel model;

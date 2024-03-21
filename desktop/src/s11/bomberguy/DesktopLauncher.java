@@ -2,8 +2,9 @@ package s11.bomberguy;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import s11.bomberguy.game.GameModel;
 import s11.bomberguy.gui.MenuPanel;
-import s11.bomberguy.Controls;
+
 
 import java.util.ArrayList;
 

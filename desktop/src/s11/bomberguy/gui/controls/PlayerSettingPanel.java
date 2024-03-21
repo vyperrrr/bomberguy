@@ -1,7 +1,6 @@
 package s11.bomberguy.gui.controls;
 
 import com.badlogic.gdx.Input;
-import s11.bomberguy.PlayerControl;
 import s11.bomberguy.gui.MenuPanel;
 
 import javax.swing.*;
@@ -11,6 +10,7 @@ import java.awt.event.KeyListener;
 
 import static java.awt.event.KeyEvent.getKeyText;
 import static s11.bomberguy.Controls.getControls;
+import s11.bomberguy.PlayerControl;
 
 public class PlayerSettingPanel extends JPanel {
     private static final int BUTTON_WIDTH = 200;
