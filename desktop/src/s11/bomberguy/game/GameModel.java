@@ -4,6 +4,7 @@ package s11.bomberguy.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
+import s11.bomberguy.GameSetup;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 import s11.bomberguy.mapElements.Crate;
@@ -18,20 +19,17 @@ public class GameModel extends Game {
 
 	// Initialize with dummy data
 	private Timer timer;
-	public ArrayList<Player> players;
-
-	public int playerCount;
-
-	ArrayList<PlayerControl> controls;
+	private final GameSetup setup;
+	private ArrayList<Player> players;
+	private final ArrayList<PlayerControl> controls;
 	private ArrayList<Monster> monsters;
 	private ArrayList<Crate> crates;
 	private ArrayList<Wall> walls;
 
 	// Data passed by GUI
-	public GameModel(ArrayList<PlayerControl> controls, int playerCount) {
+	public GameModel(ArrayList<PlayerControl> controls, GameSetup setup) {
 		this.controls = controls;
-		this.playerCount = playerCount;
-		System.out.println(controls.toString());
+		this.setup = setup;
 	}
 
 	@Override
@@ -40,7 +38,7 @@ public class GameModel extends Game {
 		players = new ArrayList<>();
 
 		// Generate players
-		IntStream.range(0, playerCount).forEach(i -> players.add(new Player(new Texture("assets/badlogic.jpg"),
+		IntStream.range(0, setup.getPlayerNum()).forEach(i -> players.add(new Player(
 				50, 50, 200, 200, 100, controls.get(i))));
 
 		setScreen(new GameScreen(this));

@@ -38,9 +38,7 @@ public class GameScreen implements Screen {
         // Draw content
         movePlayers();
         drawPlayers();
-
-        // batch.draw();
-
+        drawBombs();
 
         // End draw
         batch.end();
@@ -57,6 +55,15 @@ public class GameScreen implements Screen {
     public void movePlayers()
     {
         model.getPlayers().forEach(Player::move);
+    }
+
+    public void drawBombs()
+    {
+        // Render bombs
+        model.getPlayers().forEach(player -> {
+            player.placeBomb();
+            player.getActiveBombs().forEach(bomb -> bomb.render(batch));
+        });
     }
 
     @Override

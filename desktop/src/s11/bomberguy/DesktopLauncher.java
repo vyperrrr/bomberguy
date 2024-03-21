@@ -25,9 +25,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = Config.getConfig();
 		ArrayList<PlayerControl> controls = Controls.getControls();
 		GameSetup setup =  GameSetup.getGameSetup();
-		// Fails of bad folder structure
-		// GameModel model = new GameModel(controls, setup);
-		GameModel model = new GameModel(controls, setup.getPlayerNum());
+		GameModel model = new GameModel(controls, setup);
 		new Lwjgl3Application(model, config);
 	}
 }
