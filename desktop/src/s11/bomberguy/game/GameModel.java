@@ -12,6 +12,7 @@ import s11.bomberguy.mapElements.Wall;
 import s11.bomberguy.PlayerControl;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 
@@ -37,9 +38,12 @@ public class GameModel extends Game {
 		// Initialize players
 		players = new ArrayList<>();
 
+		// For testing reasons
+		Random random = new Random();
+
 		// Generate players
 		IntStream.range(0, setup.getPlayerNum()).forEach(i -> players.add(new Player(
-				50, 50, 200, 200, 100, controls.get(i))));
+				random.nextInt(1080), random.nextInt(1920), 200, 200, 100, controls.get(i))));
 
 		setScreen(new GameScreen(this));
 	}

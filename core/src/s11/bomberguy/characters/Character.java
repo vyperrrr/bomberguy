@@ -20,4 +20,9 @@ public abstract class Character extends Sprite {
     {
         batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
+
+    // Check if collides
+    public <T extends Sprite> boolean collidesWith(T otherSprite) {
+        return this.getBoundingRectangle().overlaps(otherSprite.getBoundingRectangle());
+    }
 }

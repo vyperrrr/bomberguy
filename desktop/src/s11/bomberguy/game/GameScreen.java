@@ -54,7 +54,8 @@ public class GameScreen implements Screen {
 
     public void movePlayers()
     {
-        model.getPlayers().forEach(Player::move);
+        // Need to pass collidables to move, only players for now
+        model.getPlayers().forEach(player -> player.move(model.getPlayers()));
     }
 
     public void drawBombs()

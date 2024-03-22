@@ -1,6 +1,7 @@
 package s11.bomberguy.characters;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.PlayerControl;
 import s11.bomberguy.explosives.Bomb;
@@ -23,20 +24,50 @@ public class Player extends Character {
         this.activeBombs = new ArrayList<>();
         this.controls = controls;
     }
-    
-    public void move() {
+
+    public <T extends Sprite> void move(ArrayList<T> collidables) {
+        float newX = getX();
+        float newY = getY();
+
+        // Calculate the new position based on input
         if (Gdx.input.isKeyPressed(controls.getLeftButton())) {
-            this.setX(this.getX() - moveSpeed * Gdx.graphics.getDeltaTime());
+            newX -= moveSpeed * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.isKeyPressed(controls.getRightButton())) {
-            this.setX(this.getX() + moveSpeed * Gdx.graphics.getDeltaTime());
+            newX += moveSpeed * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.isKeyPressed(controls.getUpButton())) {
-            this.setY(this.getY() + moveSpeed * Gdx.graphics.getDeltaTime());
+            newY += moveSpeed * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.isKeyPressed(controls.getDownButton())) {
-            this.setY(this.getY() - moveSpeed * Gdx.graphics.getDeltaTime());
+            newY -= moveSpeed * Gdx.graphics.getDeltaTime();
         }
+
+        // Check if the new position will cause collision with any collidable
+        boolean willCollide = false;
+        for (T collidable : collidables) {
+            if (this != collidable && collidesWith(collidable, newX, newY)) {
+                willCollide = true;
+                break;
+            }
+        }
+
+        // Update the position only if there won't be a collision
+        if (!willCollide) {
+            setPosition(newX, newY);
+        }
+    }
+
+    // Method to check if the player will collide with a collidable at the specified position
+    private <T extends Sprite> boolean collidesWith(T collidable, float newX, float newY) {
+        float oldX = getX();
+        float oldY = getY();
+        setX(newX);
+        setY(newY);
+        boolean result = getBoundingRectangle().overlaps(collidable.getBoundingRectangle());
+        setX(oldX);
+        setY(oldY);
+        return result;
     }
 
     public void placeBomb()
@@ -61,6 +92,14 @@ public class Player extends Character {
             // Add to active bombs
             activeBombs.add(bomb);
         }
+    }
+
+    // Handle collision
+    public <T extends Sprite> void handleCollision(T otherSprite) {
+        if(!collidesWith(otherSprite))
+            return;
+        if(otherSprite instanceof Player)
+            System.out.println("Collided with other player...");
     }
 
     public ArrayList<PowerUp> getActivePowerUps() {
