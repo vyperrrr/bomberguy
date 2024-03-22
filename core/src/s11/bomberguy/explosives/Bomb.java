@@ -45,4 +45,6 @@ public class Bomb extends Sprite {
     public void setTimer(Timer timer) {
         this.timer = timer;
     }
+
+
 }

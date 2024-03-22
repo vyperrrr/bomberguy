@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import s11.bomberguy.characters.*;
+
+import java.util.ArrayList;
 
 public class GameScreen implements Screen {
     private GameModel model;
@@ -55,7 +58,7 @@ public class GameScreen implements Screen {
     public void movePlayers()
     {
         // Need to pass collidables to move, only players for now
-        model.getPlayers().forEach(player -> player.move(model.getPlayers()));
+        model.getPlayers().forEach(Player::move);
     }
 
     public void drawBombs()

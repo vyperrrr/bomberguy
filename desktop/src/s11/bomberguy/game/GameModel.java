@@ -3,13 +3,16 @@ package s11.bomberguy.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Timer;
+import s11.bomberguy.Collidables;
 import s11.bomberguy.GameSetup;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 import s11.bomberguy.mapElements.Crate;
 import s11.bomberguy.mapElements.Wall;
 import s11.bomberguy.PlayerControl;
+import s11.bomberguy.Collidables;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,10 +25,10 @@ public class GameModel extends Game {
 	private Timer timer;
 	private final GameSetup setup;
 	private ArrayList<Player> players;
-	private final ArrayList<PlayerControl> controls;
 	private ArrayList<Monster> monsters;
 	private ArrayList<Crate> crates;
 	private ArrayList<Wall> walls;
+	private final ArrayList<PlayerControl> controls;
 
 	// Data passed by GUI
 	public GameModel(ArrayList<PlayerControl> controls, GameSetup setup) {
@@ -37,13 +40,24 @@ public class GameModel extends Game {
 	public void create() {
 		// Initialize players
 		players = new ArrayList<>();
+		monsters = new ArrayList<>();
+		crates = new ArrayList<>();
+		walls = new ArrayList<>();
 
 		// For testing reasons
 		Random random = new Random();
 
 		// Generate players
 		IntStream.range(0, setup.getPlayerNum()).forEach(i -> players.add(new Player(
-				random.nextInt(1080), random.nextInt(1920), 200, 200, 100, controls.get(i))));
+				random.nextInt(500), random.nextInt(1200), 200, 200, 100, controls.get(i))));
+
+		// Add collidable objects to collidables list
+		Collidables collidables = Collidables.getInstance();
+
+		collidables.addCollidables(players);
+		collidables.addCollidables(monsters);
+		collidables.addCollidables(crates);
+		collidables.addCollidables(walls);
 
 		setScreen(new GameScreen(this));
 	}

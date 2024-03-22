@@ -25,4 +25,20 @@ public abstract class Character extends Sprite {
     public <T extends Sprite> boolean collidesWith(T otherSprite) {
         return this.getBoundingRectangle().overlaps(otherSprite.getBoundingRectangle());
     }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public float getMoveSpeed() {
+        return moveSpeed;
+    }
+
+    public void setMoveSpeed(float moveSpeed) {
+        this.moveSpeed = moveSpeed;
+    }
 }
