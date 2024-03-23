@@ -10,9 +10,9 @@ import java.sql.Time;
 public class Bomb extends Sprite {
     private int range;
     private Timer timer;
-    private static final int BOMB_WIDTH = 50;
-    private static final int BOMB_HEIGHT = 50;
-    private static final Texture BOMB_TEXTURE = new Texture("assets/badlogic.jpg");
+    private static final int BOMB_WIDTH = 60;
+    private static final int BOMB_HEIGHT = 60;
+    private static final Texture BOMB_TEXTURE = new Texture("assets/bomb.png");
 
     public Bomb(float x, float y) {
         super.setTexture(BOMB_TEXTURE);

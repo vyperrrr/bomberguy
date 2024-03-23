@@ -31,8 +31,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        // Set the clear color to green (R, G, B, Alpha)
-        Gdx.gl.glClearColor(0, 1, 0, 1);
+        // Set the clear color to grey (R, G, B, Alpha)
+        Gdx.gl.glClearColor(128, 128, 128, 1);
         // Clear the screen with the specified color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // Begin draw
@@ -43,6 +43,8 @@ public class GameScreen implements Screen {
         drawPlayers();
         placeBombs();
         drawBombs();
+        drawCrates();
+        drawWalls();
 
         // End draw
         batch.end();
@@ -72,6 +74,14 @@ public class GameScreen implements Screen {
     {
         // Render bombs
         model.getPlayers().forEach(player -> player.getActiveBombs().forEach(bomb -> bomb.render(batch)));
+    }
+
+    public void drawCrates(){
+        model.getCrates().forEach(crate -> crate.render(batch));
+    }
+
+    public void drawWalls(){
+        model.getWalls().forEach(wall -> wall.render(batch));
     }
 
     @Override
