@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import s11.bomberguy.characters.*;
 
 import java.util.ArrayList;
@@ -15,14 +17,33 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
+    private OrthogonalTiledMapRenderer tiledMapRenderer;
+
 
     // game provides initialized data
     public GameScreen(GameModel model) {
         this.model = model;
         this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch = new SpriteBatch();
+
+        // Set the camera viewport to match the map dimensions
+        this.camera.setToOrtho(false, 960, 640); // Map dimensions in pixels
+
+        this.batch = new SpriteBatch();
+
+        // Calculate the unit scale to fit the map onto the screen
+        float unitScale = 1f; // Start with 1:1 mapping
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+
+        if (960 * unitScale > screenWidth || 640 * unitScale > screenHeight) {
+            // Adjust unit scale if the map is too large for the screen
+            unitScale = Math.min(screenWidth / 960, screenHeight / 640);
+        }
+
+        this.tiledMapRenderer = new OrthogonalTiledMapRenderer(model.getTiledMap(), unitScale, batch);
     }
+
+
 
     @Override
     public void show() {
@@ -35,6 +56,10 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(128, 128, 128, 1);
         // Clear the screen with the specified color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        camera.update();
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
         // Begin draw
         batch.begin();
 
