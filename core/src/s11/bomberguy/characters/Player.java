@@ -39,17 +39,20 @@ public class Player extends Character {
         Collidables collidables = Collidables.getInstance();
 
         // Calculate the new position based on input
-        if (Gdx.input.isKeyPressed(controls.getLeftButton())) {
-            newX -= moveSpeed * Gdx.graphics.getDeltaTime();
-        }
-        if (Gdx.input.isKeyPressed(controls.getRightButton())) {
-            newX += moveSpeed * Gdx.graphics.getDeltaTime();
-        }
-        if (Gdx.input.isKeyPressed(controls.getUpButton())) {
-            newY += moveSpeed * Gdx.graphics.getDeltaTime();
-        }
-        if (Gdx.input.isKeyPressed(controls.getDownButton())) {
-            newY -= moveSpeed * Gdx.graphics.getDeltaTime();
+        //only if the player is alive
+        if(this.isAlive){
+            if (Gdx.input.isKeyPressed(controls.getLeftButton())) {
+                newX -= moveSpeed * Gdx.graphics.getDeltaTime();
+            }
+            if (Gdx.input.isKeyPressed(controls.getRightButton())) {
+                newX += moveSpeed * Gdx.graphics.getDeltaTime();
+            }
+            if (Gdx.input.isKeyPressed(controls.getUpButton())) {
+                newY += moveSpeed * Gdx.graphics.getDeltaTime();
+            }
+            if (Gdx.input.isKeyPressed(controls.getDownButton())) {
+                newY -= moveSpeed * Gdx.graphics.getDeltaTime();
+            }
         }
 
         // Check if the new position will cause collision with any collidable
@@ -72,6 +75,10 @@ public class Player extends Character {
         else
             BOMB_COLLISION_FLAG = false;
 
+        //if collides with a monster, it's es hora de dormir mimir amimir (it dies)
+        if(willCollide && collidedWith instanceof Monster ){
+            this.isAlive=false;
+        }
     }
 
     // Method to check if the player will collide with a collidable at the specified position

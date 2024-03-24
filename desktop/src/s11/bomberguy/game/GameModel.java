@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.Collidables;
 import s11.bomberguy.GameSetup;
+import s11.bomberguy.characters.Character;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 import s11.bomberguy.mapElements.Crate;
@@ -37,6 +38,7 @@ public class GameModel extends Game {
 
     private AssetManager assetManager;
     private TiledMap tiledMap;
+    private Collidables collidables;
 
 
     // Data passed by GUI
@@ -59,8 +61,11 @@ public class GameModel extends Game {
         // Generate players
         IntStream.range(0, setup.getPlayerNum()).forEach(i -> players.add(new Player(random.nextInt(300), random.nextInt(300), 16, 16, 100, controls.get(i))));
 
+        //Generate monsters
+        IntStream.range(0, 1).forEach(i -> monsters.add(new Monster(random.nextInt(300), random.nextInt(300), 25, 25, 50)));
+
         // Add collidable objects to collidables list
-        Collidables collidables = Collidables.getInstance();
+        this.collidables = Collidables.getInstance();
 
         collidables.addCollidables(players);
         collidables.addCollidables(monsters);
@@ -70,13 +75,20 @@ public class GameModel extends Game {
         assetManager = new AssetManager();
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
         assetManager.load("assets/maps/map1.tmx", TiledMap.class);
+        assetManager.load("assets/maps/testMap.tmx", TiledMap.class);
         assetManager.finishLoading();
 
-        tiledMap = assetManager.get("assets/maps/map1.tmx", TiledMap.class);
+        //tiledMap = assetManager.get("assets/maps/map1.tmx", TiledMap.class);
+        tiledMap = assetManager.get("assets/maps/testMap.tmx", TiledMap.class);
 
         setCollidableMapLayers();
 
         setScreen(new GameScreen(this));
+    }
+
+    //remove Collidable
+    public <T extends Sprite> void removeColladible( T collidable){
+        this.collidables.removeCollidable(collidable);
     }
 
     public void setCollidableMapLayers()

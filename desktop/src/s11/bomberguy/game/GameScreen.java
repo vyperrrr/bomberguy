@@ -66,6 +66,8 @@ public class GameScreen implements Screen {
         // Draw content
         movePlayers();
         drawPlayers();
+        moveMonsters();
+        drawMonsters();
         placeBombs();
         drawBombs();
         drawCrates();
@@ -79,7 +81,19 @@ public class GameScreen implements Screen {
     {
         // Render players
         model.getPlayers().forEach(player -> {
-            player.render(batch);
+            if(player.isAlive()){
+                player.render(batch);
+            }else{
+                model.removeColladible(player);
+            }
+        });
+    }
+
+    public void drawMonsters()
+    {
+        // Render players
+        model.getMonsters().forEach(monster -> {
+            monster.render(batch);
         });
     }
 
@@ -87,6 +101,11 @@ public class GameScreen implements Screen {
     {
         // Need to pass collidables to move, only players for now
         model.getPlayers().forEach(Player::move);
+    }
+
+    public void moveMonsters()
+    {
+        model.getMonsters().forEach(Monster::move);
     }
 
     public void placeBombs()
