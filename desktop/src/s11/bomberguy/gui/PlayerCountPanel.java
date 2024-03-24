@@ -1,9 +1,9 @@
 package s11.bomberguy.gui;
 
-import s11.bomberguy.DesktopLauncher;
 import s11.bomberguy.GameSetup;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 import java.awt.*;
 
@@ -11,10 +11,10 @@ import static s11.bomberguy.gui.MenuPanel.FRAME_HEIGHT;
 import static s11.bomberguy.gui.MenuPanel.FRAME_WIDTH;
 
 public class PlayerCountPanel extends JFrame {
-    private JButton twoPlayersButton;
-    private  JButton threePlayersButton;
-    private JButton continueButton;
-    private JLabel text;
+    private final JButton twoPlayersButton;
+    private final JButton threePlayersButton;
+    private final JButton continueButton;
+    private final JLabel text;
     public PlayerCountPanel() {
         // Construct buttons
         twoPlayersButton = new JButton("2");
@@ -30,6 +30,9 @@ public class PlayerCountPanel extends JFrame {
         add(twoPlayersButton);
         add(threePlayersButton);
         add(continueButton);
+
+        // Make twoPlayersButton appear selected by default
+        twoPlayersButton.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
         // Label
         text = new JLabel("Játékosok száma");
@@ -51,12 +54,16 @@ public class PlayerCountPanel extends JFrame {
         twoPlayersButton.addActionListener(
                 e -> {
                     GameSetup.setPlayerNum(2);
+                    twoPlayersButton.setBorder(new BevelBorder(BevelBorder.LOWERED));
+                    threePlayersButton.setBorder(null);
                 }
         );
 
         threePlayersButton.addActionListener(
                 e -> {
                     GameSetup.setPlayerNum(3);
+                    threePlayersButton.setBorder(new BevelBorder(BevelBorder.LOWERED));
+                    twoPlayersButton.setBorder(null);
                 }
         );
 
@@ -64,9 +71,7 @@ public class PlayerCountPanel extends JFrame {
                 e -> {
                     setVisible(false);
                     dispose();
-                    //new MapPickerPanel();
-                    //Game starts from here for now
-                    DesktopLauncher.launchGame();
+                    new MapPickerPanel();
                 }
         );
     }
