@@ -211,11 +211,11 @@ public class PlayerSettingPanel extends JPanel{
     public PlayerControl getPlayerControls() {
         PlayerControl controls = new PlayerControl();
         controls.setUpButton(Input.Keys.valueOf(getKeyText(upButton.getKeyCode())));
-        controls.setDownButton(downButton.getKeyCode());
-        controls.setLeftButton(leftButton.getKeyCode());
-        controls.setRightButton(rightButton.getKeyCode());
-        controls.setBombButton(bombButton.getKeyCode());
-        controls.setExtraButton(extraButton.getKeyCode());
+        controls.setDownButton(Input.Keys.valueOf(getKeyText(downButton.getKeyCode())));
+        controls.setLeftButton(Input.Keys.valueOf(getKeyText(leftButton.getKeyCode())));
+        controls.setRightButton(Input.Keys.valueOf(getKeyText(rightButton.getKeyCode())));
+        controls.setBombButton(Input.Keys.valueOf(getKeyText(bombButton.getKeyCode())));
+        controls.setExtraButton(Input.Keys.valueOf(getKeyText(extraButton.getKeyCode())));
         return controls;
     }
 }
