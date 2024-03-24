@@ -21,6 +21,7 @@ import s11.bomberguy.PlayerControl;
 import s11.bomberguy.TileSpriteFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -58,11 +59,8 @@ public class GameModel extends Game {
         // For testing reasons
         Random random = new Random();
 
-        // Generate players
-        IntStream.range(0, setup.getPlayerNum()).forEach(i -> players.add(new Player(random.nextInt(300), random.nextInt(300), 16, 16, 100, controls.get(i))));
-
         //Generate monsters
-        IntStream.range(0, 1).forEach(i -> monsters.add(new Monster(random.nextInt(300), random.nextInt(300), 25, 25, 50)));
+
 
         // Add collidable objects to collidables list
         this.collidables = Collidables.getInstance();
@@ -79,21 +77,62 @@ public class GameModel extends Game {
         assetManager.finishLoading();
 
         //tiledMap = assetManager.get("assets/maps/map1.tmx", TiledMap.class);
-        tiledMap = assetManager.get("assets/maps/testMap.tmx", TiledMap.class);
+        tiledMap = assetManager.get("assets/maps/map1.tmx", TiledMap.class);
+
+        // Generate players
+        MapLayer playerSpawnLayer = tiledMap.getLayers().get("Player spawn");
+        if (playerSpawnLayer instanceof TiledMapTileLayer) {
+            TiledMapTileLayer tiledLayer = (TiledMapTileLayer) playerSpawnLayer;
+            int playerNum = setup.getPlayerNum();
+            int currentPlayerNum = 0; // Track the number of players added
+            // Iterate over each cell in the tiled layer
+            for (int y = 0; y < tiledLayer.getHeight(); y++) {
+                for (int x = 0; x < tiledLayer.getWidth(); x++) {
+                    // Check if the number of players added equals playerNum
+                    if (currentPlayerNum >= playerNum) {
+                        break; // Exit the loop if the limit is reached
+                    }
+                    // Get the cell at the current position
+                    TiledMapTileLayer.Cell cell = tiledLayer.getCell(x, y);
+                    if (cell != null) {
+                        // Retrieve the position of the tile
+                        float tileX = x * tiledLayer.getTileWidth();
+                        float tileY = y * tiledLayer.getTileHeight();
+                        // Create a new Player instance and pass the position
+                        players.add(new Player(tileX, tileY, 24, 24, 100, controls.get(currentPlayerNum)));
+                        currentPlayerNum++; // Increment the number of players added
+                    }
+                }
+            }
+        }
+
+        MapLayer monsterSpawnLayer = tiledMap.getLayers().get("Monster spawn");
+        if (monsterSpawnLayer instanceof TiledMapTileLayer) {
+            TiledMapTileLayer tiledLayer = (TiledMapTileLayer) monsterSpawnLayer;
+            // Iterate over each cell in the tiled layer
+            for (int y = 0; y < tiledLayer.getHeight(); y++) {
+                for (int x = 0; x < tiledLayer.getWidth(); x++) {
+                    // Check if the number of players added equals playerNum
+                    // Get the cell at the current position
+                    TiledMapTileLayer.Cell cell = tiledLayer.getCell(x, y);
+                    if (cell != null) {
+                        // Retrieve the position of the tile
+                        float tileX = x * tiledLayer.getTileWidth();
+                        float tileY = y * tiledLayer.getTileHeight();
+                        // Create a new Player instance and pass the position
+                        monsters.add(new Monster(tileX, tileY, 24, 24, 50));
+                    }
+                }
+            }
+        }
 
         setCollidableMapLayers();
 
         setScreen(new GameScreen(this));
     }
 
-    //remove Collidable
-    public <T extends Sprite> void removeColladible( T collidable){
-        this.collidables.removeCollidable(collidable);
-    }
-
     public void setCollidableMapLayers()
     {
-        Collidables collidables = Collidables.getInstance();
         // Get the group layer (folder) named "collidables"
         MapLayer groupLayer = tiledMap.getLayers().get("collidables");
 
@@ -177,5 +216,13 @@ public class GameModel extends Game {
 
     public void setTiledMap(TiledMap tiledMap) {
         this.tiledMap = tiledMap;
+    }
+
+    public Collidables getCollidables() {
+        return collidables;
+    }
+
+    public void setCollidables(Collidables collidables) {
+        this.collidables = collidables;
     }
 }

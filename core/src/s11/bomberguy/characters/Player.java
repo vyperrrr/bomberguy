@@ -19,7 +19,7 @@ public class Player extends Character {
 
     private boolean BOMB_COLLISION_FLAG;
 
-    private static final Texture PLAYER_TEXTURE = new Texture("assets/badlogic.jpg");
+    private static final Texture PLAYER_TEXTURE = new Texture("assets/player.png");
 
     public Player(float x, float y, float width, float height, float moveSpeed, PlayerControl controls) {
         super(PLAYER_TEXTURE, x, y, width, height, moveSpeed);

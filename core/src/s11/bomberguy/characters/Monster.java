@@ -18,7 +18,7 @@ public class Monster extends Character{
     4-right
      */
     private int direction = 1;
-    private Random r = new Random();
+    private final Random random = new Random();
     public Monster(float x, float y, float width, float height, float moveSpeed) {
         super(MONSTER_TEXTURE, x, y, width, height, moveSpeed);
     }
@@ -58,7 +58,7 @@ public class Monster extends Character{
         if(!willCollide){
             setPosition(newX, newY);
 
-            if((r.nextInt(1000)+1) >= 990){
+            if((random.nextInt(1000)+1) >= 990){
                 this.newDirection();
             }
 
@@ -89,9 +89,9 @@ public class Monster extends Character{
     }
 
     private void newDirection(){
-        int tempDir = r.nextInt(4)+1;
+        int tempDir = random.nextInt(4)+1;
         while(this.direction == tempDir){
-            this.direction = r.nextInt(4)+1;
+            this.direction = random.nextInt(4)+1;
         }
     }
 

@@ -84,7 +84,7 @@ public class GameScreen implements Screen {
             if(player.isAlive()){
                 player.render(batch);
             }else{
-                model.removeColladible(player);
+                model.getCollidables().removeCollidable(player);
             }
         });
     }
