@@ -1,5 +1,6 @@
 package s11.bomberguy.gui;
 
+import s11.bomberguy.DesktopLauncher;
 import s11.bomberguy.GameSetup;
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +33,7 @@ public class RoundCountPanel extends JFrame {
             buttons[i].setBounds((FRAME_WIDTH - 200) / 2, 200 + i*60, 200, 60);
             group.add(buttons[i]);
         }
+        buttons[0].setSelected(true);
         startButton.setBounds(FRAME_WIDTH/2 - 200/2, 550, 200, 60);
 
         for (int i = 0; i < 3; i++) {
@@ -48,7 +50,9 @@ public class RoundCountPanel extends JFrame {
                             break;
                         }
                     }
-                    // start game here
+                    setVisible(false);
+                    dispose();
+                    DesktopLauncher.launchGame();
                 }
         );
 
