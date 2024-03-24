@@ -79,7 +79,7 @@ public class MapPickerPanel extends JFrame {
 
         // Configure frame
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        setTitle("Bomber Guy");
+        setTitle("Bomber Guy - Pálya választás");
         setResizable(false);
         setLayout(null);
         setLocationRelativeTo(null); // Open in center of screen
