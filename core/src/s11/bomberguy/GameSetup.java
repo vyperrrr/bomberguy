@@ -22,20 +22,25 @@ public class GameSetup {
         gameSetup.playerNum = playerNum;
     }
 
-    public void setMapNum(int mapNum) {
+    public static void setMapNum(int mapNum) {
         if (gameSetup == null) {
             gameSetup = new GameSetup();
         }
         gameSetup.mapNum = mapNum;
     }
 
-    public void setRounds(int rounds) {
+    public static void setRounds(int rounds) {
         if (gameSetup == null) {
             gameSetup = new GameSetup();
         }
         gameSetup.rounds = rounds;
     }
 
+    /* Intended way:
+    public static int getPlayerNum() {
+        return gameSetup.playerNum;
+    }
+    */
     public int getPlayerNum() {
         return playerNum;
     }
