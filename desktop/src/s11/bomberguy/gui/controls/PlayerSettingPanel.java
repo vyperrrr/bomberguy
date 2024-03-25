@@ -30,12 +30,12 @@ public class PlayerSettingPanel extends JPanel{
         setLayout(null);
 
         // Construct buttons
-        upButton = new ControlButton("Előre: " + getKeyText(getControls().get(num-1).getUpButton()), getControls().get(num-1).getUpButton());
-        downButton = new ControlButton("Hátra: " + getKeyText(getControls().get(num-1).getDownButton()), getControls().get(num-1).getDownButton());
-        leftButton = new ControlButton("Balra: " + getKeyText(getControls().get(num-1).getLeftButton()), getControls().get(num-1).getLeftButton());
-        rightButton = new ControlButton("Jobbra: " + getKeyText(getControls().get(num-1).getRightButton()), getControls().get(num-1).getRightButton());
-        bombButton = new ControlButton("Bomba: " + getKeyText(getControls().get(num-1).getBombButton()), getControls().get(num-1).getBombButton());
-        extraButton = new ControlButton("Extra: " + getKeyText(getControls().get(num-1).getExtraButton()), getControls().get(num-1).getExtraButton());
+        upButton = new ControlButton("Előre: " + Input.Keys.toString(getControls().get(num-1).getUpButton()), getControls().get(num-1).getUpButton());
+        downButton = new ControlButton("Hátra: " + Input.Keys.toString(getControls().get(num-1).getDownButton()), getControls().get(num-1).getDownButton());
+        leftButton = new ControlButton("Balra: " + Input.Keys.toString(getControls().get(num-1).getLeftButton()), getControls().get(num-1).getLeftButton());
+        rightButton = new ControlButton("Jobbra: " + Input.Keys.toString(getControls().get(num-1).getRightButton()), getControls().get(num-1).getRightButton());
+        bombButton = new ControlButton("Bomba: " + Input.Keys.toString(getControls().get(num-1).getBombButton()), getControls().get(num-1).getBombButton());
+        extraButton = new ControlButton("Extra: " + Input.Keys.toString(getControls().get(num-1).getExtraButton()), getControls().get(num-1).getExtraButton());
 
         // Position buttons
         upButton.setBounds((MenuPanel.FRAME_WIDTH / 3 - BUTTON_WIDTH) / 2, (MenuPanel.FRAME_HEIGHT / 10) * 1, BUTTON_WIDTH, BUTTON_HEIGHT);
