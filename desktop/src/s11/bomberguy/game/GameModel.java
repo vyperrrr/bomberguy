@@ -34,10 +34,7 @@ public class GameModel extends Game {
     private final GameSetup setup;
     private ArrayList<Player> players;
     private ArrayList<Monster> monsters;
-    private ArrayList<Crate> crates;
-    private ArrayList<Wall> walls;
     private final ArrayList<PlayerControl> controls;
-
     private AssetManager assetManager;
     private TiledMap tiledMap;
     private Collidables collidables;
@@ -54,8 +51,6 @@ public class GameModel extends Game {
         // Initialize players
         players = new ArrayList<>();
         monsters = new ArrayList<>();
-        crates = new ArrayList<>();
-        walls = new ArrayList<>();
 
         // For testing reasons
         Random random = new Random();
@@ -68,8 +63,6 @@ public class GameModel extends Game {
 
         collidables.addCollidables(players);
         collidables.addCollidables(monsters);
-        collidables.addCollidables(crates);
-        collidables.addCollidables(walls);
 
         assetManager = new AssetManager();
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
@@ -185,22 +178,6 @@ public class GameModel extends Game {
 
     public void setMonsters(ArrayList<Monster> monsters) {
         this.monsters = monsters;
-    }
-
-    public ArrayList<Crate> getCrates() {
-        return crates;
-    }
-
-    public void setCrates(ArrayList<Crate> crates) {
-        this.crates = crates;
-    }
-
-    public ArrayList<Wall> getWalls() {
-        return walls;
-    }
-
-    public void setWalls(ArrayList<Wall> walls) {
-        this.walls = walls;
     }
 
     public AssetManager getAssetManager() {

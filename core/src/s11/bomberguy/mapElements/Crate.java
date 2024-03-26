@@ -3,6 +3,7 @@ package s11.bomberguy.mapElements;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapGroupLayer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -45,15 +46,19 @@ public class Crate extends Sprite {
         if(willCollide && collidedWith instanceof Explosion){
             System.out.println("belefutott");
             System.out.println(this.getMapX()+" "+this.getMapY());
-            MapLayer layer = map.getLayers().get("Boxes");
-            if(layer == null) System.out.println("Nem talált");
+            MapGroupLayer groupLayer = (MapGroupLayer) map.getLayers().get("collidables");
+            if(groupLayer == null) System.out.println("Nem talált");
+            MapLayer layer = groupLayer.getLayers().get("Boxes");
             if(layer instanceof TiledMapTileLayer){
-                TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) layer).getCell(1,18);
+                System.out.println("halo");
+                TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) layer).getCell(this.getMapX(),this.getMapY());
                 if(cell != null) {
                     System.out.println("SZIA");
                     ((TiledMapTileLayer) layer).setCell(this.getMapX(), this.getMapY(), null);
                 }
             }
+
+
 
             //collidables.removeCollidable(this);
         }
