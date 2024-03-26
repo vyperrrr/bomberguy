@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
+import s11.bomberguy.Collidables;
 
 import java.sql.Time;
 
@@ -16,8 +17,11 @@ public class Bomb extends Sprite {
 
     public Bomb(float x, float y) {
         super.setTexture(BOMB_TEXTURE);
-        super.setBounds(x,y,BOMB_WIDTH,BOMB_HEIGHT);
+        super.setBounds(x,y, BOMB_WIDTH,BOMB_HEIGHT);
+
+        this.range = 2;
         timer = new Timer();
+
     }
 
     public void render(SpriteBatch batch)
@@ -27,7 +31,11 @@ public class Bomb extends Sprite {
 
     public void explode()
     {
-        //...
+        Explosion explosion = new Explosion(this.getX(), this.getY(), 0, this.range);
+
+        Collidables collidables = Collidables.getInstance();
+        collidables.addExplosion(explosion);
+
     }
 
     public int getRange() {

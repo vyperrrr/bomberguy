@@ -15,6 +15,7 @@ import s11.bomberguy.GameSetup;
 import s11.bomberguy.characters.Character;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
+import s11.bomberguy.explosives.Explosion;
 import s11.bomberguy.mapElements.Crate;
 import s11.bomberguy.mapElements.Wall;
 import s11.bomberguy.PlayerControl;
@@ -76,7 +77,7 @@ public class GameModel extends Game {
         assetManager.load("assets/maps/testMap.tmx", TiledMap.class);
         assetManager.finishLoading();
 
-        //tiledMap = assetManager.get("assets/maps/map1.tmx", TiledMap.class);
+        //tiledMap = assetManager.get("assets/maps/testMap.tmx", TiledMap.class);
         tiledMap = assetManager.get("assets/maps/map1.tmx", TiledMap.class);
 
         // Generate players
@@ -149,7 +150,7 @@ public class GameModel extends Game {
                     // Iterate through the tiles of the tiled layer
                     for (int row = 0; row < tiledLayer.getHeight(); row++) {
                         for (int col = 0; col < tiledLayer.getWidth(); col++) {
-                            Sprite sprite = TileSpriteFactory.createSpriteFromTile(tiledMap, tiledLayer, col, row);
+                            Sprite sprite = TileSpriteFactory.createCrateOrWall(tiledMap, tiledLayer, col, row);
                             if (sprite != null) {
                                 // Add the sprite to your sprite batch or render it as needed
                                 collidables.addCollidable(sprite);

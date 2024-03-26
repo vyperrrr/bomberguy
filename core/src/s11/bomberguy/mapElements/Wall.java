@@ -11,6 +11,10 @@ public class Wall extends Sprite {
         super.setTexture(WALL_TEXTURE);
         super.setBounds(x, y, pixelSize, pixelSize);
     }
+    public Wall(float x, float y, Texture texture, float width, float height){
+        super.setTexture(texture);
+        super.setBounds(x, y, width, height);
+    }
 
     public void render(SpriteBatch batch){
         batch.draw(this.getTexture(),this.getX(), this.getY(), this.getWidth(), this.getHeight());

@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.Collidables;
 import s11.bomberguy.PlayerControl;
 import s11.bomberguy.explosives.Bomb;
+import s11.bomberguy.explosives.Explosion;
 import s11.bomberguy.powerups.PowerUp;
 import com.badlogic.gdx.Gdx;
 import s11.bomberguy.Collidables;
@@ -18,6 +19,8 @@ public class Player extends Character {
     private ArrayList<Bomb> activeBombs;
 
     private boolean BOMB_COLLISION_FLAG;
+
+    private ArrayList<Explosion> explosions;
 
     private static final Texture PLAYER_TEXTURE = new Texture("assets/player.png");
 
@@ -79,6 +82,11 @@ public class Player extends Character {
         if(willCollide && collidedWith instanceof Monster ){
             this.isAlive=false;
         }
+
+        //if collides with an explosion, it dies
+        if(willCollide && collidedWith instanceof Explosion ){
+            this.isAlive=false;
+        }
     }
 
     // Method to check if the player will collide with a collidable at the specified position
@@ -97,9 +105,8 @@ public class Player extends Character {
         return result;
     }
 
-    public void placeBomb()
-    {
-        if(Gdx.input.isKeyPressed(controls.getBombButton()) && BOMB_COUNT > 0)
+    public void placeBomb(){
+        if(Gdx.input.isKeyPressed(controls.getBombButton()) && BOMB_COUNT > 0 && this.isAlive)
         {
             BOMB_COUNT--;
 

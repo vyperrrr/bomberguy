@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import s11.bomberguy.characters.*;
+import s11.bomberguy.explosives.Explosion;
+import s11.bomberguy.mapElements.Crate;
 
 import java.util.ArrayList;
 
@@ -16,7 +18,6 @@ public class GameScreen implements Screen {
     private GameModel model;
     private OrthographicCamera camera;
     private SpriteBatch batch;
-
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
 
@@ -72,6 +73,7 @@ public class GameScreen implements Screen {
         drawBombs();
         drawCrates();
         drawWalls();
+        drawExplosions();
 
         // End draw
         batch.end();
@@ -93,7 +95,9 @@ public class GameScreen implements Screen {
     {
         // Render players
         model.getMonsters().forEach(monster -> {
-            monster.render(batch);
+            if(monster.isAlive()){
+                monster.render(batch);
+            }
         });
     }
 
@@ -120,8 +124,21 @@ public class GameScreen implements Screen {
         model.getPlayers().forEach(player -> player.getActiveBombs().forEach(bomb -> bomb.render(batch)));
     }
 
+    public void drawExplosions(){
+        model.getCollidables().getCollidables().stream().forEach( sprite -> {
+            if(sprite instanceof Explosion){
+                ((Explosion) sprite).render(batch);
+            }
+        }  );
+    }
+
     public void drawCrates(){
-        model.getCrates().forEach(crate -> crate.render(batch));
+        model.getCollidables().getCollidables().forEach(sprite -> {
+            if(sprite instanceof Crate){
+                ((Crate) sprite).render(batch, model.getTiledMap());
+            }
+        }
+        );
     }
 
     public void drawWalls(){
