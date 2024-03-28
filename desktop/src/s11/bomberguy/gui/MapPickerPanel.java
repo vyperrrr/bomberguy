@@ -63,9 +63,9 @@ public class MapPickerPanel extends JFrame {
                             mapButtons[j].setBorder(BorderFactory.createEmptyBorder());
                         }
                         mapButtons[finalI].setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+                        GameSetup.setMapNum(finalI+1);
                     }
             );
-            GameSetup.setMapNum(i);
         }
 
         continueButton.addActionListener(
