@@ -41,11 +41,14 @@ public class GameSetup {
         return gameSetup.playerNum;
     }
     */
+    public static int getMapNum() {
+        return getGameSetup().getPrivateMapNum();
+    }
     public int getPlayerNum() {
         return playerNum;
     }
 
-    public int getMapNum() {
+    private int getPrivateMapNum() {
         return mapNum;
     }
 
