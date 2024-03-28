@@ -73,12 +73,12 @@ public class GameModel extends Game {
 
         assetManager = new AssetManager();
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
-        assetManager.load("assets/maps/map1.tmx", TiledMap.class);
+        assetManager.load("assets/maps/map" + GameSetup.getMapNum() + ".tmx", TiledMap.class);
         assetManager.load("assets/maps/testMap.tmx", TiledMap.class);
         assetManager.finishLoading();
 
         //tiledMap = assetManager.get("assets/maps/testMap.tmx", TiledMap.class);
-        tiledMap = assetManager.get("assets/maps/map1.tmx", TiledMap.class);
+        tiledMap = assetManager.get("assets/maps/map" + GameSetup.getMapNum() + ".tmx", TiledMap.class);
 
         // Generate players
         MapLayer playerSpawnLayer = tiledMap.getLayers().get("Player spawn");
