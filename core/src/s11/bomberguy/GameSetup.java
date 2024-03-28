@@ -16,40 +16,26 @@ public class GameSetup {
     }
 
     public static void setPlayerNum(int playerNum) {
-        if (gameSetup == null) {
-            gameSetup = new GameSetup();
-        }
-        gameSetup.playerNum = playerNum;
+        getGameSetup().playerNum = playerNum;
     }
 
     public static void setMapNum(int mapNum) {
-        if (gameSetup == null) {
-            gameSetup = new GameSetup();
-        }
-        gameSetup.mapNum = mapNum;
+        getGameSetup().mapNum = mapNum;
     }
 
     public static void setRounds(int rounds) {
-        if (gameSetup == null) {
-            gameSetup = new GameSetup();
-        }
-        gameSetup.rounds = rounds;
+        getGameSetup().rounds = rounds;
     }
 
-    /* Intended way:
     public static int getPlayerNum() {
-        return gameSetup.playerNum;
-    }
-    */
-    public int getPlayerNum() {
-        return playerNum;
+        return getGameSetup().playerNum;
     }
 
-    public int getMapNum() {
-        return mapNum;
+    public static int getMapNum() {
+        return getGameSetup().mapNum;
     }
 
-    public int getRounds() {
-        return rounds;
+    public static int getRounds() {
+        return getGameSetup().rounds;
     }
 }
