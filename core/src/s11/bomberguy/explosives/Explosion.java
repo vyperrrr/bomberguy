@@ -36,7 +36,7 @@ public class Explosion extends Sprite {
             public void run() {
                 spread();
             }
-        }, 1);
+        }, 0.3f);
     }
 
     private void spread(){

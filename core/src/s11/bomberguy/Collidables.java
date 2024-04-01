@@ -73,7 +73,7 @@ public class Collidables {
             public void run() {
                 collidables.remove(e);
             }
-        }, 2);
+        }, 1);
 
     }
 
