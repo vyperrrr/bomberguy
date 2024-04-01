@@ -32,13 +32,15 @@ public class MapPickerPanel extends JFrame {
             mapButtons[i].setBorder(BorderFactory.createEmptyBorder());
             mapButtons[i].setContentAreaFilled(false);
             try {
-                BufferedImage img = ImageIO.read(new File("assets/badlogic.jpg"));
+                BufferedImage img = ImageIO.read(new File("assets/maps/map_" + (((int)i) + 1) + "_background.png"));
                 mapButtons[i].setIcon(new ImageIcon(img));
             } catch (Exception ex) {
-                System.out.println("Invalid img path!");
+                mapButtons[i].setContentAreaFilled(true);
+                mapButtons[i].setBackground(Color.GRAY);
+                mapButtons[i].setText("Kép nem található!");
             }
         }
-        mapButtons[0].setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+        mapButtons[0].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         continueButton.setBounds(FRAME_WIDTH/2 - 200/2, 550, 200, 60);
 
         for (int i = 0; i < 3; i++) {
@@ -62,7 +64,7 @@ public class MapPickerPanel extends JFrame {
                         for (int j = 0; j < 3; j++) {
                             mapButtons[j].setBorder(BorderFactory.createEmptyBorder());
                         }
-                        mapButtons[finalI].setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+                        mapButtons[finalI].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
                         GameSetup.setMapNum(finalI+1);
                     }
             );
