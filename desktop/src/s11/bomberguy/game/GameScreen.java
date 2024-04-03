@@ -10,12 +10,14 @@ import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 import s11.bomberguy.explosives.Explosion;
 import s11.bomberguy.mapElements.Crate;
+import java.util.ArrayList;
 
 public class GameScreen implements Screen {
     private final GameModel model;
     private final OrthographicCamera camera;
     private final SpriteBatch batch;
     private final OrthogonalTiledMapRenderer tiledMapRenderer;
+    private int overFor = 0;
 
 
     // game provides initialized data
@@ -50,6 +52,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if (model.isOver() || overFor > 0) { overFor ++; }
+        // Run for a bit longer with only the last player
+        if (overFor > 480) { return; }
+
         // Set the clear color to grey (R, G, B, Alpha)
         Gdx.gl.glClearColor(128, 128, 128, 1);
         // Clear the screen with the specified color
@@ -100,6 +106,16 @@ public class GameScreen implements Screen {
 
     public void movePlayers()
     {
+        int alive = 0;
+        ArrayList<Player> players = model.getPlayers();
+        for (Player player : players) {
+            if (player.isAlive()) {
+                alive++;
+            }
+        }
+        if (alive <= 1) {
+            model.setOver();
+        }
         // Need to pass collidables to move, only players for now
         model.getPlayers().forEach(Player::move);
     }

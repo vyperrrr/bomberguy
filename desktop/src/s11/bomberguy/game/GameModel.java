@@ -31,6 +31,7 @@ public class GameModel extends Game {
     private AssetManager assetManager;
     private TiledMap tiledMap;
     private Collidables collidables;
+    private Boolean isOver = false;
 
 
     // Data passed by GUI
@@ -215,5 +216,11 @@ public class GameModel extends Game {
 
     public void setCollidables(Collidables collidables) {
         this.collidables = collidables;
+    }
+
+    public void setOver() { isOver = true; }
+
+    public boolean isOver() {
+        return isOver;
     }
 }
