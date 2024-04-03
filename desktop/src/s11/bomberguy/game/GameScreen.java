@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import s11.bomberguy.characters.Character;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 import s11.bomberguy.explosives.Explosion;
@@ -106,14 +107,8 @@ public class GameScreen implements Screen {
 
     public void movePlayers()
     {
-        int alive = 0;
-        ArrayList<Player> players = model.getPlayers();
-        for (Player player : players) {
-            if (player.isAlive()) {
-                alive++;
-            }
-        }
-        if (alive <= 1) {
+        // Check if only one player left
+        if (model.getPlayers().stream().filter(Character::isAlive).count() <= 1) {
             model.setOver();
         }
         // Need to pass collidables to move, only players for now
