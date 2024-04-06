@@ -4,6 +4,7 @@ import s11.bomberguy.PlayerControl;
 import s11.bomberguy.gui.MenuPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import s11.bomberguy.Controls;
 
@@ -30,8 +31,13 @@ public class ControlSettingsPanel extends JFrame {
 
         // Save button
         saveButton = new JButton("Mentés");
-        saveButton.setBounds((FRAME_WIDTH - 200) / 2, FRAME_HEIGHT - 2 * 60, 200, 60);
+        saveButton.setBounds(FRAME_WIDTH / 2 - 100, FRAME_HEIGHT - 2 * 60, 200, 60);
         add(saveButton);
+
+        // Style save button
+        saveButton.setBorder(BorderFactory.createRaisedBevelBorder());
+        saveButton.setBackground(Color.LIGHT_GRAY);
+        saveButton.setForeground(Color.BLACK);
 
         // Configure frame
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
