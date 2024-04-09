@@ -5,8 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.Collidables;
+import s11.bomberguy.mapElements.Crate;
+import s11.bomberguy.mapElements.Wall;
 
-import java.sql.Time;
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Bomb extends Sprite {
     private int range;
@@ -34,7 +37,15 @@ public class Bomb extends Sprite {
         Explosion explosion = new Explosion(this.getX(), this.getY(), 0, this.range);
 
         Collidables collidables = Collidables.getInstance();
-        collidables.addExplosion(explosion);
+
+        collidables.addCollidable(explosion);
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                collidables.removeCollidable(explosion);
+            }
+        }, 2);
 
     }
 

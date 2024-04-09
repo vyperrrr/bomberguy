@@ -75,8 +75,6 @@ public class GameScreen implements Screen {
         drawMonsters();
         placeBombs();
         drawBombs();
-        drawCrates();
-        drawWalls();
         drawExplosions();
 
         // End draw
@@ -133,24 +131,12 @@ public class GameScreen implements Screen {
     }
 
     public void drawExplosions(){
-        model.getCollidables().getCollidables().stream().forEach( sprite -> {
+        model.getCollidables().getCollidables().forEach(sprite -> {
             if(sprite instanceof Explosion){
                 ((Explosion) sprite).render(batch);
             }
-        }  );
-    }
-
-    public void drawCrates(){
-        model.getCollidables().getCollidables().forEach(sprite -> {
-            if(sprite instanceof Crate){
-                ((Crate) sprite).render(batch, model.getTiledMap());
-            }
         }
         );
-    }
-
-    public void drawWalls(){
-        model.getWalls().forEach(wall -> wall.render(batch));
     }
 
     @Override

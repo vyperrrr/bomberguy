@@ -44,40 +44,6 @@ public class Collidables {
         collidables.add(collidableObject);
     }
 
-    public <T extends Sprite> void addExplosion(Explosion e) {
-        AtomicBoolean canPutDown = new AtomicBoolean(true);
-        ArrayList<Sprite> needToRemove = new ArrayList<>();
-
-        this.collidables.forEach( sprite -> {
-            if(sprite.getBoundingRectangle().overlaps(e.getBoundingRectangle())) {
-                if ((sprite instanceof Wall)) {
-                    canPutDown.set(false);
-                } else {
-                    needToRemove.add(sprite);
-
-                    if(sprite instanceof Crate){
-
-                    }
-
-                }
-            }
-        });
-
-        if (canPutDown.get()){
-            collidables.add(e);
-            collidables.removeAll(needToRemove);
-        }
-
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                collidables.remove(e);
-            }
-        }, 1);
-
-    }
-
-
     public <T extends Sprite> void removeCollidable(T collidableObject) {
         collidables.remove(collidableObject);
     }
