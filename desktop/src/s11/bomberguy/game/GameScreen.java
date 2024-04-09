@@ -4,21 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import s11.bomberguy.characters.*;
+import s11.bomberguy.characters.Character;
+import s11.bomberguy.characters.Monster;
+import s11.bomberguy.characters.Player;
 import s11.bomberguy.explosives.Explosion;
 import s11.bomberguy.mapElements.Crate;
-
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
-    private GameModel model;
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private OrthogonalTiledMapRenderer tiledMapRenderer;
+    private final GameModel model;
+    private final OrthographicCamera camera;
+    private final SpriteBatch batch;
+    private final OrthogonalTiledMapRenderer tiledMapRenderer;
+    private int overFor = 0;
 
 
     // game provides initialized data
@@ -53,6 +53,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if (model.isOver() || overFor > 0) { overFor ++; }
+        // Run for a bit longer with only the last player
+        if (overFor > 480) { return; }
+
         // Set the clear color to grey (R, G, B, Alpha)
         Gdx.gl.glClearColor(128, 128, 128, 1);
         // Clear the screen with the specified color
@@ -101,6 +105,10 @@ public class GameScreen implements Screen {
 
     public void movePlayers()
     {
+        // Check if only one player left
+        if (model.getPlayers().stream().filter(Character::isAlive).count() <= 1) {
+            model.setOver();
+        }
         // Need to pass collidables to move, only players for now
         model.getPlayers().forEach(Player::move);
     }

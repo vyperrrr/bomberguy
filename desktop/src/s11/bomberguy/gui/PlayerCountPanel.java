@@ -1,5 +1,6 @@
 package s11.bomberguy.gui;
 
+import com.badlogic.gdx.Game;
 import s11.bomberguy.GameSetup;
 
 import javax.swing.*;
@@ -14,25 +15,47 @@ public class PlayerCountPanel extends JFrame {
     private final JButton twoPlayersButton;
     private final JButton threePlayersButton;
     private final JButton continueButton;
+    private final JButton backButton;
     private final JLabel text;
     public PlayerCountPanel() {
         // Construct buttons
         twoPlayersButton = new JButton("2");
         threePlayersButton = new JButton("3");
         continueButton = new JButton("Tovább");
+        backButton = new JButton("Vissza");
 
         // Position buttons
         twoPlayersButton.setBounds(400, 300, 200, 60);
         threePlayersButton.setBounds(700, 300, 200, 60);
-        continueButton.setBounds((FRAME_WIDTH - 200) / 2, 500, 200, 60);
+        backButton.setBounds(400, 500, 200, 60);
+        continueButton.setBounds(700, 500, 200, 60);
+
+        // Style navigation buttons
+        continueButton.setBorder(BorderFactory.createRaisedBevelBorder());
+        continueButton.setBackground(Color.LIGHT_GRAY);
+        continueButton.setForeground(Color.BLACK);
+
+        backButton.setBorder(BorderFactory.createRaisedBevelBorder());
+        backButton.setBackground(Color.LIGHT_GRAY);
+        backButton.setForeground(Color.BLACK);
 
         // Add buttons
         add(twoPlayersButton);
         add(threePlayersButton);
         add(continueButton);
+        add(backButton);
 
         // Make twoPlayersButton appear selected by default
-        twoPlayersButton.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        switch (GameSetup.getPlayerNum()) {
+            case 2:
+                twoPlayersButton.setBorder(new BevelBorder(BevelBorder.LOWERED));
+                threePlayersButton.setBorder(BorderFactory.createEmptyBorder());
+                break;
+            case 3:
+                threePlayersButton.setBorder(new BevelBorder(BevelBorder.LOWERED));
+                twoPlayersButton.setBorder(BorderFactory.createEmptyBorder());
+                break;
+        }
 
         // Label
         text = new JLabel("Játékosok száma");
@@ -72,6 +95,14 @@ public class PlayerCountPanel extends JFrame {
                     setVisible(false);
                     dispose();
                     new MapPickerPanel();
+                }
+        );
+
+        backButton.addActionListener(
+                e -> {
+                    setVisible(false);
+                    dispose();
+                    new MenuPanel();
                 }
         );
     }

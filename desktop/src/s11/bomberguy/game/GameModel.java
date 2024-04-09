@@ -5,45 +5,35 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapGroupLayer;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Timer;
-import s11.bomberguy.Collidables;
-import s11.bomberguy.GameSetup;
-import s11.bomberguy.characters.Character;
+import s11.bomberguy.*;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
-import s11.bomberguy.explosives.Explosion;
 import s11.bomberguy.mapElements.Crate;
 import s11.bomberguy.mapElements.Wall;
-import s11.bomberguy.PlayerControl;
-import s11.bomberguy.TileSpriteFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 
 public class GameModel extends Game {
 
     // Initialize with dummy data
     private Timer timer;
-    private final GameSetup setup;
     private ArrayList<Player> players;
     private ArrayList<Monster> monsters;
     private final ArrayList<PlayerControl> controls;
     private AssetManager assetManager;
     private TiledMap tiledMap;
     private Collidables collidables;
+    private Boolean isOver = false;
 
 
     // Data passed by GUI
-    public GameModel(ArrayList<PlayerControl> controls, GameSetup setup) {
-        this.controls = controls;
-        this.setup = setup;
+    public GameModel() {
     }
 
     @Override
@@ -66,18 +56,18 @@ public class GameModel extends Game {
 
         assetManager = new AssetManager();
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
-        assetManager.load("assets/maps/map1.tmx", TiledMap.class);
+        assetManager.load("assets/maps/map" + GameSetup.getMapNum() + ".tmx", TiledMap.class);
         assetManager.load("assets/maps/testMap.tmx", TiledMap.class);
         assetManager.finishLoading();
 
         //tiledMap = assetManager.get("assets/maps/testMap.tmx", TiledMap.class);
-        tiledMap = assetManager.get("assets/maps/map1.tmx", TiledMap.class);
+        tiledMap = assetManager.get("assets/maps/map" + GameSetup.getMapNum() + ".tmx", TiledMap.class);
 
         // Generate players
         MapLayer playerSpawnLayer = tiledMap.getLayers().get("Player spawn");
         if (playerSpawnLayer instanceof TiledMapTileLayer) {
             TiledMapTileLayer tiledLayer = (TiledMapTileLayer) playerSpawnLayer;
-            int playerNum = setup.getPlayerNum();
+            int playerNum = GameSetup.getPlayerNum();
             int currentPlayerNum = 0; // Track the number of players added
             // Iterate over each cell in the tiled layer
             for (int y = 0; y < tiledLayer.getHeight(); y++) {
@@ -93,7 +83,7 @@ public class GameModel extends Game {
                         float tileX = x * tiledLayer.getTileWidth();
                         float tileY = y * tiledLayer.getTileHeight();
                         // Create a new Player instance and pass the position
-                        players.add(new Player(tileX, tileY, 24, 24, 100, controls.get(currentPlayerNum)));
+                        players.add(new Player(tileX, tileY, 24, 24, 100, Controls.getControls().get(currentPlayerNum)));
                         currentPlayerNum++; // Increment the number of players added
                     }
                 }
@@ -119,6 +109,11 @@ public class GameModel extends Game {
                 }
             }
         }
+
+        collidables.addCollidables(players);
+        collidables.addCollidables(monsters);
+        collidables.addCollidables(crates);
+        collidables.addCollidables(walls);
 
         setCollidableMapLayers();
 
@@ -202,5 +197,11 @@ public class GameModel extends Game {
 
     public void setCollidables(Collidables collidables) {
         this.collidables = collidables;
+    }
+
+    public void setOver() { isOver = true; }
+
+    public boolean isOver() {
+        return isOver;
     }
 }

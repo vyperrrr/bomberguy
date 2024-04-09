@@ -12,6 +12,8 @@ public class RoundCountPanel extends JFrame {
     private final ButtonGroup group;
     private final JRadioButton[] buttons;
     private final JButton startButton;
+    private final JButton backButton;
+
     private final JLabel title;
 
     public RoundCountPanel() {
@@ -19,6 +21,7 @@ public class RoundCountPanel extends JFrame {
         group = new ButtonGroup();
         buttons = new JRadioButton[3];
         startButton = new JButton("Indítás!");
+        backButton = new JButton("Vissza");
         title = new JLabel("Körök száma");
 
         // Setup title
@@ -30,16 +33,30 @@ public class RoundCountPanel extends JFrame {
         // Setup buttons
         for (int i = 0; i < 3; i++) {
             buttons[i] = new JRadioButton(i+1 + " kör");
-            buttons[i].setBounds((FRAME_WIDTH - 200) / 2, 200 + i*60, 200, 60);
+            buttons[i].setBounds(FRAME_WIDTH / 2 - 25, 200 + i*60, 200, 60);
             group.add(buttons[i]);
         }
-        buttons[0].setSelected(true);
-        startButton.setBounds(FRAME_WIDTH/2 - 200/2, 550, 200, 60);
+        buttons[GameSetup.getRounds()-1].setSelected(true);
 
+        // Position navigation buttons
+        backButton.setBounds(400, 500, 200, 60);
+        startButton.setBounds(700, 500, 200, 60);
+
+        // Style navigation buttons
+        startButton.setBorder(BorderFactory.createRaisedBevelBorder());
+        startButton.setBackground(Color.LIGHT_GRAY);
+        startButton.setForeground(Color.BLACK);
+
+        backButton.setBorder(BorderFactory.createRaisedBevelBorder());
+        backButton.setBackground(Color.LIGHT_GRAY);
+        backButton.setForeground(Color.BLACK);
+
+        // Add buttons to frame
         for (int i = 0; i < 3; i++) {
             add(buttons[i]);
         }
         add(startButton);
+        add(backButton);
 
         // Button actions
         startButton.addActionListener(
@@ -53,6 +70,14 @@ public class RoundCountPanel extends JFrame {
                     setVisible(false);
                     dispose();
                     DesktopLauncher.launchGame();
+                }
+        );
+
+        backButton.addActionListener(
+                e -> {
+                    setVisible(false);
+                    dispose();
+                    new MapPickerPanel();
                 }
         );
 

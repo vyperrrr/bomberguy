@@ -3,6 +3,7 @@ package s11.bomberguy.gui;
 import s11.bomberguy.gui.controls.ControlSettingsPanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MenuPanel extends JFrame {
     public static final int FRAME_WIDTH = 1280;
@@ -15,6 +16,11 @@ public class MenuPanel extends JFrame {
     private JButton exitButton;
 
     public MenuPanel() {
+        // Set image background
+        setLayout(new BorderLayout());
+        setContentPane(new JLabel(new ImageIcon("assets/bomberguy.jpeg")));
+        setLayout(new FlowLayout());
+
         // Construct buttons
         startGameButton = new JButton("Játék indítása");
         settingsButton = new JButton("Beállítások");
@@ -38,6 +44,8 @@ public class MenuPanel extends JFrame {
         setLocationRelativeTo(null); // Open in center of screen
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+
+
 
         // startGame click action
         startGameButton.addActionListener(
