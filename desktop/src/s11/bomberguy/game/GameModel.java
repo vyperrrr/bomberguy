@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.*;
 import s11.bomberguy.characters.Monster;
@@ -25,7 +26,6 @@ public class GameModel extends Game {
     private Timer timer;
     private ArrayList<Player> players;
     private ArrayList<Monster> monsters;
-    private final ArrayList<PlayerControl> controls;
     private AssetManager assetManager;
     private TiledMap tiledMap;
     private Collidables collidables;
@@ -112,8 +112,6 @@ public class GameModel extends Game {
 
         collidables.addCollidables(players);
         collidables.addCollidables(monsters);
-        collidables.addCollidables(crates);
-        collidables.addCollidables(walls);
 
         setCollidableMapLayers();
 

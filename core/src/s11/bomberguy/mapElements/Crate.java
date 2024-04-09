@@ -30,7 +30,7 @@ public class Crate extends Sprite {
         this.mapY = mapY;
     }
 
-    public void render(SpriteBatch batch, TiledMap map){
+    public Crate destroy(SpriteBatch batch, TiledMap map){
         Collidables collidables = Collidables.getInstance();
 
         boolean willCollide = false;
@@ -60,8 +60,9 @@ public class Crate extends Sprite {
 
 
 
-            //collidables.removeCollidable(this);
+            return this;
         }
+        return null;
     }
 
     public boolean isAlive() {

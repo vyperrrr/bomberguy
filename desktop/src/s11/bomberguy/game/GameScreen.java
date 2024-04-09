@@ -76,6 +76,7 @@ public class GameScreen implements Screen {
         placeBombs();
         drawBombs();
         drawExplosions();
+        destroyCrates();
 
         // End draw
         batch.end();
@@ -137,6 +138,18 @@ public class GameScreen implements Screen {
             }
         }
         );
+    }
+
+    public void destroyCrates()
+    {
+        ArrayList<Crate> cratesToDestroy = new ArrayList<>();
+        model.getCollidables().getCollidables().forEach(sprite -> {
+                    if(sprite instanceof Crate){
+                        cratesToDestroy.add(((Crate) sprite).destroy(batch, model.getTiledMap()));
+                    }
+                }
+        );
+        cratesToDestroy.forEach(crateToDestroy -> model.getCollidables().removeCollidable(crateToDestroy));
     }
 
     @Override

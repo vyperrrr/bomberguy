@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Gerzsenyi Patrik\\Desktop\\bomberguy\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Gerzsenyi Patrik\\Desktop\\bomberguy\\desktop\\src\\s11\\bomberguy\\DesktopLauncher.java||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:desktop\\src\\s11\\bomberguy\\DesktopLauncher.java||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DesktopLauncher.java",
+              "DocumentMoniker": "C:\\Users\\Gerzsenyi Patrik\\Desktop\\bomberguy\\desktop\\src\\s11\\bomberguy\\DesktopLauncher.java",
+              "RelativeDocumentMoniker": "desktop\\src\\s11\\bomberguy\\DesktopLauncher.java",
+              "ToolTip": "C:\\Users\\Gerzsenyi Patrik\\Desktop\\bomberguy\\desktop\\src\\s11\\bomberguy\\DesktopLauncher.java",
+              "RelativeToolTip": "desktop\\src\\s11\\bomberguy\\DesktopLauncher.java",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAkXSURBVFhHhVcLjBXVGf7OzNz33WV3gS4PYYEiItREEkpJYy00NMbQ1NCEEFoLNhgFUxub2MbUNN0mpUowTdPa2GprsQU1wbBIu4IWxIpBW6IgYK3IY4F1XyzL7t57d\u002B5jzpx\u002B/5l7d1nB9Gf/e86cx/99/\u002BOcGRQ\u002BJeY/d7yGWPcSOL3noXAC5fAEtOmEr88jUB1q6UBndelnSvyd0oKEV\u002BrLLa7vrw5dX4wx4wiYg8s8TL4hj9BNwCNOsgfwFsK0XYZ5twiEXK65sOzlVSkher/6x5490e6qHDRZNx50eLFSzsvEVxUWxo9VZ64r4wkcX3cXh3bbh5GZMMUpUC0FmLVHgcHQDgMOibhcHGfXzalSwzzVsZVMI/H2l98zCbXI84pQSTePrLuxeGNiR3X6GqG1cbLe/lYmkMBUYIDeH7wDZuSrHCSo8DUC7pFEDKqcquNYm0ErBxj6nZVfGu0tUgWxYWDKYRbFcHuqo7KV4bZrPi2jBMzRexpgsNKC\u002BNMIOt1q\u002BO8gNImVCFP3cXpSlUAcSiIgqhNLMS32lPdMZZkJ1CPqioEaMrRBOwHbEiNX1A\u002Bnu/TeumFDA\u002BNlLAJuuAZKxeFPJXCNQBPwfqNDX6DVTJSSmxA4t0LRe4QEDxNVTd779Euvt6s8lJMzcAoEHqHpMjmShCEJ44crdNkcyVwxt1YRrYzWgDmx/hAq2dswNB9maAHWPriGg/wLjXWkotmyCAM6xJjYMTvORRXWcmAMiqZkWy0qpDkvfRY7/KM5qDpGr44FbLCx0KRsXdgImJN3z\u002BX620ZDX5guwwgJJgYE0Bq1BjlebWtjIVv6SGNxtnxmX9bIOP94eFQUhSJnS2GWfLenBoytiygFxvkOis1joS9MsadNDLzUdRkv91xGe98AXu3vr4KOEXq6fQ\u002BO5wYiIgRWLNaInOwXcJpnayqcFRIjtMxncno4/YE5HBEI0neL9yC41Ssleh\u002BBPP/EFhSGhpCnbtuyxZKSMEv4ZZ6NFelFXstpcSE3jFUZkwWyQQpS1GeCjoUIdwUZxxxbJ6GfW6t6M5yCOt5HAlFe/7r1ceSHIwLPbnkcAYEiD9la4EjGxkhFeSSiCCwakUCJrRxN3ifmZeoBriyrUw7Kk9fb0Hc3Q\u002B0dGnF3fRQ4vRMxSU1GGvXc7FwFUgVnXwxLyGtSq4Na7hV47NkXcCFij\u002BUF2trP6PRygw2U6XDw5M0r1OZbtPPCfKjum9LwbuLOGDQtJZFCE4moKolabmueCpiMiwgpmbOFx74lx0gYKUAhdIoX1ymPVEgkxjlRLzzt4L0DSzHQ9gqu7CzBf58WR5ivijUuaZNQOjTi8l\u002BclAS8fmITkpmMBWmZMxuXenstcBQF2RMR4yNF0ZmAlxG7o8DSt9rhqZMvSEC\u002Bac4134VTdbvNa7yCDy7CSDhCIy6WrVmNRDrNJcCqtevQvmMnNm/7M24gcOf5C5gyfTra23ZbYjVQw4MubZQS\u002BuxIUDlA50dFCtRV5\u002B2QOUhOLc0nuGM\u002BBllmA8DKDaxS5m3fpct2fU1W1M/B1769Ct/98fcxgySOHH4bD923CWdOn7EpoK\u002BWCHfbSNiiNCGaH82hr4nxqZEgyWI2mYoInG3egGH9R5Pncjmn/S7ufDSA1iECWtQlelCJ8WQ4DGeUbwEKaMQPK9SAN6KEXo4nc06rmqBROuTXYM4DeVycpRGkhB5Foae4MTXVMedmJc0n5SdML00edeG01cPZ1RyBiEdiLFZBOT6CouujrAJe8ZrfKQFKmrVCN10GUC6UCIo6mo4ITH6H\u002BeoIBoUc5\u002BLUmDktcw72FlpxIFavtmegDmWAznqEU8QDOXISvmpx0Yp26Kk7QhI\u002BPZZCrRYdIaS6HYmvikIvcyLRLzDEdxarmUxIVU5oHB0y7uDNzO/Vf2OHIWEustgKdTCN2oKLkdq5j45d9ZmtBD1UvDENqdArWRP5TSEJyW0NXNrA4y8hlBQla8uJm4iAerGjAz2fLEc5/QuCBybXyOPL/FsCkXcCzL/o2Y5Fomms5CZRcGMoeC58xyEZJ0qFBENYWCoUgsOSoJYV4nnVKMP2XaDeYKp3f/hT5JtIJHWRHxbWiHhdIyJtFInI05BbjapH0eHNxjFLjIh2DzGlBLWRi1uUb0rmPSIhajCry8xgLyJQE/WvfW/p27ue4/mwXovRd7t9HO3zcXzAx4eDPj7O\u002BThT8NHhF1Di7oqASYS4/\u002Bqii3oRWWM0eIDGIkASDcUwKfPV\u002BIxJZdPtbzteZemStmPQ/Ppo/fUzNvxymqKWluRqprffe\u002BAhnhT6zEkBkUXSjxaP9TU/LBK/8qu3H6NBEosvhiffbM3ecg2BYMPX87SdWbzvEEIS0HwratrWTIsuJVhfrk1PjqHPxZjvkJOiHK0BXk1Ca7kxgMRvhAA9IIk0x\u002BddQf6dH2XqxqXA3Lu2Wel4BsUMjUhoI9Way4p8TVvwKDUFglcjbqXWvWooIlcTCX2Suxt4ZCeYy\u002BUUsl/8XX7KuAjob93zEyQKm1Ghp1QEcRT7Z8A7Px398Rb0ZOagKz0Dr8wu49kF3JqgUTnfto3UxOl5km2CYINMj8NnOX7y\u002BvV4BOO8LRIOMkXnramd7iPjIqAKmdWKBagkAsU6lC7Og3duJvoSBM7ORWdmBs5NCHue/4LSFpBGGWR6WkalUkC5NMQP1AK0x7vyUoAgX4QusJ\u002BrUHm089Rh6mClc9gE\u002By98PvhofArgLYCf4cKJ0B/fCNU7BT3p2ejKzO2/mJ3\u002B5LksvvLg6\u002B7UkdBZzYPrwyeJMgnwhSGH1LgML710K3G43XF4w2k4eUbTZ7p4dxs/\u002BLsuBN8IJkycHdzZ\u002BPPc8vr\u002B0RSYL21uNumhnkqF3yRnp9HuhP7e9KzdfamWFwufa/7n8jf4ErhKGlpNQzFbbNe6/OUwwVuRigy/g\u002BpjcI7zSpcCISHjhh2hY7YFqfKf8IOJ1/zHdpRAsOSx37Li7/cuNO3wVeP2IzdPIujycaDXk9gfrvxQa73VeGVX1XmId9cZ3vf8kjN/Y1ieKv0s\u002BWp16XVllIC/8C8zkx\u002Bc7VJo/b\u002Bg18iOrhZHOYddk0x6XcntTiF4rNCaHf0P62cL8D/94KMAD4n4UgAAAABJRU5ErkJggg==",
+              "WhenOpened": "2024-04-09T13:18:14.259Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
