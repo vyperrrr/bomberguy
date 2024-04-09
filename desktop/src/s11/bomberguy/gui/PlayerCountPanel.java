@@ -27,8 +27,8 @@ public class PlayerCountPanel extends JFrame {
         // Position buttons
         twoPlayersButton.setBounds(400, 300, 200, 60);
         threePlayersButton.setBounds(700, 300, 200, 60);
-        continueButton.setBounds(400, 500, 200, 60);
-        backButton.setBounds(700, 500, 200, 60);
+        backButton.setBounds(400, 500, 200, 60);
+        continueButton.setBounds(700, 500, 200, 60);
 
         // Style navigation buttons
         continueButton.setBorder(BorderFactory.createRaisedBevelBorder());

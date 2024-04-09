@@ -46,8 +46,8 @@ public class MapPickerPanel extends JFrame {
         mapButtons[GameSetup.getMapNum()-1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 
         // Position navigation buttons
-        continueButton.setBounds(400, 500, 200, 60);
-        backButton.setBounds(700, 500, 200, 60);
+        backButton.setBounds(400, 500, 200, 60);
+        continueButton.setBounds(700, 500, 200, 60);
 
         // Style navigation buttons
         continueButton.setBorder(BorderFactory.createRaisedBevelBorder());

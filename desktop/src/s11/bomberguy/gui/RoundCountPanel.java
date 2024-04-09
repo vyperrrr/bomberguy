@@ -39,8 +39,8 @@ public class RoundCountPanel extends JFrame {
         buttons[GameSetup.getRounds()-1].setSelected(true);
 
         // Position navigation buttons
-        startButton.setBounds(400, 500, 200, 60);
-        backButton.setBounds(700, 500, 200, 60);
+        backButton.setBounds(400, 500, 200, 60);
+        startButton.setBounds(700, 500, 200, 60);
 
         // Style navigation buttons
         startButton.setBorder(BorderFactory.createRaisedBevelBorder());
