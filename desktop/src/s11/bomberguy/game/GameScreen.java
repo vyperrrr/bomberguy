@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import s11.bomberguy.characters.Character;
@@ -14,11 +16,14 @@ import s11.bomberguy.mapElements.Crate;
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
+    private final float SCREEN_WIDTH = 960;
+    private final float  SCREEN_HEIGHT = 640;
     private final GameModel model;
     private final OrthographicCamera camera;
     private final SpriteBatch batch;
     private final OrthogonalTiledMapRenderer tiledMapRenderer;
-    private int overFor = 0;
+    private final BitmapFont font;
+    private final GlyphLayout glyph;
 
 
     // game provides initialized data
@@ -27,21 +32,26 @@ public class GameScreen implements Screen {
         this.camera = new OrthographicCamera();
 
         // Set the camera viewport to match the map dimensions
-        this.camera.setToOrtho(false, 960, 640); // Map dimensions in pixels
+        this.camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT); // Map dimensions in pixels
 
         this.batch = new SpriteBatch();
+        this.font = new BitmapFont();
+        this.glyph = new GlyphLayout();
 
         // Calculate the unit scale to fit the map onto the screen
         float unitScale = 1f; // Start with 1:1 mapping
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
 
-        if (960 * unitScale > screenWidth || 640 * unitScale > screenHeight) {
+        if (SCREEN_WIDTH * unitScale > screenWidth || SCREEN_HEIGHT * unitScale > screenHeight) {
             // Adjust unit scale if the map is too large for the screen
-            unitScale = Math.min(screenWidth / 960, screenHeight / 640);
+            unitScale = Math.min(screenWidth / SCREEN_WIDTH, screenHeight / SCREEN_HEIGHT);
         }
 
         this.tiledMapRenderer = new OrthogonalTiledMapRenderer(model.getTiledMap(), unitScale, batch);
+
+        // Start the timer
+        model.setCurrentTime();
     }
 
 
@@ -53,9 +63,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if (model.isOver() || overFor > 0) { overFor ++; }
-        // Run for a bit longer with only the last player
-        if (overFor > 480) { return; }
+
 
         // Set the clear color to grey (R, G, B, Alpha)
         Gdx.gl.glClearColor(128, 128, 128, 1);
@@ -69,6 +77,7 @@ public class GameScreen implements Screen {
         batch.begin();
 
         // Draw content
+        drawTimer();
         movePlayers();
         drawPlayers();
         moveMonsters();
@@ -150,6 +159,13 @@ public class GameScreen implements Screen {
                 }
         );
         cratesToDestroy.forEach(crateToDestroy -> model.getCollidables().removeCollidable(crateToDestroy));
+    }
+
+    public void drawTimer()
+    {
+        CharSequence timerCharSequence = String.format("Remaining time: %.0f", model.getRemainingTimeInSeconds());
+        glyph.setText(font, timerCharSequence);
+        font.draw(batch,  glyph , (SCREEN_WIDTH / 2) - (glyph.width / 2), SCREEN_HEIGHT-glyph.height);
     }
 
     @Override

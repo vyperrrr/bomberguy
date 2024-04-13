@@ -8,13 +8,9 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.*;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
-import s11.bomberguy.mapElements.Crate;
-import s11.bomberguy.mapElements.Wall;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,13 +19,15 @@ import java.util.Random;
 public class GameModel extends Game {
 
     // Initialize with dummy data
-    private Timer timer;
     private ArrayList<Player> players;
     private ArrayList<Monster> monsters;
     private AssetManager assetManager;
     private TiledMap tiledMap;
     private Collidables collidables;
-    private Boolean isOver = false;
+
+    private long GAME_TIME = 480;
+    private long CURRENT_TIME;
+    private boolean isOver = false;
 
 
     // Data passed by GUI
@@ -115,6 +113,8 @@ public class GameModel extends Game {
 
         setCollidableMapLayers();
 
+
+
         setScreen(new GameScreen(this));
     }
 
@@ -148,13 +148,14 @@ public class GameModel extends Game {
         }
     }
 
-
-    public Timer getTimer() {
-        return timer;
+    public void setCurrentTime()
+    {
+        this.CURRENT_TIME = System.currentTimeMillis();
     }
 
-    public void setTimer(Timer timer) {
-        this.timer = timer;
+    public double getRemainingTimeInSeconds()
+    {
+        return this.GAME_TIME - Math.floor((double) (System.currentTimeMillis() - this.CURRENT_TIME) / 1000);
     }
 
     public ArrayList<Player> getPlayers() {
