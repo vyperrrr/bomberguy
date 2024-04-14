@@ -24,11 +24,7 @@ public class GameModel extends Game {
     private AssetManager assetManager;
     private TiledMap tiledMap;
     private Collidables collidables;
-
-    private long GAME_TIME = 480;
-    private long CURRENT_TIME;
     private boolean isOver = false;
-
 
     // Data passed by GUI
     public GameModel() {
@@ -146,16 +142,6 @@ public class GameModel extends Game {
                 }
             }
         }
-    }
-
-    public void setCurrentTime()
-    {
-        this.CURRENT_TIME = System.currentTimeMillis();
-    }
-
-    public double getRemainingTimeInSeconds()
-    {
-        return this.GAME_TIME - Math.floor((double) (System.currentTimeMillis() - this.CURRENT_TIME) / 1000);
     }
 
     public ArrayList<Player> getPlayers() {

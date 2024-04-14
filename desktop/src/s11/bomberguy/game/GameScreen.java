@@ -24,6 +24,7 @@ public class GameScreen implements Screen {
     private final OrthogonalTiledMapRenderer tiledMapRenderer;
     private final BitmapFont font;
     private final GlyphLayout glyph;
+    private int overFor = 0;
 
 
     // game provides initialized data
@@ -49,9 +50,6 @@ public class GameScreen implements Screen {
         }
 
         this.tiledMapRenderer = new OrthogonalTiledMapRenderer(model.getTiledMap(), unitScale, batch);
-
-        // Start the timer
-        model.setCurrentTime();
     }
 
 
@@ -63,6 +61,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if (model.isOver() || overFor > 0) { overFor ++; }
+        // Run for a bit longer with only the last player
+        if (overFor > 480) {
+            model.setScreen(new SummaryScreen(model));
+        }
 
 
         // Set the clear color to grey (R, G, B, Alpha)
@@ -77,7 +80,6 @@ public class GameScreen implements Screen {
         batch.begin();
 
         // Draw content
-        drawTimer();
         movePlayers();
         drawPlayers();
         moveMonsters();
@@ -115,13 +117,20 @@ public class GameScreen implements Screen {
 
     public void movePlayers()
     {
-        // Check if only one player left
-        if (model.getPlayers().stream().filter(Character::isAlive).count() <= 1) {
+        int alive = 0;
+        ArrayList<Player> players = model.getPlayers();
+        for (Player player : players) {
+            if (player.isAlive()) {
+                alive++;
+            }
+        }
+        if (alive <= 1) {
             model.setOver();
         }
         // Need to pass collidables to move, only players for now
         model.getPlayers().forEach(Player::move);
     }
+
 
     public void moveMonsters()
     {
@@ -159,13 +168,6 @@ public class GameScreen implements Screen {
                 }
         );
         cratesToDestroy.forEach(crateToDestroy -> model.getCollidables().removeCollidable(crateToDestroy));
-    }
-
-    public void drawTimer()
-    {
-        CharSequence timerCharSequence = String.format("Remaining time: %.0f", model.getRemainingTimeInSeconds());
-        glyph.setText(font, timerCharSequence);
-        font.draw(batch,  glyph , (SCREEN_WIDTH / 2) - (glyph.width / 2), SCREEN_HEIGHT-glyph.height);
     }
 
     @Override
