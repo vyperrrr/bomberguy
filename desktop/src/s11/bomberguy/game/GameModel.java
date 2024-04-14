@@ -152,15 +152,20 @@ public class GameModel extends Game {
     }
 
     public void resetGame() {
+        TimerManager.disposeAllTasks();
         players.clear();
         monsters.clear();
+        collidables.clearCollidables();
 
         // Reset other game-related variables
         isOver = false;
 
-        // Reload the tiled map if necessary
+        // Reload the original tiled map file
+        assetManager.unload("assets/maps/map" + GameSetup.getMapNum() + ".tmx");
         assetManager.load("assets/maps/map" + GameSetup.getMapNum() + ".tmx", TiledMap.class);
         assetManager.finishLoading();
+
+        // Get the reloaded tiled map
         tiledMap = assetManager.get("assets/maps/map" + GameSetup.getMapNum() + ".tmx", TiledMap.class);
 
         // Regenerate players and monsters
@@ -168,7 +173,6 @@ public class GameModel extends Game {
         generateMonsters();
 
         // Reset collidables
-        collidables.getCollidables().clear();
         collidables.addCollidables(players);
         collidables.addCollidables(monsters);
 

@@ -48,4 +48,7 @@ public class Collidables {
         collidables.remove(collidableObject);
     }
 
+    public void clearCollidables() {
+        collidables.clear();
+    }
 }
