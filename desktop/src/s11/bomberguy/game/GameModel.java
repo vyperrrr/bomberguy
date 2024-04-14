@@ -24,6 +24,9 @@ public class GameModel extends Game {
     private AssetManager assetManager;
     private TiledMap tiledMap;
     private Collidables collidables;
+
+    private int playerNum;
+    private int roundNum;
     private boolean isOver = false;
 
     // Data passed by GUI
@@ -36,10 +39,12 @@ public class GameModel extends Game {
         players = new ArrayList<>();
         monsters = new ArrayList<>();
 
+
         // For testing reasons
         Random random = new Random();
 
-        //Generate monsters
+        playerNum = GameSetup.getPlayerNum();
+        roundNum = GameSetup.getRounds();
 
 
         // Add collidable objects to collidables list
@@ -188,5 +193,21 @@ public class GameModel extends Game {
 
     public boolean isOver() {
         return isOver;
+    }
+
+    public int getRoundNum() {
+        return roundNum;
+    }
+
+    public void setRoundNum(int roundNum) {
+        this.roundNum = roundNum;
+    }
+
+    public int getPlayerNum() {
+        return playerNum;
+    }
+
+    public void setPlayerNum(int playerNum) {
+        this.playerNum = playerNum;
     }
 }
