@@ -12,8 +12,8 @@ import s11.bomberguy.*;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class GameModel extends Game {
@@ -24,7 +24,7 @@ public class GameModel extends Game {
     private AssetManager assetManager;
     private TiledMap tiledMap;
     private Collidables collidables;
-
+    HashMap<String, Player> roundWinners;
     private int playerNum;
     private int roundNum;
     private boolean isOver = false;
@@ -39,19 +39,15 @@ public class GameModel extends Game {
         players = new ArrayList<>();
         monsters = new ArrayList<>();
 
-
         // For testing reasons
         Random random = new Random();
 
         playerNum = GameSetup.getPlayerNum();
         roundNum = GameSetup.getRounds();
-
+        roundWinners = new HashMap<>();
 
         // Add collidable objects to collidables list
         this.collidables = Collidables.getInstance();
-
-        collidables.addCollidables(players);
-        collidables.addCollidables(monsters);
 
         assetManager = new AssetManager();
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
@@ -59,62 +55,16 @@ public class GameModel extends Game {
         assetManager.load("assets/maps/testMap.tmx", TiledMap.class);
         assetManager.finishLoading();
 
-        //tiledMap = assetManager.get("assets/maps/testMap.tmx", TiledMap.class);
         tiledMap = assetManager.get("assets/maps/map" + GameSetup.getMapNum() + ".tmx", TiledMap.class);
 
         // Generate players
-        MapLayer playerSpawnLayer = tiledMap.getLayers().get("Player spawn");
-        if (playerSpawnLayer instanceof TiledMapTileLayer) {
-            TiledMapTileLayer tiledLayer = (TiledMapTileLayer) playerSpawnLayer;
-            int playerNum = GameSetup.getPlayerNum();
-            int currentPlayerNum = 0; // Track the number of players added
-            // Iterate over each cell in the tiled layer
-            for (int y = 0; y < tiledLayer.getHeight(); y++) {
-                for (int x = 0; x < tiledLayer.getWidth(); x++) {
-                    // Check if the number of players added equals playerNum
-                    if (currentPlayerNum >= playerNum) {
-                        break; // Exit the loop if the limit is reached
-                    }
-                    // Get the cell at the current position
-                    TiledMapTileLayer.Cell cell = tiledLayer.getCell(x, y);
-                    if (cell != null) {
-                        // Retrieve the position of the tile
-                        float tileX = x * tiledLayer.getTileWidth();
-                        float tileY = y * tiledLayer.getTileHeight();
-                        // Create a new Player instance and pass the position
-                        players.add(new Player(tileX, tileY, 24, 24, 100, Controls.getControls().get(currentPlayerNum)));
-                        currentPlayerNum++; // Increment the number of players added
-                    }
-                }
-            }
-        }
-
-        MapLayer monsterSpawnLayer = tiledMap.getLayers().get("Monster spawn");
-        if (monsterSpawnLayer instanceof TiledMapTileLayer) {
-            TiledMapTileLayer tiledLayer = (TiledMapTileLayer) monsterSpawnLayer;
-            // Iterate over each cell in the tiled layer
-            for (int y = 0; y < tiledLayer.getHeight(); y++) {
-                for (int x = 0; x < tiledLayer.getWidth(); x++) {
-                    // Check if the number of players added equals playerNum
-                    // Get the cell at the current position
-                    TiledMapTileLayer.Cell cell = tiledLayer.getCell(x, y);
-                    if (cell != null) {
-                        // Retrieve the position of the tile
-                        float tileX = x * tiledLayer.getTileWidth();
-                        float tileY = y * tiledLayer.getTileHeight();
-                        // Create a new Player instance and pass the position
-                        monsters.add(new Monster(tileX, tileY, 24, 24, 50));
-                    }
-                }
-            }
-        }
+        generatePlayers();
+        generateMonsters();
 
         collidables.addCollidables(players);
         collidables.addCollidables(monsters);
 
         setCollidableMapLayers();
-
-
 
         setScreen(new GameScreen(this));
     }
@@ -147,6 +97,89 @@ public class GameModel extends Game {
                 }
             }
         }
+    }
+
+    public void generatePlayers()
+    {
+        MapLayer playerSpawnLayer = tiledMap.getLayers().get("Player spawn");
+        if (playerSpawnLayer instanceof TiledMapTileLayer) {
+            TiledMapTileLayer tiledLayer = (TiledMapTileLayer) playerSpawnLayer;
+            int playerNum = GameSetup.getPlayerNum();
+            int currentPlayerNum = 0; // Track the number of players added
+            // Iterate over each cell in the tiled layer
+            for (int y = 0; y < tiledLayer.getHeight(); y++) {
+                for (int x = 0; x < tiledLayer.getWidth(); x++) {
+                    // Check if the number of players added equals playerNum
+                    if (currentPlayerNum >= playerNum) {
+                        break; // Exit the loop if the limit is reached
+                    }
+                    // Get the cell at the current position
+                    TiledMapTileLayer.Cell cell = tiledLayer.getCell(x, y);
+                    if (cell != null) {
+                        // Retrieve the position of the tile
+                        float tileX = x * tiledLayer.getTileWidth();
+                        float tileY = y * tiledLayer.getTileHeight();
+                        // Create a new Player instance and pass the position
+                        players.add(new Player(tileX, tileY, 24, 24, 100, Controls.getControls().get(currentPlayerNum)));
+                        currentPlayerNum++; // Increment the number of players added
+                    }
+                }
+            }
+        }
+    }
+
+    public void generateMonsters()
+    {
+        MapLayer monsterSpawnLayer = tiledMap.getLayers().get("Monster spawn");
+        if (monsterSpawnLayer instanceof TiledMapTileLayer) {
+            TiledMapTileLayer tiledLayer = (TiledMapTileLayer) monsterSpawnLayer;
+            // Iterate over each cell in the tiled layer
+            for (int y = 0; y < tiledLayer.getHeight(); y++) {
+                for (int x = 0; x < tiledLayer.getWidth(); x++) {
+                    // Check if the number of players added equals playerNum
+                    // Get the cell at the current position
+                    TiledMapTileLayer.Cell cell = tiledLayer.getCell(x, y);
+                    if (cell != null) {
+                        // Retrieve the position of the tile
+                        float tileX = x * tiledLayer.getTileWidth();
+                        float tileY = y * tiledLayer.getTileHeight();
+                        // Create a new Player instance and pass the position
+                        monsters.add(new Monster(tileX, tileY, 24, 24, 50));
+                    }
+                }
+            }
+        }
+    }
+
+    public void resetGame() {
+        players.clear();
+        monsters.clear();
+
+        // Reset other game-related variables
+        isOver = false;
+
+        // Reload the tiled map if necessary
+        assetManager.load("assets/maps/map" + GameSetup.getMapNum() + ".tmx", TiledMap.class);
+        assetManager.finishLoading();
+        tiledMap = assetManager.get("assets/maps/map" + GameSetup.getMapNum() + ".tmx", TiledMap.class);
+
+        // Regenerate players and monsters
+        generatePlayers();
+        generateMonsters();
+
+        // Reset collidables
+        collidables.getCollidables().clear();
+        collidables.addCollidables(players);
+        collidables.addCollidables(monsters);
+
+        // Reset collidable map layers
+        setCollidableMapLayers();
+    }
+
+    public void determineCurrentRoundWinner()
+    {
+        Optional<Player> winner = players.stream().filter(Player::isAlive).findFirst();
+        winner.ifPresent(player -> roundWinners.put("Round 1", player));
     }
 
     public ArrayList<Player> getPlayers() {

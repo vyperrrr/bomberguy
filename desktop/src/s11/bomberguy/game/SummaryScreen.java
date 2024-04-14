@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 
@@ -101,7 +100,8 @@ public class SummaryScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Handle button click event
-                System.out.println("Button clicked!");
+                model.resetGame();
+                model.setScreen(new GameScreen(model));
             }
         });
 
