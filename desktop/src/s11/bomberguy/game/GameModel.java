@@ -12,6 +12,7 @@ import s11.bomberguy.*;
 import s11.bomberguy.characters.Character;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
+import s11.bomberguy.powerups.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,9 +46,6 @@ public class GameModel extends Game {
         playerToWinCount = new HashMap<>();
         roundToWinner = new HashMap<>();
 
-        // For testing reasons
-        Random random = new Random();
-
         playerNum = GameSetup.getPlayerNum();
         roundNum = GameSetup.getRounds();
         currentRound = 1;
@@ -73,6 +71,22 @@ public class GameModel extends Game {
         setCollidableMapLayers();
 
         setScreen(new GameScreen(this));
+
+        this.generatePowerUps();
+    }
+    private void generatePowerUps() {
+        Random random = new Random();
+
+        int crateNum = collidables.getCrates().size();
+        int powerUpNum = 0;
+
+        while(powerUpNum < crateNum / 3){
+            int randomCrateIndex = random.nextInt(crateNum-1);
+            if(!collidables.getCrates().get(randomCrateIndex).isPowerUpInside()){
+                collidables.getCrates().get(randomCrateIndex).setPowerUpInside(true);
+                powerUpNum++;
+            }
+        }
     }
 
     public void setCollidableMapLayers()
@@ -295,5 +309,31 @@ public class GameModel extends Game {
 
     public HashMap<String, Integer> getPlayerToWinCount() {
         return playerToWinCount;
+    }
+    public void putDownRandomPowerUp(float x, float y) {
+        Random random = new Random();
+        switch (random.nextInt(7)){
+            case 1:
+                collidables.addCollidable(new BonusBomb(x,y));
+                break;
+            case 2:
+                collidables.addCollidable(new BoxPlacement(x,y));
+                break;
+            case 3:
+                collidables.addCollidable(new Detonator(x,y));
+                break;
+            case 4:
+                collidables.addCollidable(new ExplosionRangeUp(x,y));
+                break;
+            case 5:
+                collidables.addCollidable(new Ghost(x,y));
+                break;
+            case 6:
+                collidables.addCollidable(new RollerSkates(x,y));
+                break;
+            case 7:
+                collidables.addCollidable(new Shield(x,y));
+                break;
+        }
     }
 }
