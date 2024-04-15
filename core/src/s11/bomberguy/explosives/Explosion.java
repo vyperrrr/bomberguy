@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.Collidables;
+import s11.bomberguy.TimerManager;
 import s11.bomberguy.mapElements.Wall;
 import s11.bomberguy.mapElements.Crate;
 
@@ -24,7 +25,6 @@ public class Explosion extends Sprite {
     4-right
      */
     private int range;
-    private Timer timer;
     private static final int EXPLOSION_WIDTH = 32;
     private static final int EXPLOSION_HEIGHT = 32;
     private static final Texture EXPLOSION_TEXTURE = new Texture("assets/explosion.jpg");
@@ -32,21 +32,25 @@ public class Explosion extends Sprite {
     public Explosion(float x, float y, int direction, int range) {
         super.setTexture(EXPLOSION_TEXTURE);
         super.setBounds((x - (x % 32)), (y - (y % 32)), EXPLOSION_WIDTH, EXPLOSION_HEIGHT);
-        this.timer = new Timer();
         this.range = range;
         this.direction = direction;
-        this.timer.scheduleTask(new Timer.Task() {
+        Timer.Task spread = new Timer.Task() {
             @Override
             public void run() {
                 spread();
             }
-        }, 1);
-        this.timer.scheduleTask(new Timer.Task() {
+        };
+
+        Timer.Task stop = new Timer.Task()
+        {
             @Override
             public void run() {
                 stop();
             }
-        }, 2);
+        };
+
+        TimerManager.scheduleTask(spread, 1);
+        TimerManager.scheduleTask(stop, 2);
     }
 
     private void spread() {
@@ -110,13 +114,5 @@ public class Explosion extends Sprite {
 
     public void render(SpriteBatch batch) {
         batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
-    }
-
-    public Timer getTimer() {
-        return timer;
-    }
-
-    public void setTimer(Timer timer) {
-        this.timer = timer;
     }
 }

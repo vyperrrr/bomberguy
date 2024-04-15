@@ -66,6 +66,7 @@ public class GameScreen implements Screen {
         if (model.isOver() || overFor > 0) { overFor ++; }
         // Run for a bit longer with only the last player
         if (overFor > 480) {
+            model.determineCurrentRoundWinner();
             model.setScreen(new SummaryScreen(model));
         }
 
