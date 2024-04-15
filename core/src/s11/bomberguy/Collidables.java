@@ -60,4 +60,7 @@ public class Collidables {
         return crates;
     }
 
+    public void clearCollidables() {
+        this.collidables.clear();
+    }
 }

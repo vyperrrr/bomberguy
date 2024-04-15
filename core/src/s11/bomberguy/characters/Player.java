@@ -12,6 +12,7 @@ import s11.bomberguy.mapElements.Crate;
 import s11.bomberguy.mapElements.Wall;
 import s11.bomberguy.powerups.*;
 import com.badlogic.gdx.Gdx;
+import s11.bomberguy.TimerManager;
 import s11.bomberguy.Collidables;
 
 import java.util.ArrayList;
@@ -226,16 +227,15 @@ public class Player extends Character {
         int duration = 5;
 
         Player tempPlayer = this;
-        this.timer.scheduleTask(new Timer.Task() {
 
+        Timer.Task warnPlayer = new Timer.Task() {
             @Override
             public void run() {
                 GHOST_TEXTURE = new Texture("assets/powerups/yellow-circle.png");
             }
-        }, duration-3);
+        };
 
-        this.timer.scheduleTask(new Timer.Task() {
-
+        Timer.Task deactivateGhost = new Timer.Task() {
             @Override
             public void run() {
                 isGhosted = false;
@@ -260,7 +260,11 @@ public class Player extends Character {
 
                 GHOST_TEXTURE = new Texture("assets/powerups/red-circle.png");
             }
-        }, duration);
+        };
+
+        TimerManager.scheduleTask(warnPlayer, duration-3);
+        TimerManager.scheduleTask(deactivateGhost, duration);
+
     }
 
     private void activateShield(){
@@ -269,13 +273,14 @@ public class Player extends Character {
         System.out.println("Shield active");
         int duration = 7;
 
-        this.timer.scheduleTask(new Timer.Task() {
+        Timer.Task warnPlayer = new Timer.Task() {
             @Override
             public void run() {
                 SHIELD_TEXTURE = new Texture("assets/powerups/green-circle.png");
             }
-        }, duration-3);
-        this.timer.scheduleTask(new Timer.Task() {
+        };
+
+        Timer.Task deactivateShield = new Timer.Task() {
             @Override
             public void run() {
                 isShielded = false;
@@ -285,7 +290,10 @@ public class Player extends Character {
                 System.out.println("Shield over");
                 SHIELD_TEXTURE = new Texture("assets/powerups/circle.png");
             }
-        }, duration);
+        };
+
+        TimerManager.scheduleTask(warnPlayer, duration-3);
+        TimerManager.scheduleTask(deactivateShield, duration);
     }
 
     public ArrayList<String> getActivePowerUps() {
@@ -297,9 +305,6 @@ public class Player extends Character {
     }
 
     public int getBombCount() {
-
-
-
         return BOMB_COUNT;
     }
 
