@@ -16,10 +16,13 @@ import s11.bomberguy.TimerManager;
 import s11.bomberguy.Collidables;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
 public class Player extends Character {
+
+    private String name;
     private Timer timer;
     PlayerControl controls;
-    private int roundsWon;
     private int BOMB_COUNT;
     private int MAX_BOMB_COUNT;
     private int EXPLOSION_RANGE = 2;
@@ -36,9 +39,9 @@ public class Player extends Character {
     private Texture SHIELD_TEXTURE = new Texture("assets/powerups/circle.png");
     private Texture GHOST_TEXTURE = new Texture("assets/powerups/red-circle.png");
 
-    public Player(float x, float y, float width, float height, float moveSpeed, PlayerControl controls) {
+    public Player(String name, float x, float y, float width, float height, float moveSpeed, PlayerControl controls) {
         super(PLAYER_TEXTURE, x, y, width, height, moveSpeed);
-        this.roundsWon = 0;
+        this.name = name;
         this.activePowerUps = new ArrayList<>();
         this.BOMB_COUNT = 1; //Temporarily
         this.MAX_BOMB_COUNT = 1;
@@ -321,11 +324,11 @@ public class Player extends Character {
         this.activeBombs = activeBombs;
     }
 
-    public int getRoundsWon() {
-        return roundsWon;
+    public String getName() {
+        return name;
     }
 
-    public void setRoundsWon(int roundsWon) {
-        this.roundsWon = roundsWon;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -28,6 +28,9 @@ public class GameModel extends Game {
     private int playerNum;
     private int roundNum;
     private int currentRound;
+
+    private HashMap<String, Integer> playerToWinCount;
+    private HashMap<Integer, String> roundToWinner;
     private boolean isOver = false;
 
     // Data passed by GUI
@@ -39,6 +42,8 @@ public class GameModel extends Game {
         // Initialize players
         players = new ArrayList<>();
         monsters = new ArrayList<>();
+        playerToWinCount = new HashMap<>();
+        roundToWinner = new HashMap<>();
 
         // For testing reasons
         Random random = new Random();
@@ -121,7 +126,7 @@ public class GameModel extends Game {
                         float tileX = x * tiledLayer.getTileWidth();
                         float tileY = y * tiledLayer.getTileHeight();
                         // Create a new Player instance and pass the position
-                        players.add(new Player(tileX, tileY, 24, 24, 100, Controls.getControls().get(currentPlayerNum)));
+                        players.add(new Player("Játékos "+(currentPlayerNum+1),tileX, tileY, 24, 24, 100, Controls.getControls().get(currentPlayerNum)));
                         currentPlayerNum++; // Increment the number of players added
                     }
                 }
@@ -181,35 +186,33 @@ public class GameModel extends Game {
         setCollidableMapLayers();
     }
 
-    public Player determineRoundWinner()
+    public String determineRoundWinner()
     {
         Optional<Player> roundWinner = players.stream().filter(Character::isAlive).collect(Collectors.collectingAndThen(Collectors.toList(), list -> list.size() > 1 ? Optional.empty() : list.stream().findFirst()));
 
-        Player winner = roundWinner.orElse(null);
-        if(winner != null)
-            winner.setRoundsWon(winner.getRoundsWon()+1);
-
-        return winner;
+        if(roundWinner.isPresent())
+            return roundWinner.get().getName();
+        return "Döntetlen";
     }
 
-    public Player determineGameWinner()
-    {
-        Comparator<Player> roundsWonComparator = Comparator
-                .comparingInt(Player::getRoundsWon)
-                .reversed(); // To get the maximum rounds won first
+    public String determineGameWinner() {
+        // Assuming playerToWinCount is already populated
+        String winner = null;
+        int max = Integer.MIN_VALUE;
+        boolean hasDuplicate = false;
 
-        Optional<Player> maxPlayer = players.stream()
-                .sorted(roundsWonComparator)
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toList(),
-                        list -> {
-                            int maxWins = list.get(0).getRoundsWon(); // Get the maximum number of wins
-                            long count = list.stream().filter(player -> player.getRoundsWon() == maxWins).count();
-                            return count > 1 ? Optional.empty() : list.stream().findFirst();
-                        }
-                ));
+        for (String playerName : playerToWinCount.keySet()) {
+            int wins = playerToWinCount.get(playerName);
+            if (wins > max) {
+                max = wins;
+                winner = playerName;
+                hasDuplicate = false; // Reset hasDuplicate flag
+            } else if (wins == max) {
+                hasDuplicate = true; // Found duplicate
+            }
+        }
 
-        return maxPlayer.orElse(null);
+        return hasDuplicate ? "Döntetlen" : winner;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -280,5 +283,17 @@ public class GameModel extends Game {
 
     public void setCurrentRound(int currentRound) {
         this.currentRound = currentRound;
+    }
+
+    public HashMap<Integer, String> getRoundToWinner() {
+        return roundToWinner;
+    }
+
+    public void setRoundToWinner(HashMap<Integer, String> roundToWinner) {
+        this.roundToWinner = roundToWinner;
+    }
+
+    public HashMap<String, Integer> getPlayerToWinCount() {
+        return playerToWinCount;
     }
 }

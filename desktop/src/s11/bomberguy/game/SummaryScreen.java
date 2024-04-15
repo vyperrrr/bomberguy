@@ -12,17 +12,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import s11.bomberguy.characters.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SummaryScreen implements Screen {
     GameModel model;
     private Stage stage;
     private Table table;
     private BitmapFont font;
-    private ArrayList<String> roundLabels;
-    private ArrayList<String> winners;
-
     public SummaryScreen(GameModel model)
     {
         this.model = model;
@@ -41,21 +40,28 @@ public class SummaryScreen implements Screen {
         font.getData().setScale(4); // Set font scale to 2 (doubles the size)
         font.setColor(Color.BLACK); // Set font color
 
-        roundLabels = new ArrayList<>();
-        winners = new ArrayList<>();
+        HashMap<Integer, String> roundToWinner = model.getRoundToWinner();
+        HashMap<String, Integer> playerToWinCount = model.getPlayerToWinCount();
 
-        // Add some sample data
-        roundLabels.add("Round 1");
-        winners.add("Player A");
-        roundLabels.add("Round 2");
-        winners.add("Player B");
-        roundLabels.add("Round 3");
-        winners.add("Player A");
-        // Add more round numbers and winners as needed
+        // Add data
+        String roundWinner = model.determineRoundWinner();
 
-        model.roundToWinner.forEach((key, value) -> System.out.println(key + " " + value));
+        roundToWinner.put(model.getCurrentRound(), roundWinner);
+
+        if (playerToWinCount.containsKey(roundWinner) && !roundWinner.equals("Döntetlen")) {
+            // Key already exists, increment its value
+            playerToWinCount.put(roundWinner, playerToWinCount.get(roundWinner) + 1);
+        } else {
+            // Key not present, simply put it in the map
+            playerToWinCount.put(roundWinner, 1);
+        }
 
         populateTable();
+
+        if(model.getCurrentRound() != model.getRoundNum())
+        {
+            model.setCurrentRound(model.getCurrentRound()+1);
+        }
     }
 
     private void populateTable() {
@@ -63,52 +69,69 @@ public class SummaryScreen implements Screen {
         table.clear();
 
         // Add round number and winner labels in a single row
-        Label roundNumberHeader = new Label("Round Number", new Label.LabelStyle(font, Color.BLACK));
+        Label roundNumberHeader = new Label("Kör száma", new Label.LabelStyle(font, Color.BLACK));
         roundNumberHeader.setAlignment(Align.center); // Align the text to the center
 
-        Label winnerHeader = new Label("Winner", new Label.LabelStyle(font, Color.BLACK));
+        Label winnerHeader = new Label("Kör nyertese", new Label.LabelStyle(font, Color.BLACK));
         winnerHeader.setAlignment(Align.center); // Align the text to the center
 
         // Add the labels to the table
         table.add(roundNumberHeader).padRight(100);
         table.add(winnerHeader).row();
 
+        HashMap<Integer, String> roundToWinner = model.getRoundToWinner();
+
         // Add round numbers and winners
-        for(int i = 0; i < winners.size(); i++) {
-            Label roundLabel = new Label("Round " + (i + 1), new Label.LabelStyle(font, Color.BLACK));
+        roundToWinner.forEach((key, value) -> {
+            Label roundLabel = new Label("Kör " + (key), new Label.LabelStyle(font, Color.BLACK));
             roundLabel.setAlignment(Align.center); // Align the text to the center
 
-            Label winnerLabel = new Label(winners.get(i), new Label.LabelStyle(font, Color.BLACK));
+            Label winnerLabel = new Label(value, new Label.LabelStyle(font, Color.BLACK));
             winnerLabel.setAlignment(Align.center); // Align the text to the center
 
             // Add the labels to the table
             table.add(roundLabel).padRight(100);
             table.add(winnerLabel).row();
-        }
+        });
 
         // Add an empty row for spacing
         table.row().padTop(20f);
 
-        // Add the button in a separate row
-        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
-        buttonStyle.font = font;
-        TextButton button = new TextButton("Next round", buttonStyle);
+        if(model.getCurrentRound() == model.getRoundNum())
+        {
+            String labelText = "Győztes "+model.determineGameWinner();
+            if(model.determineGameWinner() == "Döntetlen")
+                labelText = "Döntetlen";
 
-        // Adjust the font size of the button label
-        button.getLabel().setFontScale(3f); // 3 times bigger
-        button.getLabel().setColor(Color.BLACK);
+            Label winLabel = new Label(labelText, new Label.LabelStyle(font, Color.BLACK));
+            winLabel.setAlignment(Align.center);
 
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // Handle button click event
-                model.resetGame();
-                model.setScreen(new GameScreen(model));
-            }
-        });
+            table.add(winLabel).colspan(2).center().padTop(20f);
+        }
 
-        // Add the button to the table
-        table.add(button).colspan(2).center().padTop(20f); // Add button spanning both columns and centered
+
+        if(model.getCurrentRound() != model.getRoundNum()) {
+            // Add the button in a separate row
+            TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
+            buttonStyle.font = font;
+            TextButton button = new TextButton("Következö kör", buttonStyle);
+
+            // Adjust the font size of the button label
+            button.getLabel().setFontScale(3f); // 3 times bigger
+            button.getLabel().setColor(Color.BLACK);
+
+            button.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Handle button click event
+                    model.resetGame();
+                    model.setScreen(new GameScreen(model));
+                }
+            });
+
+            // Add the button to the table
+            table.add(button).colspan(2).center().padTop(20f); // Add button spanning both columns and centered
+        }
     }
 
     @Override
