@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import s11.bomberguy.characters.Character;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 import s11.bomberguy.explosives.Explosion;
@@ -66,7 +65,7 @@ public class GameScreen implements Screen {
         if (model.isOver() || overFor > 0) { overFor ++; }
         // Run for a bit longer with only the last player
         if (overFor > 480) {
-            model.determineCurrentRoundWinner();
+            model.determineRoundWinner();
             model.setScreen(new SummaryScreen(model));
         }
 

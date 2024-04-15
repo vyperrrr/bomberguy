@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import s11.bomberguy.*;
+import s11.bomberguy.characters.Character;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 
@@ -24,9 +25,9 @@ public class GameModel extends Game {
     private AssetManager assetManager;
     private TiledMap tiledMap;
     private Collidables collidables;
-    HashMap<String, Player> roundWinners;
     private int playerNum;
     private int roundNum;
+    private int currentRound;
     private boolean isOver = false;
 
     // Data passed by GUI
@@ -44,7 +45,7 @@ public class GameModel extends Game {
 
         playerNum = GameSetup.getPlayerNum();
         roundNum = GameSetup.getRounds();
-        roundWinners = new HashMap<>();
+        currentRound = 1;
 
         // Add collidable objects to collidables list
         this.collidables = Collidables.getInstance();
@@ -180,10 +181,35 @@ public class GameModel extends Game {
         setCollidableMapLayers();
     }
 
-    public void determineCurrentRoundWinner()
+    public Player determineRoundWinner()
     {
-        Optional<Player> winner = players.stream().filter(Player::isAlive).findFirst();
-        winner.ifPresent(player -> roundWinners.put("Round 1", player));
+        Optional<Player> roundWinner = players.stream().filter(Character::isAlive).collect(Collectors.collectingAndThen(Collectors.toList(), list -> list.size() > 1 ? Optional.empty() : list.stream().findFirst()));
+
+        Player winner = roundWinner.orElse(null);
+        if(winner != null)
+            winner.setRoundsWon(winner.getRoundsWon()+1);
+
+        return winner;
+    }
+
+    public Player determineGameWinner()
+    {
+        Comparator<Player> roundsWonComparator = Comparator
+                .comparingInt(Player::getRoundsWon)
+                .reversed(); // To get the maximum rounds won first
+
+        Optional<Player> maxPlayer = players.stream()
+                .sorted(roundsWonComparator)
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        list -> {
+                            int maxWins = list.get(0).getRoundsWon(); // Get the maximum number of wins
+                            long count = list.stream().filter(player -> player.getRoundsWon() == maxWins).count();
+                            return count > 1 ? Optional.empty() : list.stream().findFirst();
+                        }
+                ));
+
+        return maxPlayer.orElse(null);
     }
 
     public ArrayList<Player> getPlayers() {
@@ -246,5 +272,13 @@ public class GameModel extends Game {
 
     public void setPlayerNum(int playerNum) {
         this.playerNum = playerNum;
+    }
+
+    public int getCurrentRound() {
+        return currentRound;
+    }
+
+    public void setCurrentRound(int currentRound) {
+        this.currentRound = currentRound;
     }
 }

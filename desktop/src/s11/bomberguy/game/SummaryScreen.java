@@ -53,7 +53,7 @@ public class SummaryScreen implements Screen {
         winners.add("Player A");
         // Add more round numbers and winners as needed
 
-        model.roundWinners.forEach((key, value) -> System.out.println(key + " " + value));
+        model.roundToWinner.forEach((key, value) -> System.out.println(key + " " + value));
 
         populateTable();
     }
