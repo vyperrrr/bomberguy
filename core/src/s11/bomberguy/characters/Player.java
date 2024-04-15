@@ -196,6 +196,7 @@ public class Player extends Character {
 
         if(powerUp instanceof BonusBomb){
             this.MAX_BOMB_COUNT++;
+            this.BOMB_COUNT++;
         }
 
         if(powerUp instanceof ExplosionRangeUp){
