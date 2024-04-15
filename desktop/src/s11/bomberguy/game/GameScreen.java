@@ -13,6 +13,8 @@ import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 import s11.bomberguy.explosives.Explosion;
 import s11.bomberguy.mapElements.Crate;
+import s11.bomberguy.powerups.*;
+
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
@@ -88,6 +90,7 @@ public class GameScreen implements Screen {
         drawBombs();
         drawExplosions();
         destroyCrates();
+        drawPowerUps();
 
         // End draw
         batch.end();
@@ -130,8 +133,6 @@ public class GameScreen implements Screen {
         // Need to pass collidables to move, only players for now
         model.getPlayers().forEach(Player::move);
     }
-
-
     public void moveMonsters()
     {
         model.getMonsters().forEach(Monster::move);
@@ -146,7 +147,11 @@ public class GameScreen implements Screen {
     public void drawBombs()
     {
         // Render bombs
-        model.getPlayers().forEach(player -> player.getActiveBombs().forEach(bomb -> bomb.render(batch)));
+        model.getPlayers().forEach(player -> player.getActiveBombs().forEach(bomb -> {
+            if(!bomb.getExploded()){
+                bomb.render(batch);
+            }
+        }));
     }
 
     public void drawExplosions(){
@@ -155,6 +160,15 @@ public class GameScreen implements Screen {
                 ((Explosion) sprite).render(batch);
             }
         }
+        );
+    }
+
+    public void drawPowerUps(){
+        model.getCollidables().getCollidables().forEach(sprite -> {
+                    if(sprite instanceof PowerUp){
+                        ((PowerUp) sprite).render(batch);
+                    }
+                }
         );
     }
 
@@ -167,7 +181,12 @@ public class GameScreen implements Screen {
                     }
                 }
         );
-        cratesToDestroy.forEach(crateToDestroy -> model.getCollidables().removeCollidable(crateToDestroy));
+        cratesToDestroy.forEach(crateToDestroy -> {
+            model.getCollidables().removeCollidable(crateToDestroy);
+            if(crateToDestroy != null){
+                model.getCollidables().addCollidable(new Shield(crateToDestroy.getX(), crateToDestroy.getY()));
+            }
+        });
     }
 
     @Override

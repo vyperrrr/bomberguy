@@ -2,35 +2,62 @@ package s11.bomberguy.characters;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.Collidables;
 import s11.bomberguy.PlayerControl;
 import s11.bomberguy.explosives.Bomb;
 import s11.bomberguy.explosives.Explosion;
-import s11.bomberguy.powerups.PowerUp;
+import s11.bomberguy.mapElements.Crate;
+import s11.bomberguy.mapElements.Wall;
+import s11.bomberguy.powerups.*;
 import com.badlogic.gdx.Gdx;
 import s11.bomberguy.Collidables;
 
 import java.util.ArrayList;
 public class Player extends Character {
+    private Timer timer;
     PlayerControl controls;
-    private ArrayList<PowerUp> activePowerUps;
     private int BOMB_COUNT;
+    private int MAX_BOMB_COUNT;
+    private int EXPLOSION_RANGE = 2;
     private ArrayList<Bomb> activeBombs;
-
     private boolean BOMB_COLLISION_FLAG;
 
     private ArrayList<Explosion> explosions;
+    private ArrayList<String> activePowerUps;
+    private Boolean isShielded = false;
+    private Boolean isGhosted = false;
+
+    private Boolean hasDetonator = false;
 
     private static final Texture PLAYER_TEXTURE = new Texture("assets/player.png");
+    private Texture SHIELD_TEXTURE = new Texture("assets/powerups/circle.png");
+    private Texture GHOST_TEXTURE = new Texture("assets/powerups/red-circle.png");
 
     public Player(float x, float y, float width, float height, float moveSpeed, PlayerControl controls) {
         super(PLAYER_TEXTURE, x, y, width, height, moveSpeed);
         this.activePowerUps = new ArrayList<>();
         this.BOMB_COUNT = 1; //Temporarily
+        this.MAX_BOMB_COUNT = 1;
         this.BOMB_COLLISION_FLAG = false;
         this.activeBombs = new ArrayList<>();
         this.controls = controls;
+        this.timer = new Timer();
+    }
+
+    public void render(SpriteBatch batch)
+    {
+        batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+
+        if(this.isShielded){
+            batch.draw(SHIELD_TEXTURE, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        }
+
+        if(this.isGhosted){
+            batch.draw(GHOST_TEXTURE, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        }
+
     }
 
     // Sprites are collidable
@@ -70,7 +97,7 @@ public class Player extends Character {
         }
 
         // Update the position only if there won't be a collision
-        if(!willCollide)
+        if(!willCollide || isGhosted)
             setPosition(newX, newY);
 
         if(willCollide && collidedWith instanceof Bomb && BOMB_COLLISION_FLAG)
@@ -79,13 +106,17 @@ public class Player extends Character {
             BOMB_COLLISION_FLAG = false;
 
         //if collides with a monster, it's es hora de dormir mimir amimir (it dies)
-        if(willCollide && collidedWith instanceof Monster ){
+        if(willCollide && collidedWith instanceof Monster && !isShielded ){
             this.isAlive=false;
         }
 
         //if collides with an explosion, it dies
-        if(willCollide && collidedWith instanceof Explosion ){
+        if(willCollide && collidedWith instanceof Explosion && !isShielded){
             this.isAlive=false;
+        }
+
+        if(willCollide && collidedWith instanceof PowerUp ){
+            this.powerUpInteraction(collidedWith);
         }
     }
 
@@ -106,44 +137,169 @@ public class Player extends Character {
     }
 
     public void placeBomb(){
-        if(Gdx.input.isKeyPressed(controls.getBombButton()) && BOMB_COUNT > 0 && this.isAlive)
+
+        if(Gdx.input.isKeyJustPressed(controls.getBombButton())  && this.isAlive)
         {
-            BOMB_COUNT--;
-
-            // Create new bomb that receives player coordinates
-            Bomb bomb = new Bomb(this.getX(), this.getY());
-
             // Get Collidables instance
             Collidables collidables = Collidables.getInstance();
 
-            // Explode and remove bomb from active bombs after 4 seconds...
-            bomb.getTimer().scheduleTask(new Timer.Task() {
-                @Override
-                public void run() {
-                    bomb.explode();
-                    activeBombs.remove(bomb);
-                    collidables.removeCollidable(bomb);
-                    BOMB_COLLISION_FLAG = false;
-                    BOMB_COUNT++;
-                }
-            }, 4);
+            if(BOMB_COUNT > 0){
+                BOMB_COUNT--;
 
-            // Add to active bombs
-            BOMB_COLLISION_FLAG = true;
-            activeBombs.add(bomb);
-            collidables.addCollidable(bomb);
+                // Create new bomb that receives player coordinates
+                Bomb bomb = new Bomb(this.getX(), this.getY(), this.EXPLOSION_RANGE);
+
+                // Explode and remove bomb from active bombs after 4 seconds...
+                bomb.getTimer().scheduleTask(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if(!bomb.getExploded()){
+                            bomb.explode();
+                            activeBombs.remove(bomb);
+                            collidables.removeCollidable(bomb);
+                            BOMB_COLLISION_FLAG = false;
+
+                            if((BOMB_COUNT) < MAX_BOMB_COUNT){
+                                BOMB_COUNT++;
+                            }
+                        }
+                    }
+                }, 4);
+
+                // Add to active bombs
+                BOMB_COLLISION_FLAG = true;
+                activeBombs.add(bomb);
+                collidables.addCollidable(bomb);
+            }else if(this.hasDetonator){
+                for(Bomb bomb : this.activeBombs){
+                    bomb.explode();
+                }
+                collidables.getCollidables().removeAll(activeBombs);
+                this.activeBombs.clear();
+                this.BOMB_COUNT = this.MAX_BOMB_COUNT;
+            }
         }
     }
 
-    public ArrayList<PowerUp> getActivePowerUps() {
+    private void powerUpInteraction(Sprite powerUp){
+        if(powerUp instanceof RollerSkates){
+            if(!this.activePowerUps.contains("RollerSkate")){
+                this.moveSpeed *= 1.25;
+                this.activePowerUps.add("RollerSkate");
+            }
+        }
+
+        if(powerUp instanceof BonusBomb){
+            this.MAX_BOMB_COUNT++;
+        }
+
+        if(powerUp instanceof ExplosionRangeUp){
+            this.EXPLOSION_RANGE++;
+        }
+
+        if(powerUp instanceof Shield){
+            this.activateShield();
+        }
+
+        if(powerUp instanceof Ghost){
+            this.activateGhost();
+        }
+
+        if(powerUp instanceof Detonator){
+            this.hasDetonator = true;
+        }
+
+        if(powerUp instanceof BoxPlacement){
+
+        }
+
+        Collidables collidables = Collidables.getInstance();
+        collidables.removeCollidable(powerUp);
+    }
+
+
+
+    private void activateGhost() {
+        this.isGhosted = true;
+        this.activePowerUps.add("Ghost");
+        System.out.println("Ghost active");
+        int duration = 5;
+
+        Player tempPlayer = this;
+        this.timer.scheduleTask(new Timer.Task() {
+
+            @Override
+            public void run() {
+                GHOST_TEXTURE = new Texture("assets/powerups/yellow-circle.png");
+            }
+        }, duration-3);
+
+        this.timer.scheduleTask(new Timer.Task() {
+
+            @Override
+            public void run() {
+                isGhosted = false;
+                ArrayList<String> ghostList = new ArrayList<>();
+                ghostList.add("Ghost");
+                activePowerUps.removeAll(ghostList);
+                System.out.println("Ghost over");
+
+                Collidables collidables = Collidables.getInstance();
+
+                Sprite collidedWith = null;
+                for (Sprite collidable : collidables.getCollidables()) {
+                    if (tempPlayer != collidable && collidesWith(collidable, getX(), getY())) {
+                        collidedWith = collidable;
+                        break;
+                    }
+                }
+
+                if(collidedWith != null && (collidedWith instanceof Crate || collidedWith instanceof Wall)){
+                    isAlive= false;
+                }
+
+                GHOST_TEXTURE = new Texture("assets/powerups/red-circle.png");
+            }
+        }, duration);
+    }
+
+    private void activateShield(){
+        this.isShielded = true;
+        this.activePowerUps.add("Shield");
+        System.out.println("Shield active");
+        int duration = 7;
+
+        this.timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                SHIELD_TEXTURE = new Texture("assets/powerups/green-circle.png");
+            }
+        }, duration-3);
+        this.timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                isShielded = false;
+                ArrayList<String> shieldList = new ArrayList<>();
+                shieldList.add("Shield");
+                activePowerUps.removeAll(shieldList);
+                System.out.println("Shield over");
+                SHIELD_TEXTURE = new Texture("assets/powerups/circle.png");
+            }
+        }, duration);
+    }
+
+    public ArrayList<String> getActivePowerUps() {
         return activePowerUps;
     }
 
-    public void setActivePowerUps(ArrayList<PowerUp> activePowerUps) {
+    public void setActivePowerUps(ArrayList<String> activePowerUps) {
         this.activePowerUps = activePowerUps;
     }
 
     public int getBombCount() {
+
+
+
         return BOMB_COUNT;
     }
 

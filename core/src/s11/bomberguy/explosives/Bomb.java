@@ -18,11 +18,13 @@ public class Bomb extends Sprite {
     private static final int BOMB_HEIGHT = 12;
     private static final Texture BOMB_TEXTURE = new Texture("assets/bomb.png");
 
-    public Bomb(float x, float y) {
+    private Boolean exploded = false;
+
+    public Bomb(float x, float y, int range) {
         super.setTexture(BOMB_TEXTURE);
         super.setBounds(x,y, BOMB_WIDTH,BOMB_HEIGHT);
 
-        this.range = 2;
+        this.range = range;
         timer = new Timer();
 
     }
@@ -34,19 +36,21 @@ public class Bomb extends Sprite {
 
     public void explode()
     {
-        Explosion explosion = new Explosion(this.getX(), this.getY(), 0, this.range);
+        if(!this.exploded){
+            Explosion explosion = new Explosion(this.getX(), this.getY(), 0, this.range);
 
-        Collidables collidables = Collidables.getInstance();
+            Collidables collidables = Collidables.getInstance();
 
-        collidables.addCollidable(explosion);
+            collidables.addCollidable(explosion);
 
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                collidables.removeCollidable(explosion);
-            }
-        }, 2);
-
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    collidables.removeCollidable(explosion);
+                }
+            }, 2);
+            this.exploded = true;
+        }
     }
 
     public int getRange() {
@@ -65,5 +69,7 @@ public class Bomb extends Sprite {
         this.timer = timer;
     }
 
-
+    public Boolean getExploded() {
+        return exploded;
+    }
 }

@@ -109,8 +109,6 @@ public class GameModel extends Game {
 
         setCollidableMapLayers();
 
-
-
         setScreen(new GameScreen(this));
     }
 
