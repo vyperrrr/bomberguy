@@ -182,8 +182,8 @@ public class GameScreen implements Screen {
         );
         cratesToDestroy.forEach(crateToDestroy -> {
             model.getCollidables().removeCollidable(crateToDestroy);
-            if(crateToDestroy != null){
-                model.getCollidables().addCollidable(new Ghost(crateToDestroy.getX(), crateToDestroy.getY()));
+            if(crateToDestroy != null && crateToDestroy.isPowerUpInside()){
+                model.putDownRandomPowerUp(crateToDestroy.getX(), crateToDestroy.getY());
             }
         });
     }

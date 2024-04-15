@@ -13,7 +13,8 @@ import s11.bomberguy.powerups.RollerSkates;
 
 public class Crate extends Sprite {
     private boolean isAlive = true;
-    private boolean powerUpInside;
+    private boolean powerUpInside = false;
+
     private int mapX;
     private int mapY;
     private static final Texture CRATE_TEXTURE = new Texture("assets/crate.png");
@@ -81,8 +82,12 @@ public class Crate extends Sprite {
     public int getMapY() {
         return mapY;
     }
-}
 
-/*
-when it collides with an explosion it should "die" and wont render anymore
- */
+    public boolean isPowerUpInside() {
+        return powerUpInside;
+    }
+
+    public void setPowerUpInside(boolean powerUpInside) {
+        this.powerUpInside = powerUpInside;
+    }
+}
