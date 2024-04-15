@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import s11.bomberguy.Collidables;
 import s11.bomberguy.explosives.Explosion;
+import s11.bomberguy.powerups.RollerSkates;
 
 public class Crate extends Sprite {
     private boolean isAlive = true;

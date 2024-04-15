@@ -48,7 +48,16 @@ public class Collidables {
         collidables.remove(collidableObject);
     }
 
-    public void clearCollidables() {
-        collidables.clear();
+    public ArrayList<Crate> getCrates(){
+        ArrayList<Crate> crates = new ArrayList<>();
+
+        for(Sprite sprite : this.collidables){
+            if(sprite instanceof Crate){
+                crates.add( (Crate) sprite);
+            }
+        }
+
+        return crates;
     }
+
 }
