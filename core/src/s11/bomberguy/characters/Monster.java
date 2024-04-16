@@ -61,7 +61,6 @@ public class Monster extends Character{
                 this.isAlive=false;
             }else if(!willCollide){
                 setPosition(newX, newY);
-
                 if((random.nextInt(1000)+1) >= 990){
                     this.newDirection();
                 }

@@ -113,6 +113,8 @@ public class GameScreen implements Screen {
         model.getMonsters().forEach(monster -> {
             if(monster.isAlive()){
                 monster.render(batch);
+            }else{
+                model.getCollidables().removeCollidable(monster);
             }
         });
     }

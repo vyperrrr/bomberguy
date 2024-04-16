@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player extends Character {
-
     private String name;
     private Timer timer;
     PlayerControl controls;
@@ -35,7 +34,7 @@ public class Player extends Character {
     private Boolean isGhosted = false;
     private Boolean hasDetonator = false;
 
-    private static final Texture PLAYER_TEXTURE = new Texture("assets/player.png");
+    private static final Texture PLAYER_TEXTURE = new Texture("assets/players/player.png");
     private Texture SHIELD_TEXTURE = new Texture("assets/powerups/circle.png");
     private Texture GHOST_TEXTURE = new Texture("assets/powerups/red-circle.png");
 
@@ -49,6 +48,18 @@ public class Player extends Character {
         this.activeBombs = new ArrayList<>();
         this.controls = controls;
         this.timer = new Timer();
+        this.setPlayerTexture(this.name);
+    }
+
+    private void setPlayerTexture(String name){
+        switch (name){
+            case "Játékos 2":
+                this.setTexture(new Texture("assets/players/player2.png"));
+                break;
+            case "Játékos 3":
+                this.setTexture(new Texture("assets/players/player3.png"));
+                break;
+        }
     }
 
     public void render(SpriteBatch batch)
