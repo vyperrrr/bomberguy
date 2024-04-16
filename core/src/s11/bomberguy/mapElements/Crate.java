@@ -8,13 +8,13 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import s11.bomberguy.Collidables;
+import s11.bomberguy.characters.Player;
 import s11.bomberguy.explosives.Explosion;
-import s11.bomberguy.powerups.RollerSkates;
 
 public class Crate extends Sprite {
     private boolean isAlive = true;
     private boolean powerUpInside = false;
-
+    private Player owner = null;
     private int mapX;
     private int mapY;
     private static final Texture CRATE_TEXTURE = new Texture("assets/crate.png");
@@ -30,6 +30,14 @@ public class Crate extends Sprite {
         super.setBounds(x, y, width, height);
         this.mapX = mapX;
         this.mapY = mapY;
+    }
+
+    public Crate(Player owner, float x, float y, int mapX, int mapY) {
+        super.setTexture(CRATE_TEXTURE);
+        super.setBounds(x - (x % 32), y - (y % 32), 32, 32);
+        this.mapX = mapX;
+        this.mapY = mapY;
+        this.owner = owner;
     }
 
     public Crate destroy(SpriteBatch batch, TiledMap map){
@@ -52,11 +60,13 @@ public class Crate extends Sprite {
             if(groupLayer == null) System.out.println("Nem talált");
             MapLayer layer = groupLayer.getLayers().get("Boxes");
             if(layer instanceof TiledMapTileLayer){
-                System.out.println("halo");
                 TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) layer).getCell(this.getMapX(),this.getMapY());
+
                 if(cell != null) {
-                    System.out.println("SZIA");
                     ((TiledMapTileLayer) layer).setCell(this.getMapX(), this.getMapY(), null);
+                    if (owner != null) {
+                        owner.setPlacedBoxes(owner.getPlacedBoxes() - 1);
+                    }
                 }
             }
 
@@ -69,6 +79,9 @@ public class Crate extends Sprite {
 
     public boolean isAlive() {
         return isAlive;
+    }
+    public Player getOwner() {
+        return owner;
     }
 
     private void spawnPowerUp(){

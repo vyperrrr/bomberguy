@@ -132,7 +132,7 @@ public class GameScreen implements Screen {
             model.setOver();
         }
         // Need to pass collidables to move, only players for now
-        model.getPlayers().forEach(Player::move);
+        model.getPlayers().forEach(x -> x.move(model.getTiledMap()));
     }
     public void moveMonsters()
     {

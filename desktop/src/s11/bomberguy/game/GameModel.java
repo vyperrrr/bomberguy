@@ -83,7 +83,7 @@ public class GameModel extends Game {
 
         while(powerUpNum < crateNum / 3){
             int randomCrateIndex = random.nextInt(crateNum-1);
-            if(!collidables.getCrates().get(randomCrateIndex).isPowerUpInside()){
+            if(!collidables.getCrates().get(randomCrateIndex).isPowerUpInside() && collidables.getCrates().get(randomCrateIndex).getOwner() == null){
                 collidables.getCrates().get(randomCrateIndex).setPowerUpInside(true);
                 powerUpNum++;
             }
