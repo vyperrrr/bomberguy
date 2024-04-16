@@ -34,6 +34,7 @@ public class Player extends Character {
     private Boolean isGhosted = false;
     private Boolean hasDetonator = false;
     private int placeableBoxes = 0;
+
     private int placedBoxes = 0;
 
     private static final Texture PLAYER_TEXTURE = new Texture("assets/players/player.png");
@@ -348,5 +349,12 @@ public class Player extends Character {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public int getPlacedBoxes() {
+        return placedBoxes;
+    }
+
+    public void setPlacedBoxes(int placedBoxes) {
+        this.placedBoxes = placedBoxes;
     }
 }
