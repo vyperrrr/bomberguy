@@ -36,6 +36,7 @@ public class Player extends Character {
     private int placeableBoxes = 0;
 
     private int placedBoxes = 0;
+    private Crate recentCrate = null;
 
     private static final Texture PLAYER_TEXTURE = new Texture("assets/players/player.png");
     private Texture SHIELD_TEXTURE = new Texture("assets/powerups/circle.png");
@@ -102,9 +103,11 @@ public class Player extends Character {
             if (Gdx.input.isKeyPressed(controls.getDownButton())) {
                 newY -= moveSpeed * Gdx.graphics.getDeltaTime();
             }
-            if (Gdx.input.isKeyPressed(controls.getExtraButton()) && placeableBoxes - placedBoxes > 0) {
+            if (Gdx.input.isKeyPressed(controls.getExtraButton()) && placeableBoxes - placedBoxes > -1) {
                 ++placedBoxes;
                 // TODO: Add crate to tiledmap
+                recentCrate = new Crate(this, getX(), getY());
+                collidables.addCollidable(recentCrate);
             }
         }
 
@@ -120,8 +123,13 @@ public class Player extends Character {
         }
 
         // Update the position only if there won't be a collision
-        if(!willCollide || isGhosted)
+        if(!willCollide || isGhosted || (recentCrate != null && collidedWith == recentCrate)) {
             setPosition(newX, newY);
+        }
+
+        if (!willCollide) {
+            recentCrate = null;
+        }
 
         if(willCollide && collidedWith instanceof Bomb && BOMB_COLLISION_FLAG)
             setPosition(newX, newY);

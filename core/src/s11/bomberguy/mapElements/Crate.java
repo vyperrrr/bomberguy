@@ -33,9 +33,9 @@ public class Crate extends Sprite {
         this.mapY = mapY;
     }
 
-    public Crate(Player owner, float x, float y, Texture texture, float width, float height, int mapX, int mapY){
-        super.setTexture(texture);
-        super.setBounds(x, y, width, height);
+    public Crate(Player owner, float x, float y){
+        super.setTexture(CRATE_TEXTURE);
+        super.setBounds(x - (x % 32), y - (y % 32), 32, 32);
         this.mapX = mapX;
         this.mapY = mapY;
         this.owner = owner;
