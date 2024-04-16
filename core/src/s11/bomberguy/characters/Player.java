@@ -108,11 +108,11 @@ public class Player extends Character {
             if (Gdx.input.isKeyPressed(controls.getDownButton())) {
                 newY -= moveSpeed * Gdx.graphics.getDeltaTime();
             }
-            if (Gdx.input.isKeyPressed(controls.getExtraButton()) && placeableBoxes - placedBoxes > -1) {
+            if (Gdx.input.isKeyPressed(controls.getExtraButton()) && placeableBoxes - placedBoxes > 0) {
                 ++placedBoxes;
 
                 MapGroupLayer groupLayer = (MapGroupLayer) map.getLayers().get("collidables");
-                if(groupLayer == null) return;
+
                 MapLayer layer = groupLayer.getLayers().get("Boxes");
                 if(layer instanceof TiledMapTileLayer){
                     TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
@@ -122,7 +122,7 @@ public class Player extends Character {
 
                 }
 
-                recentCrate = new Crate(this, getX(), getY());
+                recentCrate = new Crate(this, getX(), getY(), (int)(getX()/32), (int)(getY()/32));
                 collidables.addCollidable(recentCrate);
             }
         }

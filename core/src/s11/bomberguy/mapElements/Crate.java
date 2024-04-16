@@ -32,9 +32,11 @@ public class Crate extends Sprite {
         this.mapY = mapY;
     }
 
-    public Crate(Player owner, float x, float y){
+    public Crate(Player owner, float x, float y, int mapX, int mapY) {
         super.setTexture(CRATE_TEXTURE);
         super.setBounds(x - (x % 32), y - (y % 32), 32, 32);
+        this.mapX = mapX;
+        this.mapY = mapY;
         this.owner = owner;
     }
 
@@ -43,7 +45,7 @@ public class Crate extends Sprite {
 
         boolean willCollide = false;
         Sprite collidedWith = null;
-        for (Sprite collidable : collidables.getCrates()) {
+        for (Sprite collidable : collidables.getCollidables()) {
             if (this != collidable && this.getBoundingRectangle().overlaps(collidable.getBoundingRectangle())) {
                 willCollide = true;
                 collidedWith = collidable;
@@ -58,19 +60,13 @@ public class Crate extends Sprite {
             if(groupLayer == null) System.out.println("Nem talált");
             MapLayer layer = groupLayer.getLayers().get("Boxes");
             if(layer instanceof TiledMapTileLayer){
-                System.out.println("halo");
                 TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) layer).getCell(this.getMapX(),this.getMapY());
-                // Temporarily placed here
-                if (owner != null) {
-                    owner.setPlacedBoxes(owner.getPlacedBoxes() - 1);
-                }
+
                 if(cell != null) {
-                    System.out.println("SZIA");
                     ((TiledMapTileLayer) layer).setCell(this.getMapX(), this.getMapY(), null);
-                    // Temporarily commented out
-                    //if (owner != null) {
-                    //    owner.setPlacedBoxes(owner.getPlacedBoxes() - 1);
-                    //}
+                    if (owner != null) {
+                        owner.setPlacedBoxes(owner.getPlacedBoxes() - 1);
+                    }
                 }
             }
 
