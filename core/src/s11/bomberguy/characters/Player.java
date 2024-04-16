@@ -1,22 +1,27 @@
 package s11.bomberguy.characters;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapGroupLayer;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.Collidables;
 import s11.bomberguy.PlayerControl;
+import s11.bomberguy.TimerManager;
 import s11.bomberguy.explosives.Bomb;
 import s11.bomberguy.explosives.Explosion;
 import s11.bomberguy.mapElements.Crate;
 import s11.bomberguy.mapElements.Wall;
 import s11.bomberguy.powerups.*;
-import com.badlogic.gdx.Gdx;
-import s11.bomberguy.TimerManager;
-import s11.bomberguy.Collidables;
 
 import java.util.ArrayList;
-import java.util.Objects;
+
 
 public class Player extends Character {
     private String name;
@@ -33,6 +38,10 @@ public class Player extends Character {
     private Boolean isShielded = false;
     private Boolean isGhosted = false;
     private Boolean hasDetonator = false;
+    private int placeableBoxes = 0;
+
+    private int placedBoxes = 0;
+    private Crate recentCrate = null;
 
     private static final Texture PLAYER_TEXTURE = new Texture("assets/players/player.png");
     private Texture SHIELD_TEXTURE = new Texture("assets/powerups/circle.png");
@@ -77,7 +86,7 @@ public class Player extends Character {
     }
 
     // Sprites are collidable
-    public void move() {
+    public void move(TiledMap map) {
         float newX = getX();
         float newY = getY();
 
@@ -99,6 +108,23 @@ public class Player extends Character {
             if (Gdx.input.isKeyPressed(controls.getDownButton())) {
                 newY -= moveSpeed * Gdx.graphics.getDeltaTime();
             }
+            if (Gdx.input.isKeyPressed(controls.getExtraButton()) && placeableBoxes - placedBoxes > -1) {
+                ++placedBoxes;
+
+                MapGroupLayer groupLayer = (MapGroupLayer) map.getLayers().get("collidables");
+                if(groupLayer == null) return;
+                MapLayer layer = groupLayer.getLayers().get("Boxes");
+                if(layer instanceof TiledMapTileLayer){
+                    TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
+                    cell.setTile(new StaticTiledMapTile(new TextureRegion(new Texture("assets/crate.png"))));
+                    ((TiledMapTileLayer) layer).setCell( (int)(getX()/32), (int)(getY()/32), cell);
+
+
+                }
+
+                recentCrate = new Crate(this, getX(), getY());
+                collidables.addCollidable(recentCrate);
+            }
         }
 
         // Check if the new position will cause collision with any collidable
@@ -113,8 +139,13 @@ public class Player extends Character {
         }
 
         // Update the position only if there won't be a collision
-        if(!willCollide || isGhosted)
+        if(!willCollide || isGhosted || (recentCrate != null && collidedWith == recentCrate)) {
             setPosition(newX, newY);
+        }
+
+        if (!willCollide) {
+            recentCrate = null;
+        }
 
         if(willCollide && collidedWith instanceof Bomb && BOMB_COLLISION_FLAG)
             setPosition(newX, newY);
@@ -227,7 +258,7 @@ public class Player extends Character {
         }
 
         if(powerUp instanceof BoxPlacement){
-
+            placeableBoxes += 3;
         }
 
         Collidables collidables = Collidables.getInstance();
@@ -342,5 +373,12 @@ public class Player extends Character {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public int getPlacedBoxes() {
+        return placedBoxes;
+    }
+
+    public void setPlacedBoxes(int placedBoxes) {
+        this.placedBoxes = placedBoxes;
     }
 }
