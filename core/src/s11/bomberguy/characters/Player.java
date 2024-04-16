@@ -33,6 +33,8 @@ public class Player extends Character {
     private Boolean isShielded = false;
     private Boolean isGhosted = false;
     private Boolean hasDetonator = false;
+    private int placeableBoxes = 0;
+    private int placedBoxes = 0;
 
     private static final Texture PLAYER_TEXTURE = new Texture("assets/players/player.png");
     private Texture SHIELD_TEXTURE = new Texture("assets/powerups/circle.png");
@@ -98,6 +100,10 @@ public class Player extends Character {
             }
             if (Gdx.input.isKeyPressed(controls.getDownButton())) {
                 newY -= moveSpeed * Gdx.graphics.getDeltaTime();
+            }
+            if (Gdx.input.isKeyPressed(controls.getExtraButton()) && placeableBoxes - placedBoxes > 0) {
+                ++placedBoxes;
+                // TODO: Add crate to tiledmap
             }
         }
 
@@ -227,7 +233,7 @@ public class Player extends Character {
         }
 
         if(powerUp instanceof BoxPlacement){
-
+            placeableBoxes += 3;
         }
 
         Collidables collidables = Collidables.getInstance();
