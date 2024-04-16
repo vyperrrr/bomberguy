@@ -63,12 +63,17 @@ public class Crate extends Sprite {
             if(layer instanceof TiledMapTileLayer){
                 System.out.println("halo");
                 TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) layer).getCell(this.getMapX(),this.getMapY());
+                // Temporarily placed here
+                if (owner != null) {
+                    owner.setPlacedBoxes(owner.getPlacedBoxes() - 1);
+                }
                 if(cell != null) {
                     System.out.println("SZIA");
                     ((TiledMapTileLayer) layer).setCell(this.getMapX(), this.getMapY(), null);
-                    if (owner != null) {
-                        owner.setPlacedBoxes(owner.getPlacedBoxes() - 1);
-                    }
+                    // Temporarily commented out
+                    //if (owner != null) {
+                    //    owner.setPlacedBoxes(owner.getPlacedBoxes() - 1);
+                    //}
                 }
             }
 
