@@ -99,7 +99,7 @@ public class SummaryScreen implements Screen {
 
         if(model.getCurrentRound() == model.getRoundNum())
         {
-            String labelText = "Győztes "+model.determineGameWinner();
+            String labelText = "Gyöztes "+model.determineGameWinner();
             if(model.determineGameWinner() == "Döntetlen")
                 labelText = "Döntetlen";
 
