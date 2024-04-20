@@ -82,7 +82,7 @@ public class Explosion extends Sprite {
                 boolean[] flags = filter(directionX,directionY);
 
                 if(!flags[0])
-                    explosionsToAdd.add(new Explosion(directions.get(this.direction - 1)[0], directions.get(this.direction - 1)[1], 1, this.range - 1));
+                    explosionsToAdd.add(new Explosion(directions.get(this.direction - 1)[0], directions.get(this.direction - 1)[1], direction, this.range - 1));
 
             }
 
