@@ -1,31 +1,19 @@
-image: openjdk:11-jdk
-
-variables:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .gradle/
-
-before_script:
-  - chmod +x ./gradlew
-
-stages:
-  - build
-  - test
-  - deploy
-
 build:
   stage: build
-  script:
-    - ./gradlew clean build
-  artifacts:
-    paths:
-      - build/libs/*.jar
-    expire_in: 1 week
+  only:
+    - master
+  script: gradle --build-cache assemble
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
 
 test:
   stage: test
-  script:
-    - ./gradlew test
+  only:
+    - master
+  script: gradle check
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
