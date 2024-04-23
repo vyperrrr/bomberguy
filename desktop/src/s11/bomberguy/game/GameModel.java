@@ -141,7 +141,7 @@ public class GameModel extends Game {
                         float tileX = x * tiledLayer.getTileWidth();
                         float tileY = y * tiledLayer.getTileHeight();
                         // Create a new Player instance and pass the position
-                        players.add(new Player("Játékos "+(currentPlayerNum+1),tileX, tileY, 24, 24, 100, Controls.getControls().get(currentPlayerNum)));
+                        players.add(new Player("Játékos "+(currentPlayerNum+1),tileX, tileY, 20, 20, 100, Controls.getControls().get(currentPlayerNum)));
                         currentPlayerNum++; // Increment the number of players added
                     }
                 }
