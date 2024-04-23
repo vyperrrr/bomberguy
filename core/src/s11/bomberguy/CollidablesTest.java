@@ -35,21 +35,33 @@ class CollidablesTest {
 
     @Test
     void removeCollidables() {
+        Sprite sprite = new Sprite();
+        Collidables.getInstance().addCollidable(sprite);
+        ArrayList<Sprite> sprites = new ArrayList<>();
+        sprites.add(sprite);
+        Collidables.getInstance().removeCollidables(sprites);
+        assertFalse(Collidables.getInstance().getCollidables().contains(sprite));
     }
 
     @Test
     void addCollidable() {
+        Sprite sprite = new Sprite();
+        Collidables.getInstance().addCollidable(sprite);
+        assertTrue(Collidables.getInstance().getCollidables().contains(sprite));
     }
 
     @Test
     void removeCollidable() {
-    }
-
-    @Test
-    void getCrates() {
+        Sprite sprite = new Sprite();
+        Collidables.getInstance().addCollidable(sprite);
+        Collidables.getInstance().removeCollidable(sprite);
+        assertFalse(Collidables.getInstance().getCollidables().contains(sprite));
     }
 
     @Test
     void clearCollidables() {
+        Collidables.getInstance().addCollidable(new Sprite());
+        Collidables.getInstance().clearCollidables();
+        assertEquals(0, Collidables.getInstance().getCollidables().size());
     }
 }
