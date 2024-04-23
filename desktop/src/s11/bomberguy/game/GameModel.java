@@ -73,7 +73,8 @@ public class GameModel extends Game {
 
         setScreen(new GameScreen(this));
 
-        this.generatePowerUps();
+        //this.generatePowerUps();
+        this.everyCrateHasPowerUp();
     }
     private void generatePowerUps() {
         Random random = new Random();
@@ -81,13 +82,19 @@ public class GameModel extends Game {
         int crateNum = collidables.getCrates().size();
         int powerUpNum = 0;
 
-        while(powerUpNum < crateNum / 3){
+        while(powerUpNum < crateNum / 2){
             int randomCrateIndex = random.nextInt(crateNum-1);
             if(!collidables.getCrates().get(randomCrateIndex).isPowerUpInside() && collidables.getCrates().get(randomCrateIndex).getOwner() == null){
                 collidables.getCrates().get(randomCrateIndex).setPowerUpInside(true);
                 powerUpNum++;
             }
         }
+    }
+
+    private void everyCrateHasPowerUp(){
+        this.collidables.getCrates().forEach( crate -> {
+            crate.setPowerUpInside(true);
+        } );
     }
 
     public void setCollidableMapLayers()
@@ -199,6 +206,10 @@ public class GameModel extends Game {
 
         // Reset collidable map layers
         setCollidableMapLayers();
+
+        //Reset powerups
+        //this.generatePowerUps();
+        this.everyCrateHasPowerUp();
     }
 
     public String determineRoundWinner()

@@ -54,10 +54,7 @@ public class Crate extends Sprite {
         }
 
         if(willCollide && collidedWith instanceof Explosion){
-            System.out.println("belefutott");
-            System.out.println(this.getMapX()+" "+this.getMapY());
             MapGroupLayer groupLayer = (MapGroupLayer) map.getLayers().get("collidables");
-            if(groupLayer == null) System.out.println("Nem talált");
             MapLayer layer = groupLayer.getLayers().get("Boxes");
             if(layer instanceof TiledMapTileLayer){
                 TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) layer).getCell(this.getMapX(),this.getMapY());

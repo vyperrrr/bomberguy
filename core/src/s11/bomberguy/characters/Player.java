@@ -39,7 +39,6 @@ public class Player extends Character {
     private Boolean isGhosted = false;
     private Boolean hasDetonator = false;
     private int placeableBoxes = 0;
-
     private int placedBoxes = 0;
     private Crate recentCrate = null;
 
