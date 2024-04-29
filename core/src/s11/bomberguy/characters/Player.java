@@ -1,15 +1,15 @@
 package s11.bomberguy.characters;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapGroupLayer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.Collidables;
 import s11.bomberguy.PlayerControl;
@@ -20,6 +20,7 @@ import s11.bomberguy.mapElements.Crate;
 import s11.bomberguy.mapElements.Wall;
 import s11.bomberguy.powerups.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -45,6 +46,8 @@ public class Player extends Character {
     private static final Texture PLAYER_TEXTURE = new Texture("assets/players/player.png");
     private Texture SHIELD_TEXTURE = new Texture("assets/powerups/circle.png");
     private Texture GHOST_TEXTURE = new Texture("assets/powerups/red-circle.png");
+    private final BitmapFont font = new BitmapFont();
+    private final GlyphLayout layout = new GlyphLayout();
 
     public Player(String name, float x, float y, float width, float height, float moveSpeed, PlayerControl controls) {
         super(PLAYER_TEXTURE, x, y, width, height, moveSpeed);
@@ -57,6 +60,8 @@ public class Player extends Character {
         this.controls = controls;
         this.timer = new Timer();
         this.setPlayerTexture(this.name);
+        font.getData().setScale(0.55f); // Set font scale to 2 (doubles the size)
+        font.setColor(Color.BLACK);
     }
 
     private void setPlayerTexture(String name){
@@ -73,6 +78,10 @@ public class Player extends Character {
     public void render(SpriteBatch batch)
     {
         batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+
+        layout.setText(font, (CharSequence) this.name);
+
+        this.font.draw(batch, this.name, getX()+this.getWidth()/2-layout.width/2, getY() + getHeight() + 10);
 
         if(this.isShielded){
             batch.draw(SHIELD_TEXTURE, this.getX(), this.getY(), this.getWidth(), this.getHeight());
