@@ -75,7 +75,9 @@ public class GameModel extends Game {
 
         //this.generatePowerUps();
         this.everyCrateHasPowerUp();
+        initScoreboard();
     }
+
     private void generatePowerUps() {
         Random random = new Random();
 
@@ -210,6 +212,13 @@ public class GameModel extends Game {
         //Reset powerups
         //this.generatePowerUps();
         this.everyCrateHasPowerUp();
+    }
+
+    public void initScoreboard()
+    {
+        playerToWinCount.put("Játékos 1", 0);
+        playerToWinCount.put("Játékos 2", 0);
+        playerToWinCount.put("Játékos 3", 0);
     }
 
     public String determineRoundWinner()

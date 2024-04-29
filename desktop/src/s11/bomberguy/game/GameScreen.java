@@ -2,12 +2,19 @@ package s11.bomberguy.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 import s11.bomberguy.explosives.Explosion;
@@ -26,7 +33,8 @@ public class GameScreen implements Screen {
     private final BitmapFont font;
     private final GlyphLayout glyph;
     private int overFor = 0;
-
+    private Stage stage;
+    private Table table;
 
     // game provides initialized data
     public GameScreen(GameModel model) {
@@ -37,8 +45,22 @@ public class GameScreen implements Screen {
         this.camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT); // Map dimensions in pixels
 
         this.batch = new SpriteBatch();
+
         this.font = new BitmapFont();
+        font.getData().setScale(1); // Set font scale to 2 (doubles the size)
+        font.setColor(Color.BLACK);
+
         this.glyph = new GlyphLayout();
+
+        // Table for scoreboard
+        this.table = new Table();
+        table.padTop(5);
+
+        // Stage for table
+        stage = new Stage();
+        Viewport viewport = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT, camera);
+        stage.setViewport(viewport);
+        Gdx.input.setInputProcessor(stage);
 
         // Calculate the unit scale to fit the map onto the screen
         float unitScale = 1f; // Start with 1:1 mapping
@@ -81,6 +103,7 @@ public class GameScreen implements Screen {
         batch.begin();
 
         // Draw content
+        drawScoreboard();
         movePlayers();
         drawPlayers();
         moveMonsters();
@@ -93,7 +116,37 @@ public class GameScreen implements Screen {
 
         // End draw
         batch.end();
+
+        stage.act(delta);
+        stage.draw();
     }
+
+    public void drawScoreboard() {
+        // Clear the table first
+        table.clear();
+
+        // Set the table to fill the stage
+        table.setFillParent(true);
+
+        // Iterate through player scores and add them to the table
+        model.getPlayerToWinCount().forEach((key, value) -> {
+            Label playerNameLabel = new Label(key+":", new Label.LabelStyle(font, Color.BLACK));
+            Label playerWinCountLabel = new Label(value.toString(), new Label.LabelStyle(font, Color.BLACK));
+            table.add(playerNameLabel).padRight(10);
+            table.add(playerWinCountLabel).padRight(20);
+        });
+
+        // Since the table is set to fill the parent, we adjust its position to align it at the top
+        table.align(Align.top);
+
+        // Add the table to the stage only if it's not already added
+        if (!stage.getActors().contains(table, true)) {
+            stage.addActor(table);
+        }
+    }
+
+
+
 
     public void drawPlayers()
     {
