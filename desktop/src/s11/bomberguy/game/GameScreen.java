@@ -47,7 +47,7 @@ public class GameScreen implements Screen {
         this.batch = new SpriteBatch();
 
         this.font = new BitmapFont();
-        font.getData().setScale(1);
+        font.getData().setScale(1); // Set font scale to 2 (doubles the size)
         font.setColor(Color.BLACK);
 
         this.glyph = new GlyphLayout();
@@ -144,6 +144,9 @@ public class GameScreen implements Screen {
             stage.addActor(table);
         }
     }
+
+
+
 
     public void drawPlayers()
     {
