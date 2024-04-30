@@ -116,7 +116,7 @@ public class Player extends Character {
             if (Gdx.input.isKeyPressed(controls.getDownButton())) {
                 newY -= moveSpeed * Gdx.graphics.getDeltaTime();
             }
-            if (Gdx.input.isKeyPressed(controls.getExtraButton()) && placeableBoxes - placedBoxes > 0) {
+            if (Gdx.input.isKeyJustPressed(controls.getExtraButton()) && placeableBoxes - placedBoxes > 0 && recentCrate==null) {
                 ++placedBoxes;
 
                 MapGroupLayer groupLayer = (MapGroupLayer) map.getLayers().get("collidables");
