@@ -9,7 +9,6 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.Collidables;
 import s11.bomberguy.PlayerControl;
@@ -20,7 +19,6 @@ import s11.bomberguy.mapElements.Crate;
 import s11.bomberguy.mapElements.Wall;
 import s11.bomberguy.powerups.*;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -93,7 +91,17 @@ public class Player extends Character {
 
     }
 
-    // Sprites are collidable
+    /**
+     * <p> Moves the player on the map when the movement keys are being pressed down. Also handles:
+     *  <ul>
+     *    <li>Box placement Power Up</li>
+     *    <li>Ghost Power Up</li>
+     *    <li>Explosion damage</li>
+     *    <li>Power Up collection</li>
+     *  </ul>
+     * </p>
+     * @param map the map the player is located on
+     */
     public void move(TiledMap map) {
         float newX = getX();
         float newY = getY();
@@ -175,7 +183,13 @@ public class Player extends Character {
         }
     }
 
-    // Method to check if the player will collide with a collidable at the specified position
+    /**
+     * <p> Checks if there is a collision of the provided collidable with the provided coordinates </p>
+     * @param collidable the Sprite to check potential collision with
+     * @param newX the X coordinate to check collision with
+     * @param newY the Y coordinate to check collision with
+     * @return whether collidable collides with the coordinates
+     */
     private <T extends Sprite> boolean collidesWith(T collidable, float newX, float newY) {
         float oldX = getX();
         float oldY = getY();
@@ -191,6 +205,9 @@ public class Player extends Character {
         return result;
     }
 
+    /**
+     * <p> Places a bomb on the map if the player can do so </p>
+     */
     public void placeBomb(){
 
         if(Gdx.input.isKeyJustPressed(controls.getBombButton())  && this.isAlive)
@@ -235,11 +252,15 @@ public class Player extends Character {
             }
         }
     }
-
+    /**
+     * <p> Essentially activates the Power Up </p>
+     * <p> Makes the appropriate changes based on the Power Up to the Player </p>
+     * @param powerUp the collected Power Up
+     */
     private void powerUpInteraction(Sprite powerUp){
         if(powerUp instanceof RollerSkates){
             if(!this.activePowerUps.contains("RollerSkate")){
-                this.moveSpeed *= 1.25;
+                this.moveSpeed *= 1.25f;
                 this.activePowerUps.add("RollerSkate");
             }
         }
@@ -273,8 +294,9 @@ public class Player extends Character {
         collidables.removeCollidable(powerUp);
     }
 
-
-
+    /**
+     * <p> Activates the ghost Power Up </p>
+     */
     private void activateGhost() {
         this.isGhosted = true;
         this.activePowerUps.add("Ghost");
@@ -322,6 +344,9 @@ public class Player extends Character {
 
     }
 
+    /**
+     * <p> Activates the shield Power Up </p>
+     */
     private void activateShield(){
         this.isShielded = true;
         this.activePowerUps.add("Shield");
