@@ -49,8 +49,8 @@ public class Explosion extends Sprite {
             }
         };
 
-        TimerManager.scheduleTask(spread, 1);
-        TimerManager.scheduleTask(stop, 2);
+        TimerManager.scheduleTask(spread, 0.2f);
+        TimerManager.scheduleTask(stop, 1);
     }
 
     private void spread() {
