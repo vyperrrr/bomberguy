@@ -22,6 +22,7 @@ import s11.bomberguy.powerups.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 
 public class Player extends Character {
@@ -202,7 +203,14 @@ public class Player extends Character {
                 BOMB_COUNT--;
 
                 // Create new bomb that receives player coordinates
-                Bomb bomb = new Bomb(this.getX(), this.getY(), this.EXPLOSION_RANGE);
+                //Bomb bomb = new Bomb( this.getX() , this.getY(), this.EXPLOSION_RANGE);
+
+                Function<Float, Float> center = x ->{
+                    float result = (((int) (x / 32.0)) * 32) + 8;
+                    return result;
+                };
+
+                Bomb bomb = new Bomb( center.apply(getX()) , center.apply(getY()), this.EXPLOSION_RANGE);
 
                 // Explode and remove bomb from active bombs after 4 seconds...
                 bomb.getTimer().scheduleTask(new Timer.Task() {

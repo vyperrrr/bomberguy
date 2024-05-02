@@ -67,8 +67,6 @@ public class Crate extends Sprite {
                 }
             }
 
-
-
             return this;
         }
         return null;
