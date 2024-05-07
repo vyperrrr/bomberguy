@@ -62,6 +62,10 @@ public class Player extends Character {
         font.setColor(Color.BLACK);
     }
 
+    /**
+     * <p> Sets the given player's texture to a predefined value. </p>
+     * @param name used to identify the player
+     */
     private void setPlayerTexture(String name){
         switch (name){
             case "Játékos 2":
@@ -72,7 +76,9 @@ public class Player extends Character {
                 break;
         }
     }
-
+    /**
+     * <p> Draws the player texture (or ghost / shield) and name to the map. </p>
+     */
     public void render(SpriteBatch batch)
     {
         batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
