@@ -228,7 +228,7 @@ public class GameScreen implements Screen {
         ArrayList<Crate> cratesToDestroy = new ArrayList<>();
         model.getCollidables().getCollidables().forEach(sprite -> {
                     if(sprite instanceof Crate){
-                        cratesToDestroy.add(((Crate) sprite).destroy(batch, model.getTiledMap()));
+                        cratesToDestroy.add(((Crate) sprite).destroy(model.getTiledMap()));
                     }
                 }
         );
