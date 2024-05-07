@@ -161,14 +161,16 @@ public class Player extends Character {
         else
             BOMB_COLLISION_FLAG = false;
 
-        //if collides with a monster, it's es hora de dormir mimir amimir (it dies)
+        //if collides with a monster, it's es hora de dormir mimir amimir (it dies)---
         if(willCollide && collidedWith instanceof Monster && !isShielded ){
             this.isAlive=false;
+            System.out.println("Es hora de dormir");
         }
 
         //if collides with an explosion, it dies
         if(willCollide && collidedWith instanceof Explosion && !isShielded){
             this.isAlive=false;
+            System.out.println("die");
         }
 
         if(willCollide && collidedWith instanceof PowerUp ){
@@ -361,6 +363,10 @@ public class Player extends Character {
 
     public ArrayList<String> getActivePowerUps() {
         return activePowerUps;
+    }
+
+    public Boolean getShielded() {
+        return isShielded;
     }
 
     public void setActivePowerUps(ArrayList<String> activePowerUps) {

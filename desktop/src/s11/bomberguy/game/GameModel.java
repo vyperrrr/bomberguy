@@ -74,8 +74,8 @@ public class GameModel extends Game {
 
         setScreen(new GameScreen(this));
 
-        this.generatePowerUps();
-        //this.everyCrateHasPowerUp();
+        //this.generatePowerUps();
+        this.everyCrateHasPowerUp();
         initScoreboard();
     }
 
@@ -331,7 +331,8 @@ public class GameModel extends Game {
     }
     public void putDownRandomPowerUp(float x, float y) {
         Random random = new Random();
-        switch (random.nextInt(7)){
+        //random.nextInt(8)
+        switch (random.nextInt(8)){
             case 1:
                 collidables.addCollidable(new BonusBomb(x,y));
                 break;

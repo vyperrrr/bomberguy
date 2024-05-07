@@ -84,9 +84,12 @@ public class Monster extends Character{
         setY(oldY);
 
         //If the monster collides with a player, the player dies
+
         if(result && collidable instanceof Player){
-            ((Player) collidable).isAlive = false;
-            return false;
+            if(!((Player) collidable).getShielded()){
+                ((Player) collidable).isAlive = false;
+                return false;
+            }
         }
 
         return result;
