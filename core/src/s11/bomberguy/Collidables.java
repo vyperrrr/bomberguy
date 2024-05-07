@@ -21,6 +21,10 @@ public class Collidables {
         collidables = new ArrayList<>();
     }
 
+    /**
+     * <p> Creates / returns already existing signleton instance </p>
+     * @return singleton Collidables instance
+     */
     public static Collidables getInstance() {
         if (instance == null) {
             instance = new Collidables();
@@ -32,22 +36,44 @@ public class Collidables {
         return collidables;
     }
 
+    /**
+     * <p> Adds the collidableObjects to the collidables ArrayList of the instance. </p>
+     * @param collidableObjects Sprite objects to add to the Collidables collidables ArrayList.
+     */
     public <T extends Sprite> void addCollidables(ArrayList<T> collidableObjects) {
         collidables.addAll(collidableObjects);
     }
 
+    /**
+     * <p> Removes the collidableObjects from the collidables ArrayList of the instance. </p>
+     * <p> If any of the elements of the collidableObject isn't in the collidables just ignores it. </p>
+     * @param collidableObjects Sprite objects to remove from the Collidables collidables ArrayList.
+     */
     public <T extends Sprite> void removeCollidables(ArrayList<T> collidableObjects) {
         collidables.removeAll(collidableObjects);
     }
 
+    /**
+     * <p> Adds the collidableObject to the collidables ArrayList of the instance. </p>
+     * @param collidableObject Sprite object to add to the Collidables collidables ArrayList.
+     */
     public <T extends Sprite> void addCollidable(T collidableObject) {
         collidables.add(collidableObject);
     }
 
+    /**
+     * <p> Removes the collidableObject from the collidables ArrayList of the instance. </p>
+     * <p> If collidableObject isn't in the collidables just ignores it. </p>
+     * @param collidableObject Sprite object to remove from the Collidables collidables ArrayList.
+     */
     public <T extends Sprite> void removeCollidable(T collidableObject) {
         collidables.remove(collidableObject);
     }
 
+    /**
+     * <p> Returns an ArrayList of the Crate objects present in the instance's collidables. </p>
+     * @return ArrayList containing the instance's Crate objects in the collidables.
+     */
     public ArrayList<Crate> getCrates(){
         ArrayList<Crate> crates = new ArrayList<>();
 
@@ -60,6 +86,9 @@ public class Collidables {
         return crates;
     }
 
+    /**
+     * <p> Sets tge insstance's collidables to an empty ArrayList </p>
+     */
     public void clearCollidables() {
         this.collidables.clear();
     }
