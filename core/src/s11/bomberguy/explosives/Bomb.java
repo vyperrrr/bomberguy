@@ -29,11 +29,17 @@ public class Bomb extends Sprite {
 
     }
 
+    /**
+     * <p> Draws the bomb to the screen. </p>
+     */
     public void render(SpriteBatch batch)
     {
         batch.draw(this.getTexture(),this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
+    /**
+     * <p> Creates explosion from bomb. </p>
+     */
     public void explode()
     {
         if(!this.exploded){
