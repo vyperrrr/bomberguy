@@ -2,7 +2,6 @@ package s11.bomberguy.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapGroupLayer;
 import com.badlogic.gdx.maps.MapLayer;
@@ -117,7 +116,7 @@ public class GameModel extends Game {
                     // Iterate through the tiles of the tiled layer
                     for (int row = 0; row < tiledLayer.getHeight(); row++) {
                         for (int col = 0; col < tiledLayer.getWidth(); col++) {
-                            Sprite sprite = TileSpriteFactory.createCrateOrWall(tiledMap, tiledLayer, col, row);
+                            Sprite sprite = TileSpriteFactory.createCrateOrWall(tiledLayer, col, row);
                             if (sprite != null) {
                                 // Add the sprite to your sprite batch or render it as needed
                                 collidables.addCollidable(sprite);
