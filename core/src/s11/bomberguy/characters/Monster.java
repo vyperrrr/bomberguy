@@ -23,7 +23,11 @@ public class Monster extends Character{
     public Monster(float x, float y, float width, float height, float moveSpeed) {
         super(MONSTER_TEXTURE, x, y, width, height, moveSpeed);
     }
-
+    /**
+     * <p> Makes the Monster move, it turns if it
+     * would hit something and there is a small chance for random turns. </p>
+     * <p>Also checks collision with bomb, in this case the Monster dies.</p>
+     */
     public void move(){
         if (this.isAlive){
             float newX = getX();
@@ -71,6 +75,13 @@ public class Monster extends Character{
         }
     }
 
+    /**
+     * <p> Checks if there is a collision of the provided collidable with the provided coordinates </p>
+     * @param collidable the Sprite to check potential collision with
+     * @param newX the X coordinate to check collision with
+     * @param newY the Y coordinate to check collision with
+     * @return whether collidable collides with the coordinates
+     */
     private <T extends Sprite> boolean monsterCollidesWith(T collidable, float newX, float newY) {
         float oldX = getX();
         float oldY = getY();
@@ -92,6 +103,9 @@ public class Monster extends Character{
         return result;
     }
 
+    /**
+     * <p> Turns the Monster to a random direction. </p>
+     */
     private void newDirection(){
         int tempDir = random.nextInt(4)+1;
         while(this.direction == tempDir){
