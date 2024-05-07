@@ -15,13 +15,20 @@ public abstract class Character extends Sprite {
         this.moveSpeed = moveSpeed;
     }
 
-    // Used to draw player to screen
+    /**
+     * <p> Renders the character to the screen. </p>
+     * @param batch the game's SpriteBatch, used to draw to the screen.
+     */
     public void render(SpriteBatch batch)
     {
         batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
-    // Check if collides
+    /**
+     * <p> Checks if there is a collision of the Character with the provided otherSprite </p>
+     * @param otherSprite the Sprite to check potential collision with
+     * @return whether the Character collides with the given otherSprite
+     */
     public <T extends Sprite> boolean collidesWith(T otherSprite) {
         return this.getBoundingRectangle().overlaps(otherSprite.getBoundingRectangle());
     }
