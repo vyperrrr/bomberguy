@@ -22,6 +22,7 @@ import s11.bomberguy.mapElements.Crate;
 import s11.bomberguy.powerups.*;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class GameScreen implements Screen {
     private final float SCREEN_WIDTH = 960;
@@ -266,10 +267,16 @@ public class GameScreen implements Screen {
                     }
                 }
         );
+
+        Function<Float, Float> center = x ->{
+            float result = (((int) (x / 32.0)) * 32) + 8;
+            return result;
+        };
+
         cratesToDestroy.forEach(crateToDestroy -> {
             model.getCollidables().removeCollidable(crateToDestroy);
             if(crateToDestroy != null && crateToDestroy.isPowerUpInside()){
-                model.putDownRandomPowerUp(crateToDestroy.getX(), crateToDestroy.getY());
+                model.putDownRandomPowerUp(center.apply(crateToDestroy.getX()), center.apply(crateToDestroy.getY()));
             }
         });
     }

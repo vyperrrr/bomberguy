@@ -12,6 +12,7 @@ import s11.bomberguy.*;
 import s11.bomberguy.characters.Character;
 import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
+import s11.bomberguy.mapElements.Crate;
 import s11.bomberguy.powerups.*;
 
 import java.util.*;
@@ -84,17 +85,14 @@ public class GameModel extends Game {
     }
 
     private void generatePowerUps() {
-        Random random = new Random();
-
-        int crateNum = collidables.getCrates().size();
+        ArrayList<Crate> crates = collidables.getCrates();
+        Collections.shuffle(crates);
         int powerUpNum = 0;
+        double percentage = 0.5;
 
-        while(powerUpNum < crateNum / 2){
-            int randomCrateIndex = random.nextInt(crateNum-1);
-            if(!collidables.getCrates().get(randomCrateIndex).isPowerUpInside() && collidables.getCrates().get(randomCrateIndex).getOwner() == null){
-                collidables.getCrates().get(randomCrateIndex).setPowerUpInside(true);
-                powerUpNum++;
-            }
+        while(powerUpNum < crates.size() * percentage){
+            crates.get(powerUpNum).setPowerUpInside(true);
+            powerUpNum++;
         }
     }
 
@@ -371,6 +369,7 @@ public class GameModel extends Game {
      */
     public void putDownRandomPowerUp(float x, float y) {
         Random random = new Random();
+        //random.nextInt(8)
         switch (random.nextInt(8)){
             case 1:
                 collidables.addCollidable(new BonusBomb(x,y));
