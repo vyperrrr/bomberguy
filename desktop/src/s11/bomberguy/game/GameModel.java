@@ -2,7 +2,6 @@ package s11.bomberguy.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapGroupLayer;
 import com.badlogic.gdx.maps.MapLayer;
@@ -36,10 +35,16 @@ public class GameModel extends Game {
     private HashMap<Integer, String> roundToWinner;
     private boolean isOver = false;
 
-    // Data passed by GUI
-    public GameModel() {
-    }
-
+    /**
+     * <p> Initializes the GameModel:
+     * <ul>
+     *     <li>Gets playerNum, roundNum, mapNum from GameSetup</li>
+     *     <li>Generates players and monsters</li>
+     *     <li>Loads the walls and crates</li>
+     *     <li>Sets up the screen for rendering</li>
+     * </ul>
+     * </p>
+     */
     @Override
     public void create() {
         // Initialize players
@@ -91,12 +96,18 @@ public class GameModel extends Game {
         }
     }
 
+    /**
+     * <p> Generates powerUps inside every crate (Intended for testing purposes) </p>
+     */
     private void everyCrateHasPowerUp(){
         this.collidables.getCrates().forEach( crate -> {
             crate.setPowerUpInside(true);
         } );
     }
 
+    /**
+     * <p> Adds the walls and crates from the map to the collidables instance </p>
+     */
     public void setCollidableMapLayers()
     {
         // Get the group layer (folder) named "collidables"
@@ -115,7 +126,7 @@ public class GameModel extends Game {
                     // Iterate through the tiles of the tiled layer
                     for (int row = 0; row < tiledLayer.getHeight(); row++) {
                         for (int col = 0; col < tiledLayer.getWidth(); col++) {
-                            Sprite sprite = TileSpriteFactory.createCrateOrWall(tiledMap, tiledLayer, col, row);
+                            Sprite sprite = TileSpriteFactory.createCrateOrWall(tiledLayer, col, row);
                             if (sprite != null) {
                                 // Add the sprite to your sprite batch or render it as needed
                                 collidables.addCollidable(sprite);
@@ -127,6 +138,9 @@ public class GameModel extends Game {
         }
     }
 
+    /**
+     * <p> Generatesand spawns the (correct number of) players to the right spawn locations.  </p>
+     */
     public void generatePlayers()
     {
         MapLayer playerSpawnLayer = tiledMap.getLayers().get("Player spawn");
@@ -156,6 +170,9 @@ public class GameModel extends Game {
         }
     }
 
+    /**
+     * <p> Generates and spawns monsters to the spawn points predefined on each map </p>
+     */
     public void generateMonsters()
     {
         MapLayer monsterSpawnLayer = tiledMap.getLayers().get("Monster spawn");
@@ -179,6 +196,9 @@ public class GameModel extends Game {
         }
     }
 
+    /**
+     * <p> Resets the Game state, including the player, the monsters, the collidables and the map itself </p>
+     */
     public void resetGame() {
         TimerManager.disposeAllTasks();
         players.clear();
@@ -212,6 +232,9 @@ public class GameModel extends Game {
         this.everyCrateHasPowerUp();
     }
 
+    /**
+     * <p> Initializes the scoreboard to 0 points for each player </p>
+     */
     public void initScoreboard()
     {
         playerToWinCount.put("Játékos 1", 0);
@@ -219,6 +242,10 @@ public class GameModel extends Game {
         playerToWinCount.put("Játékos 3", 0);
     }
 
+    /**
+     * <p> Returns with the winner of the last round </p>
+     * @return the name of the winner of the last round, or "Döntetlen" if it is a draw
+     */
     public String determineRoundWinner()
     {
         Optional<Player> roundWinner = players.stream().filter(Character::isAlive).collect(Collectors.collectingAndThen(Collectors.toList(), list -> list.size() > 1 ? Optional.empty() : list.stream().findFirst()));
@@ -228,6 +255,10 @@ public class GameModel extends Game {
         return "Döntetlen";
     }
 
+    /**
+     * <p> Returns with the winner of the game </p>
+     * @return the name of the winner of the game, or "Döntetlen" if it is a draw
+     */
     public String determineGameWinner() {
         // Assuming playerToWinCount is already populated
         String winner = null;
@@ -329,6 +360,13 @@ public class GameModel extends Game {
     public HashMap<String, Integer> getPlayerToWinCount() {
         return playerToWinCount;
     }
+
+    /**
+     * <p> Adds to the collidables a powerUp of random king at the specified coordinates </p>
+     * @param x the x coordinate of the new powerUp
+     * @param y the y coordinate of the new powerUp
+
+     */
     public void putDownRandomPowerUp(float x, float y) {
         Random random = new Random();
         //random.nextInt(8)

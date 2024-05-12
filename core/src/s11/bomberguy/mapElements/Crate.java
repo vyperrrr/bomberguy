@@ -2,7 +2,6 @@ package s11.bomberguy.mapElements;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapGroupLayer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -40,7 +39,12 @@ public class Crate extends Sprite {
         this.owner = owner;
     }
 
-    public Crate destroy(SpriteBatch batch, TiledMap map){
+    /**
+     * <p> Checks if the crate was exploded and if it was removes it from the map and the collidables. </p>
+     * @param map the map, used to remove the Crate from it.
+     * @return null if the crate was not in an explosion, the crate object that was removed if it was in an explosion.
+     */
+    public Crate destroy(TiledMap map){
         Collidables collidables = Collidables.getInstance();
 
         boolean willCollide = false;

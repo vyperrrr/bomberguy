@@ -53,6 +53,9 @@ public class Explosion extends Sprite {
         TimerManager.scheduleTask(stop, 1);
     }
 
+    /**
+     * <p>  Creates new explosions in the available directions. </p>
+     */
     private void spread() {
         if (this.range > 0) {
             Collidables collidables = Collidables.getInstance();
@@ -92,6 +95,10 @@ public class Explosion extends Sprite {
 
     // WALL_HIT_FLAG - next explosion will hit a wall if true
     // CRATE_HIT_FLAG - next explosion will hit a crate if true
+    /**
+     * <p> Checks if there is a collision with any crate / wall on the provided coordinates </p>
+     * @return index 0: Collision with wall on the coordinates, index 1: Collision with crate on the coordinates.
+     */
     private boolean[] filter(float directionX, float directionY)
     {
         AtomicBoolean WALL_HIT_FLAG = new AtomicBoolean(false);
@@ -107,11 +114,18 @@ public class Explosion extends Sprite {
         return new boolean[]{WALL_HIT_FLAG.get(), CRATE_HIT_FLAG.get()};
     }
 
+    /**
+     * <p> Removes the Explosion from collidables </p>
+     */
     private void stop() {
         Collidables collidables = Collidables.getInstance();
         collidables.removeCollidable(this);
     }
 
+    /**
+     * <p> Renders the explosion to the screen </p>
+     * @param batch the SpriteBatch used for rendering
+     */
     public void render(SpriteBatch batch) {
         batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }

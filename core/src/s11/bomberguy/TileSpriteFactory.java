@@ -36,7 +36,15 @@ public class TileSpriteFactory {
         return null;
     }
 
-    public static <T extends Sprite> T createCrateOrWall(TiledMap tiledMap, TiledMapTileLayer layer, int col, int row){
+    /**
+     * <p> Checks col,row position of the layer, and if the cell is a crate, creates a Crate instance from it,
+     * if it is a wall it creates a Wall instance from.</p>
+     * @param layer the layer on which to check for crate or wall
+     * @param col the cell of the row to check
+     * @param row the row of the layer to check
+     * @return T type Sprite if the cell is a crate or a wall, otherwise null
+     */
+    public static <T extends Sprite> T createCrateOrWall(TiledMapTileLayer layer, int col, int row){
         // Get the cell at the specified column and row
         TiledMapTileLayer.Cell cell = layer.getCell(col, row);
 
