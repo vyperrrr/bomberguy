@@ -178,13 +178,11 @@ public class Player extends Character {
         //if collides with a monster, it's es hora de dormir mimir amimir (it dies)---
         if(willCollide && collidedWith instanceof Monster && !isShielded ){
             this.isAlive=false;
-            System.out.println("Es hora de dormir");
         }
 
         //if collides with an explosion, it dies
         if(willCollide && collidedWith instanceof Explosion && !isShielded){
             this.isAlive=false;
-            System.out.println("die");
         }
 
         if(willCollide && collidedWith instanceof PowerUp ){
