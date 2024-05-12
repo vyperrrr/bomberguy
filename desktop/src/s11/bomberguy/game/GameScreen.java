@@ -82,6 +82,10 @@ public class GameScreen implements Screen {
 
     }
 
+    /**
+     * <p> Draws the state of the game to the screen.</p>
+     * @param delta Time since last refresh
+     */
     @Override
     public void render(float delta) {
         if (model.isOver() || overFor > 0) { overFor ++; }
@@ -121,6 +125,9 @@ public class GameScreen implements Screen {
         stage.draw();
     }
 
+    /**
+     * <p> Draws the current score of each player to the top of the window.</p>
+     */
     public void drawScoreboard() {
         // Clear the table first
         table.clear();
@@ -145,6 +152,9 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * <p> Draws the players to the screen.</p>
+     */
     public void drawPlayers()
     {
         // Render players
@@ -157,6 +167,9 @@ public class GameScreen implements Screen {
         });
     }
 
+    /**
+     * <p> Draws the monsters to the screen.</p>
+     */
     public void drawMonsters()
     {
         // Render players
@@ -169,6 +182,9 @@ public class GameScreen implements Screen {
         });
     }
 
+    /**
+     * <p> Checks if player movement keys are pressed down, and moves the player if they are.</p>
+     */
     public void movePlayers()
     {
         int alive = 0;
@@ -184,17 +200,26 @@ public class GameScreen implements Screen {
         // Need to pass collidables to move, only players for now
         model.getPlayers().forEach(x -> x.move(model.getTiledMap()));
     }
+    /**
+     * <p> Calls the monsters movement method.</p>
+     */
     public void moveMonsters()
     {
         model.getMonsters().forEach(Monster::move);
     }
 
+    /**
+     * <p> Places a bomb under the player if they pressed the corresponding button.</p>
+     */
     public void placeBombs()
     {
         // Render bombs
         model.getPlayers().forEach(Player::placeBomb);
     }
 
+    /**
+     * <p> Draws the bombs to the screen.</p>
+     */
     public void drawBombs()
     {
         // Render bombs
@@ -205,6 +230,9 @@ public class GameScreen implements Screen {
         }));
     }
 
+    /**
+     * <p> Draws the explosions to the screen. </p>
+     */
     public void drawExplosions(){
         model.getCollidables().getCollidables().forEach(sprite -> {
             if(sprite instanceof Explosion){
@@ -214,6 +242,9 @@ public class GameScreen implements Screen {
         );
     }
 
+    /**
+     * <p> Draws the icons representing the powerUps. </p>
+     */
     public void drawPowerUps(){
         model.getCollidables().getCollidables().forEach(sprite -> {
                     if(sprite instanceof PowerUp){
@@ -223,6 +254,9 @@ public class GameScreen implements Screen {
         );
     }
 
+    /**
+     * <p> Checks if there are crates to be removed from the game and removes them.</p>
+     */
     public void destroyCrates()
     {
         ArrayList<Crate> cratesToDestroy = new ArrayList<>();
