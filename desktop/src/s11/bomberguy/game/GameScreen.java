@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -32,10 +31,9 @@ public class GameScreen implements Screen {
     private final SpriteBatch batch;
     private final OrthogonalTiledMapRenderer tiledMapRenderer;
     private final BitmapFont font;
-    private final GlyphLayout glyph;
     private int overFor = 0;
-    private Stage stage;
-    private Table table;
+    private final Stage stage;
+    private final Table table;
 
     // game provides initialized data
     public GameScreen(GameModel model) {
@@ -50,8 +48,6 @@ public class GameScreen implements Screen {
         this.font = new BitmapFont();
         font.getData().setScale(1);
         font.setColor(Color.BLACK);
-
-        this.glyph = new GlyphLayout();
 
         // Table for scoreboard
         this.table = new Table();
@@ -94,7 +90,6 @@ public class GameScreen implements Screen {
         if (overFor > 480) {
             model.setScreen(new SummaryScreen(model));
         }
-
 
         // Set the clear color to grey (R, G, B, Alpha)
         Gdx.gl.glClearColor(128, 128, 128, 1);
@@ -268,10 +263,7 @@ public class GameScreen implements Screen {
                 }
         );
 
-        Function<Float, Float> center = x ->{
-            float result = (((int) (x / 32.0)) * 32) + 8;
-            return result;
-        };
+        Function<Float, Float> center = x -> (float) ((((int) (x / 32.0)) * 32) + 8);
 
         cratesToDestroy.forEach(crateToDestroy -> {
             model.getCollidables().removeCollidable(crateToDestroy);

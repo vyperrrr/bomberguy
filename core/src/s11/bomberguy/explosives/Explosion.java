@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Explosion extends Sprite {
 
 
-    private int direction;
+    private final int direction;
     /*
     direction in which the explosion will spread
     0-every direction
@@ -24,7 +24,7 @@ public class Explosion extends Sprite {
     3-left
     4-right
      */
-    private int range;
+    private final int range;
     private static final int EXPLOSION_WIDTH = 32;
     private static final int EXPLOSION_HEIGHT = 32;
     private static final Texture EXPLOSION_TEXTURE = new Texture("assets/explosion.jpg");

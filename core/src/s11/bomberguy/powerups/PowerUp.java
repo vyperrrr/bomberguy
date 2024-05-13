@@ -2,10 +2,8 @@ package s11.bomberguy.powerups;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Timer;
 
 public class PowerUp extends Sprite {
-    private Timer timer = new Timer();
     private static final int POWERUP_SIZE = 12;
 
     public PowerUp(float x, float y){

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TimerManager {
-    private static List<Timer.Task> tasks = new ArrayList<>();
+    private static final List<Timer.Task> tasks = new ArrayList<>();
 
     public static void addTask(Timer.Task task) {
         tasks.add(task);

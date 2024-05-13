@@ -2,8 +2,6 @@ package s11.bomberguy;
 
 import static com.badlogic.gdx.Input.*;
 
-import static java.awt.event.KeyEvent.*;
-
 public class PlayerControl {
     private int upButton;
     private int downButton;

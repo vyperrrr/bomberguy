@@ -24,17 +24,14 @@ import java.util.function.Function;
 
 
 public class Player extends Character {
-    private String name;
-    private Timer timer;
+    private final String name;
     PlayerControl controls;
     private int BOMB_COUNT;
     private int MAX_BOMB_COUNT;
     private int EXPLOSION_RANGE = 2;
-    private ArrayList<Bomb> activeBombs;
+    private final ArrayList<Bomb> activeBombs;
     private boolean BOMB_COLLISION_FLAG;
-
-    private ArrayList<Explosion> explosions;
-    private ArrayList<String> activePowerUps;
+    private final ArrayList<String> activePowerUps;
     private Boolean isShielded = false;
     private Boolean isGhosted = false;
     private Boolean hasDetonator = false;
@@ -57,7 +54,6 @@ public class Player extends Character {
         this.BOMB_COLLISION_FLAG = false;
         this.activeBombs = new ArrayList<>();
         this.controls = controls;
-        this.timer = new Timer();
         this.setPlayerTexture(this.name);
         font.getData().setScale(0.55f); // Set font scale to 2 (doubles the size)
         font.setColor(Color.BLACK);
@@ -84,7 +80,7 @@ public class Player extends Character {
     {
         batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
 
-        layout.setText(font, (CharSequence) this.name);
+        layout.setText(font, this.name);
 
         this.font.draw(batch, this.name, getX()+this.getWidth()/2-layout.width/2, getY() + getHeight() + 10);
 
@@ -228,10 +224,7 @@ public class Player extends Character {
                 // Create new bomb that receives player coordinates
                 //Bomb bomb = new Bomb( this.getX() , this.getY(), this.EXPLOSION_RANGE);
 
-                Function<Float, Float> center = x ->{
-                    float result = (((int) (x / 32.0)) * 32) + 8;
-                    return result;
-                };
+                Function<Float, Float> center = x -> (float) ((((int) (x / 32.0)) * 32) + 8);
 
                 Bomb bomb = new Bomb( center.apply(getX()) , center.apply(getY()), this.EXPLOSION_RANGE);
 
@@ -345,7 +338,7 @@ public class Player extends Character {
                     }
                 }
 
-                if(collidedWith != null && (collidedWith instanceof Crate || collidedWith instanceof Wall)){
+                if((collidedWith instanceof Crate || collidedWith instanceof Wall)){
                     isAlive= false;
                 }
 
@@ -390,41 +383,18 @@ public class Player extends Character {
         TimerManager.scheduleTask(deactivateShield, duration);
     }
 
-    public ArrayList<String> getActivePowerUps() {
-        return activePowerUps;
-    }
-
     public Boolean getShielded() {
         return isShielded;
-    }
-
-    public void setActivePowerUps(ArrayList<String> activePowerUps) {
-        this.activePowerUps = activePowerUps;
-    }
-
-    public int getBombCount() {
-        return BOMB_COUNT;
-    }
-
-    public void setBombCount(int BOMB_COUNT) {
-        this.BOMB_COUNT = BOMB_COUNT;
     }
 
     public ArrayList<Bomb> getActiveBombs() {
         return activeBombs;
     }
 
-    public void setActiveBombs(ArrayList<Bomb> activeBombs) {
-        this.activeBombs = activeBombs;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
     public int getPlacedBoxes() {
         return placedBoxes;
     }

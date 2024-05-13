@@ -12,10 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import s11.bomberguy.characters.Player;
-
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class SummaryScreen implements Screen {
     GameModel model;
@@ -100,7 +98,7 @@ public class SummaryScreen implements Screen {
         if(model.getCurrentRound() == model.getRoundNum())
         {
             String labelText = "Gyöztes "+model.determineGameWinner();
-            if(model.determineGameWinner() == "Döntetlen")
+            if(Objects.equals(model.determineGameWinner(), "Döntetlen"))
                 labelText = "Döntetlen";
 
             Label winLabel = new Label(labelText, new Label.LabelStyle(font, Color.BLACK));

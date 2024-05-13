@@ -1,15 +1,8 @@
 package s11.bomberguy;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.Timer;
-import com.sun.tools.javac.util.Pair;
-import s11.bomberguy.explosives.Explosion;
 import s11.bomberguy.mapElements.Crate;
-import s11.bomberguy.mapElements.Wall;
-
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Collidables {
 

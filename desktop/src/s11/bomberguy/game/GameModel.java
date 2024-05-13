@@ -18,7 +18,6 @@ import s11.bomberguy.powerups.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 public class GameModel extends Game {
 
     // Initialize with dummy data
@@ -27,10 +26,8 @@ public class GameModel extends Game {
     private AssetManager assetManager;
     private TiledMap tiledMap;
     private Collidables collidables;
-    private int playerNum;
     private int roundNum;
     private int currentRound;
-
     private HashMap<String, Integer> playerToWinCount;
     private HashMap<Integer, String> roundToWinner;
     private boolean isOver = false;
@@ -53,7 +50,6 @@ public class GameModel extends Game {
         playerToWinCount = new HashMap<>();
         roundToWinner = new HashMap<>();
 
-        playerNum = GameSetup.getPlayerNum();
         roundNum = GameSetup.getRounds();
         currentRound = 1;
 
@@ -100,9 +96,7 @@ public class GameModel extends Game {
      * <p> Generates powerUps inside every crate (Intended for testing purposes) </p>
      */
     private void everyCrateHasPowerUp(){
-        this.collidables.getCrates().forEach( crate -> {
-            crate.setPowerUpInside(true);
-        } );
+        this.collidables.getCrates().forEach( crate -> crate.setPowerUpInside(true));
     }
 
     /**
@@ -139,7 +133,7 @@ public class GameModel extends Game {
     }
 
     /**
-     * <p> Generatesand spawns the (correct number of) players to the right spawn locations.  </p>
+     * <p> Generates and spawns the (correct number of) players to the right spawn locations.  </p>
      */
     public void generatePlayers()
     {
@@ -283,40 +277,16 @@ public class GameModel extends Game {
         return players;
     }
 
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
-    }
-
     public ArrayList<Monster> getMonsters() {
         return monsters;
-    }
-
-    public void setMonsters(ArrayList<Monster> monsters) {
-        this.monsters = monsters;
-    }
-
-    public AssetManager getAssetManager() {
-        return assetManager;
-    }
-
-    public void setAssetManager(AssetManager assetManager) {
-        this.assetManager = assetManager;
     }
 
     public TiledMap getTiledMap() {
         return tiledMap;
     }
 
-    public void setTiledMap(TiledMap tiledMap) {
-        this.tiledMap = tiledMap;
-    }
-
     public Collidables getCollidables() {
         return collidables;
-    }
-
-    public void setCollidables(Collidables collidables) {
-        this.collidables = collidables;
     }
 
     public void setOver() { isOver = true; }
@@ -327,18 +297,6 @@ public class GameModel extends Game {
 
     public int getRoundNum() {
         return roundNum;
-    }
-
-    public void setRoundNum(int roundNum) {
-        this.roundNum = roundNum;
-    }
-
-    public int getPlayerNum() {
-        return playerNum;
-    }
-
-    public void setPlayerNum(int playerNum) {
-        this.playerNum = playerNum;
     }
 
     public int getCurrentRound() {
@@ -353,10 +311,6 @@ public class GameModel extends Game {
         return roundToWinner;
     }
 
-    public void setRoundToWinner(HashMap<Integer, String> roundToWinner) {
-        this.roundToWinner = roundToWinner;
-    }
-
     public HashMap<String, Integer> getPlayerToWinCount() {
         return playerToWinCount;
     }
@@ -369,7 +323,7 @@ public class GameModel extends Game {
      */
     public void putDownRandomPowerUp(float x, float y) {
         Random random = new Random();
-        //random.nextInt(8)
+
         switch (random.nextInt(8)){
             case 1:
                 collidables.addCollidable(new BonusBomb(x,y));

@@ -24,28 +24,7 @@ public abstract class Character extends Sprite {
         batch.draw(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
-    /**
-     * <p> Checks if there is a collision of the Character with the provided otherSprite </p>
-     * @param otherSprite the Sprite to check potential collision with
-     * @return whether the Character collides with the given otherSprite
-     */
-    public <T extends Sprite> boolean collidesWith(T otherSprite) {
-        return this.getBoundingRectangle().overlaps(otherSprite.getBoundingRectangle());
-    }
-
     public boolean isAlive() {
         return isAlive;
-    }
-
-    public void setAlive(boolean alive) {
-        isAlive = alive;
-    }
-
-    public float getMoveSpeed() {
-        return moveSpeed;
-    }
-
-    public void setMoveSpeed(float moveSpeed) {
-        this.moveSpeed = moveSpeed;
     }
 }

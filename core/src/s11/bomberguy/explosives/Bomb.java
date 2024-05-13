@@ -5,15 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 import s11.bomberguy.Collidables;
-import s11.bomberguy.mapElements.Crate;
-import s11.bomberguy.mapElements.Wall;
-
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Bomb extends Sprite {
-    private int range;
-    private Timer timer;
+    private final int range;
+    private final Timer timer;
     private static final int BOMB_WIDTH = 12;
     private static final int BOMB_HEIGHT = 12;
     private static final Texture BOMB_TEXTURE = new Texture("assets/bomb.png");
@@ -23,7 +18,6 @@ public class Bomb extends Sprite {
     public Bomb(float x, float y, int range) {
         super.setTexture(BOMB_TEXTURE);
         super.setBounds(x,y, BOMB_WIDTH,BOMB_HEIGHT);
-
         this.range = range;
         timer = new Timer();
 
@@ -59,22 +53,9 @@ public class Bomb extends Sprite {
         }
     }
 
-    public int getRange() {
-        return range;
-    }
-
-    public void setRange(int range) {
-        this.range = range;
-    }
-
     public Timer getTimer() {
         return timer;
     }
-
-    public void setTimer(Timer timer) {
-        this.timer = timer;
-    }
-
     public Boolean getExploded() {
         return exploded;
     }
