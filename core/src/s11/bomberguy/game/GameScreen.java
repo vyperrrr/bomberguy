@@ -18,7 +18,7 @@ import s11.bomberguy.characters.Monster;
 import s11.bomberguy.characters.Player;
 import s11.bomberguy.explosives.Explosion;
 import s11.bomberguy.mapElements.Crate;
-import s11.bomberguy.powerups.*;
+import s11.bomberguy.powerups.PowerUp;
 
 import java.util.ArrayList;
 import java.util.function.Function;

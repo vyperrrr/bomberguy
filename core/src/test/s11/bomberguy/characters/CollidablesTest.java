@@ -1,7 +1,9 @@
-package s11.bomberguy;
+package s11.bomberguy.characters;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import s11.bomberguy.Collidables;
 
 import java.util.ArrayList;
 
@@ -12,7 +14,7 @@ class CollidablesTest {
     @Test
     void getInstance() {
         assertAll(
-                () -> assertEquals(Collidables.getInstance(), Collidables.getInstance(), "Not the same instance!"),
+                () -> Assertions.assertEquals(Collidables.getInstance(), Collidables.getInstance(), "Not the same instance!"),
                 () -> assertNotNull(Collidables.getInstance(), "Instance is Null!")
         );
     }

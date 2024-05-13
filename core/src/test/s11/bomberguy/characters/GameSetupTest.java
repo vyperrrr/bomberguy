@@ -1,8 +1,10 @@
-package s11.bomberguy;
+package s11.bomberguy.characters;
 
 import org.junit.jupiter.api.Test;
+import s11.bomberguy.GameSetup;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameSetupTest {
     @Test
