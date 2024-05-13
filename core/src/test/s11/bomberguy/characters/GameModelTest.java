@@ -1,4 +1,4 @@
-package s11.bomberguy.game;
+package s11.bomberguy.characters;
 
 import org.junit.jupiter.api.Test;
 
