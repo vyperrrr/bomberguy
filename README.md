@@ -1,8 +1,4 @@
-## Végleges wiki
-
-Last edited by Gerzsenyi Patrik Alexander 3 months ago
-
-# BomberGuy
+# Bomberguy
 
 ## A feladat
 
