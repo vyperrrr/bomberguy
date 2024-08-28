@@ -6,37 +6,26 @@ Last edited by Gerzsenyi Patrik Alexander 3 months ago
 
 ## A feladat
 
-A játék egy 2 dimenziós pályán játszódik, amely négyzet alakú mezőkből áll. A játékot 2 játékos játsza, akiknek 1 - 1 bomberman figurát irányítva céljuk,
+A játék egy 2 dimenziós pályán játszódik, amely négyzet alakú mezőkből áll. A játékot 2 vagy 3 játékos játsza, akiknek egy-egy bomberman figurát irányítva céljuk,
 hogy egyedüliként maradjanak életben. A játékpálya mezőin fal elemek, dobozok, szörnyek és maguk a játékosok figurái helyezkednek el. A játékosok
-bombákat lehelyezve felrobbanthatják a dobozokat, szörnyeket és a játékosokat (akár saját magukat is). Egy játékos veszt (és ezáltal ellenfele győz), ha
+bombákat lehelyezve felrobbanthatják a dobozokat, szörnyeket és a játékosokat (akár saját magukat is). Egy játékos veszít, ha
 felrobban, vagy ha egy szörny elkapja.
 
-## Választott részfeladatok
-
-```
-Haladó bónuszok
-Háromjátékos
-Testreszabható vezérlés
-Folyamatos mozgás
-```
-## Választott fejlesztői eszközök
+## Fejlesztői eszközök
 
 A játék megvalósításához a java nyelvet választottuk, hozzá pedig a LibGDX keretrendszert.
 
 ## A játék menete
 
-A játék egy új ablakban nyílik meg, melyben elindul a Menü. Itt 3 opciónk van, elindítani egy játékot, módosítani az irányítást a beállításokban és kilépni.
-
+A játék egy új ablakban nyílik meg, melyben elindul a menü. Itt 3 opciónk van, elindítani egy játékot, módosítani az irányítást a beállításokban és kilépni.
 
 ## A játék indítása
 
 Mielőtt tényleg játszhatnánk, ki kell választanunk, hogy hány játékossal szeretnénk megtenni azt, melyik pályán, és hány kört szeretnénk játszani.
 
+## A játékról
 
-
-## Maga a játék
-
-Miután beállítottuk, hogy hogyan szeretnénk játszani, egy játékkör elindul a kiválasztott beállításoknak megfelelően
+Miután beállítottuk, hogy hogyan szeretnénk játszani, egy játékkör elindul a kiválasztott beállításoknak megfelelően.
 
 Itt a játékosok a saját beállításaiknak megfelelően mozgathatják karaktereiket, bombákat helyezhetnek le, ládákat, szörnyeket és más játékosokat
 robbanthatnak fel.
@@ -44,7 +33,6 @@ robbanthatnak fel.
 ### Bombák
 
 A játékosok bombákat helyezhetnek le a pályára, melyek pár másodpercen belül felrobbanak.
-
 
 Ezek a robbanások nem haladnak át a falakon, azonban a szörnyeket és a pajzs nélküli játékosokat megsemmisíti. Továbbá a ládákat is elpusztíthatja,
 melyek Erősítéseket tartalmazhatnak
