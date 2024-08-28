@@ -1,7 +1,5 @@
 # Bomberguy
 
-## A feladat
-
 A játék egy 2 dimenziós pályán játszódik, amely négyzet alakú mezőkből áll. A játékot 2 vagy 3 játékos játsza, akiknek egy-egy bomberman figurát irányítva céljuk,
 hogy egyedüliként maradjanak életben. A játékpálya mezőin fal elemek, dobozok, szörnyek és maguk a játékosok figurái helyezkednek el. A játékosok
 bombákat lehelyezve felrobbanthatják a dobozokat, szörnyeket és a játékosokat (akár saját magukat is). Egy játékos veszít, ha
