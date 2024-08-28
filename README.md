@@ -35,9 +35,16 @@ melyek Erősítéseket tartalmazhatnak
 
 Nem minden felrobbantott láda tartalmazhat erősítést, és amelyik tartalmaz, az ezek közül sorsol egyet:
 
-```
-Bombák száma + 1 Robbanás hatótáva + 1 Szellem Sérthetetlenség Görkorcsolya Detonátor Akadály
-```
+<ul>
+  <li>Lerakható bombák számának növelése</li>
+  <li>Robbanás hatótávjának növelése</li>
+  <li>Szellem, a játékos áthaladhat az akadályokon és az ellenfeleken</li>
+  <li>Sérthetetlenség</li>
+  <li>Görkorcsolya, gyorsított csúszós mozgás</li>
+  <li>Detonátor, a bombát gomb nyomásra robbanthatja</li>
+  <li>Builder, a játékos akadályokat tehet le a pályára</li>
+</ul>
+
 ## A játék vége
 
 A játéknak akkor van vége, ha csak egy játékos maradt életben, ekkor az a játékos a győztes. Azonban ha a túlélő játékos bizonyos időn belül meghal,
