@@ -71,11 +71,3 @@ elindíthatjuk a következőt.
 ## UML
 
 ![image (1)](https://github.com/user-attachments/assets/f836796b-a2c7-4a48-97db-2ad73d6ae5aa)
-
-
-
-
-
-## UML
-
-
